@@ -1,5 +1,5 @@
 {
-    "name": "mabiola/ppaystack-php-lib",
+    "name": "mabiola/paystack-php-lib",
     "version": "0.0.1",
     "description": "Php libary wrapper for paystack.co",
     "keywords": ["library", "Paystack"],
