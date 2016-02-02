@@ -18,7 +18,7 @@ interface TransactionInterface
 
     /**
      * Verify transaction / Get transaction Details
-     * @param $transactionReference
+     * @param string $transactionReference
      * @return mixed
      */
     public function details($transactionReference);
