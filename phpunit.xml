@@ -12,10 +12,15 @@
          verbose="true"
         >
     <testsuites>
-        <testsuite name="Paystack Php Library Test Suite">
+        <testsuite name="Paystack PHP Library Test Suite">
             <directory suffix="Test.php">./Tests/</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">app/</directory>
+        </whitelist>
+    </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>

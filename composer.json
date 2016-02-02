@@ -1,5 +1,5 @@
 {
-    "name": "Paystack/PhpLib",
+    "name": "mabiola/ppaystack-php-lib",
     "version": "0.0.1",
     "description": "Php libary wrapper for paystack.co",
     "keywords": ["library", "Paystack"],
@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9"
     },
     "license": "MIT",
     "authors": [
