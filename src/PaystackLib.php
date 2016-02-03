@@ -21,20 +21,28 @@ class PaystackLib implements PaystackInterface
 
     /**
      * Initiate transaction on paystack api and get authorization token
+     * Function accepts array so as to serve use cases where a post data is passed directly
+     * also accepts (amount, email, [plan])
      * @param array $transactionData
      * @return mixed
      */
     public function initiateTransaction(...$transactionData)
     {
-        $argCount = func_num_args();
-        if ($argCount >= 2){
-            $arg_list = func_get_args();
-            return $this->paystackTransaction->initiate($arg_list[0], $arg_list[1], $arg_list[2] ?: '');
-        } else if ($argCount == 1 && is_array($transactionData) && $this->validateTransactionData($transactionData)) {
+        if (
+            count($transactionData) == 1 &&
+            is_array($transactionData[0]) &&
+            $this->validateTransactionData($transactionData[0])
+        ) {
             return $this->paystackTransaction->initiate(
-                $transactionData['amount'],
-                $transactionData['email'],
-                $transactionData['plan'] ?: ''
+                $transactionData[0]['amount'],
+                $transactionData[0]['email'],
+                $transactionData[0]['plan'] ?: ''
+            );
+        } else if (count($transactionData) >= 2) {
+            return $this->paystackTransaction->initiate(
+                $transactionData[0],
+                $transactionData[1],
+                $transactionData[2] ?: ''
             );
         }
         return null;

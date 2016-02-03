@@ -91,7 +91,7 @@ class Transaction implements TransactionInterface
         $response = json_decode($request->getBody()->getContents());
 
         if (Response::HTTP_OK !== $request->getStatusCode()) {
-            throw ExceptionHandler::handle($response);
+            throw ExceptionHandler::handle($response, $request->getStatusCode());
         }
 
         return [
@@ -117,7 +117,7 @@ class Transaction implements TransactionInterface
         $response = json_decode($request->getBody()->getContents());
 
         if (Response::HTTP_OK !== $request->getStatusCode()) {
-            throw ExceptionHandler::handle($response);
+            throw ExceptionHandler::handle($response, $request->getStatusCode());
         }
 
         return json_decode(json_encode($response->data), true);
