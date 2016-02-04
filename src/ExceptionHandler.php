@@ -12,7 +12,7 @@ use Paystack\Exceptions\BaseException;
 
 class ExceptionHandler extends BaseException
 {
-    public static function handle($e)
+    public static function handle($e, $statusCode)
     {
         return new \Exception($e->message);
 
