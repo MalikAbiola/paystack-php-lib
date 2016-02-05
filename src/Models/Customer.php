@@ -48,7 +48,7 @@ class Customer implements ModelInterface
     }
 
     /**
-     * Create a new customer object
+     * set up a new customer object
      * @param $firstName
      * @param $lastName
      * @param $email
@@ -116,11 +116,16 @@ class Customer implements ModelInterface
         $resourceObject = null;
 
         if (!$this->isCreatable() && !$this->isUpdateable()) {
-            throw new \Exception(); //return proper error here
+            throw new \Exception(); //@todo: return proper error here
         } else if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
-            $resourceObject = $this->customerResource->update($this->customerId, $this->get(ModelInterface::TRANSFORM_TO_JSON_ARRAY));
+            $resourceObject = $this->customerResource->update(
+                $this->customerId,
+                $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
+            );
         } else if (!$this->isUpdateable() && $this->isCreatable()) { //available for creation
-            $resourceObject = $this->customerResource->save($this->get(ModelInterface::TRANSFORM_TO_JSON_ARRAY));
+            $resourceObject = $this->customerResource->save(
+                $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
+            );
         }
         $this->__setAttributes($resourceObject);
 
@@ -128,11 +133,28 @@ class Customer implements ModelInterface
     }
 
     /**
+     * delete customer by ID
+     * @param $customerId
+     * @return $this
+     * @throws \Exception|mixed
+     */
+    public function deleteCustomer($customerId)
+    {
+        //retrieve customer, set customer attributes
+        try {
+            $this->customerResource->delete($customerId);
+            return true;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * get Outward presentation of object
      * @param $transformMode
      * @return mixed
      */
-    public function get($transformMode = "")
+    public function transform($transformMode = "")
     {
         switch($transformMode) {
             case ModelInterface::TRANSFORM_TO_JSON_ARRAY:
@@ -177,21 +199,15 @@ class Customer implements ModelInterface
     }
 
     /**
-     * delete customer by ID
-     * @param $customerId
-     * @return $this
-     * @throws \Exception|mixed
+     * Get specific model attribute
+     * @param string $attribute
+     * @return mixed
      */
-    public function deleteCustomer($customerId)
+    public function get($attribute = '')
     {
-        //retrieve customer, set customer attributes
-        $customerModel = $this->customerResource->delete($customerId);
-        if ($customerModel instanceof \Exception) {
-            throw $customerModel;
-        }
-
-        return true;
+        return $this->$attribute ?: new \Exception(); //@todo: return proper error here
     }
+
     /**
      * @return boolean
      */
