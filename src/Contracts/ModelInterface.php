@@ -19,7 +19,14 @@ interface ModelInterface
      * @param $transformMode
      * @return mixed
      */
-    public function get($transformMode);
+    public function transform($transformMode);
 
     public function __setAttributes($attributes);
+
+    /**
+     * Get specific model attribute
+     * @param string $attribute
+     * @return mixed
+     */
+    public function get($attribute = '');
 }

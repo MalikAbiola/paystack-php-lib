@@ -8,6 +8,9 @@
 
 namespace Paystack\Helpers;
 
+use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
+use Rhumsaa\Uuid\Uuid;
+
 trait Utils {
 
     /**
@@ -16,9 +19,9 @@ trait Utils {
      * @param $id
      * @return mixed
      */
-    public function transformUrl($url, $id)
+    public function transformUrl($url, $id, $key = '')
     {
-        return str_replace(':id', $id, $url);
+        return str_replace(!empty($key) ? $key : ':id', $id, $url);
     }
 
     /**
@@ -28,5 +31,14 @@ trait Utils {
      */
     public function toJson($object) {
         return json_encode($object);
+    }
+
+    public function generateTransactionRef()
+    {
+        try {
+            return str_replace("-", "", Uuid::uuid1()->toString());
+        } catch (UnsatisfiedDependencyException $e) {
+            return null;
+        }
     }
 }
