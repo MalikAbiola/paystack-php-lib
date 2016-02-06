@@ -13,20 +13,29 @@ use Paystack\Models\Customer;
 use Paystack\Models\Plan;
 use Paystack\Models\Transaction;
 use Paystack\Resources\CustomerResource;
+use Paystack\Resources\PlanResource;
 use Paystack\Resources\TransactionResource;
 
 class Paystack
 {
     private $paystackHttpClient;
     private $customerModel;
+    private $transactionModel;
+    private $planModel;
+    private $customerResource;
 
     public function __construct()
     {
         $this->paystackHttpClient = PaystackHttpClientFactory::make();
+
         $this->customerResource = new CustomerResource($this->paystackHttpClient);
         $this->customerModel = new Customer($this->customerResource);
-        $this->transactionResource = new TransactionResource($this->paystackHttpClient);
-        $this->transactionModel = new Transaction($this->transactionResource, $this->customerResource);
+
+        $transactionResource = new TransactionResource($this->paystackHttpClient);
+        $this->transactionModel = new Transaction($transactionResource, $this->customerResource);
+
+        $planResource = new PlanResource($this->paystackHttpClient);
+        $this->planModel = new Plan($planResource);
     }
 
     public function getCustomer($customerId)
@@ -60,13 +69,11 @@ class Paystack
      * @param $plan
      * @return \Exception|mixed
      */
-    public function oneTimeTransaction($amount, $email, $plan)
+    public function oneTimeTransaction($amount, $email, $plan = '')
     {
-        if ($plan instanceof Plan) {
-            $transaction = $this->transactionModel->createOneTimeTransaction($amount,$email,$plan->get('code'));
-        } else {
-            $transaction = $this->transactionModel->createOneTimeTransaction($amount, $email, $plan);
-        }
+        $transaction = $plan instanceof Plan ?
+            $this->transactionModel->createOneTimeTransaction($amount, $email, $plan->get('plan_code')) :
+            $this->transactionModel->createOneTimeTransaction($amount, $email, $plan);
 
         return $transaction->charge();
     }
@@ -81,5 +88,30 @@ class Paystack
     public function verifyTransaction($transactionRef, $includeCustomer = false)
     {
         return $this->transactionModel->verify($transactionRef, $includeCustomer);
+    }
+
+    public function getPlan($planCode)
+    {
+        return $this->planModel->getPlan($planCode)->transform();
+    }
+
+    public function createPlan($name, $description, $amount, $currency)
+    {
+        return $this->planModel->make($name, $description, $amount, $currency)
+            ->save()
+            ->transform();
+    }
+
+    public function updatePlan($planCode, $updateData)
+    {
+        return $this->planModel->getPlan($planCode)
+            ->setUpdateData($updateData)
+            ->save()
+            ->transform();
+    }
+
+    public function deletePlan($planCode)
+    {
+        return $this->planModel->getPlan($planCode)->delete();
     }
 }

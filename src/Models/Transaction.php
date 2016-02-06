@@ -34,7 +34,7 @@ class Transaction implements ModelInterface
         $this->customerResource = $customerResource;
     }
 
-    public function createOneTimeTransaction($amount, $customerEmail, $planCode = '')
+    public function createOneTimeTransaction($amount, $customerEmail, $planCode)
     {
         $this->customerEmail = $customerEmail;
         $this->amount = $amount;

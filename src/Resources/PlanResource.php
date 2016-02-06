@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Created by Malik Abiola.
- * Date: 04/02/2016
- * Time: 22:02
+ * Date: 06/02/2016
+ * Time: 15:50
  * IDE: PhpStorm
  */
 
@@ -11,12 +10,9 @@ namespace Paystack\Resources;
 
 use GuzzleHttp\Client;
 use Paystack\Contracts\ResourceInterface;
-use Paystack\Helpers\Utils;
 
-class CustomerResource extends Resource implements ResourceInterface
+class PlanResource extends Resource implements ResourceInterface
 {
-    use Utils;
-
     private $paystackHttpClient;
 
     public function __construct(Client $paystackHttpClient)
@@ -26,17 +22,16 @@ class CustomerResource extends Resource implements ResourceInterface
 
     public function get($id)
     {
-        $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(getenv('CUSTOMERS_URL'), $id)
+        $request = $this->paystackHttpClient->get(
+            $this->transformUrl(getenv('PLANS_URL'), $id)
         );
-
-       return $this->processResourceRequestResponse($request);
+        return $this->processResourceRequestResponse($request);
     }
 
     public function getAll($page = null)
     {
-        $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(getenv('CUSTOMERS_URL'), "") . !empty($page) ? "?page = {$page}" : ""
+        $request = $this->paystackHttpClient->get(
+            $this->transformUrl(getenv('PLANS_URL'), "") . !empty($page) ? "?page = {$page}" : ""
         );
 
         return $this->processResourceRequestResponse($request);
@@ -44,8 +39,8 @@ class CustomerResource extends Resource implements ResourceInterface
 
     public function save($body)
     {
-        $request =  $this->paystackHttpClient->post(
-            $this->transformUrl(getenv('CUSTOMERS_URL'), ""),
+        $request = $this->paystackHttpClient->post(
+            $this->transformUrl(getenv('PLANS_URL'), ""),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -56,8 +51,8 @@ class CustomerResource extends Resource implements ResourceInterface
 
     public function update($id, $body)
     {
-        $request =  $this->paystackHttpClient->post(
-            $this->transformUrl(getenv('CUSTOMERS_URL'), $id),
+        $request = $this->paystackHttpClient->put(
+            $this->transformUrl(getenv('PLANS_URL'), $id),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -68,8 +63,8 @@ class CustomerResource extends Resource implements ResourceInterface
 
     public function delete($id)
     {
-        $request =  $this->paystackHttpClient->delete(
-            $this->transformUrl(getenv('CUSTOMERS_URL'), $id)
+        $request = $this->paystackHttpClient->delete(
+            $this->transformUrl(getenv('PLANS_URL'), $id)
         );
 
         return $this->processResourceRequestResponse($request);

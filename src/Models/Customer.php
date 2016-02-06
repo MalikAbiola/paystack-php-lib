@@ -177,6 +177,7 @@ class Customer implements ModelInterface
     /**
      * Set attributes of customer model object
      * @param $attributes
+     * @return $this
      */
     public function __setAttributes($attributes)
     {
@@ -196,6 +197,8 @@ class Customer implements ModelInterface
         foreach($attributes as $attribute => $value) {
             $this->$attribute = $value;
         }
+
+        return $this;
     }
 
     /**
