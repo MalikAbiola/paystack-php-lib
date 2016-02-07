@@ -25,8 +25,9 @@ interface ModelInterface
 
     /**
      * Get specific model attribute
-     * @param string $attribute
+     * @param array $attributes
      * @return mixed
+     * @internal param string $attribute
      */
-    public function get($attribute = '');
+    public function get($attributes);
 }

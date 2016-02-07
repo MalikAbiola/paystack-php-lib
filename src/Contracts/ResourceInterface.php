@@ -14,7 +14,7 @@ interface ResourceInterface
 
     public function get($id);
 
-    public function getAll();
+    public function getAll($page = null);
 
     public function save($body);
 

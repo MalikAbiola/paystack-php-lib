@@ -11,17 +11,13 @@ namespace Paystack\Models;
 use Paystack\Contracts\ModelInterface;
 use Paystack\Resources\CustomerResource;
 
-class Customer implements ModelInterface
+class Customer extends Model implements ModelInterface
 {
-    private $customerResource;
-    private $updateable = false;
-    private $creatable = false;
-
-    public $firstName;
-    public $lastName;
-    public $email;
-    public $phone;
-    public $customerId;
+    protected $firstName;
+    protected $lastName;
+    protected $email;
+    protected $phone;
+    protected $customerId;
 
     public function __construct(CustomerResource $customerResource)
     {
@@ -44,6 +40,7 @@ class Customer implements ModelInterface
             $this->__setAttributes($customerModel);
         }
 
+        $this->setDeleteable(true);
         return $this;
     }
 
@@ -56,7 +53,7 @@ class Customer implements ModelInterface
      * @param array $otherAttributes
      * @return $this
      */
-    public function makeCustomer($firstName, $lastName, $email, $phone, $otherAttributes = [])
+    public function make($firstName, $lastName, $email, $phone, $otherAttributes = [])
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -92,11 +89,7 @@ class Customer implements ModelInterface
                 unset($updateAttributes['last_name']);
             }
 
-            foreach($updateAttributes as $attribute => $value) {
-                $this->$attribute = $value;
-            }
-
-            //set updateable
+            $this->__setAttributes($updateAttributes);
             $this->setUpdateable(true);
 
             return $this;
@@ -110,43 +103,51 @@ class Customer implements ModelInterface
      * save/update customer model on paystack
      * @return $this
      * @throws \Exception
+     * @throws \Exception|mixed
+     * @throws null
      */
     public function save()
     {
-        $resourceObject = null;
+        $resourceResponse = null;
 
-        if (!$this->isCreatable() && !$this->isUpdateable()) {
-            throw new \Exception(); //@todo: return proper error here
+        if ($this->isCreatable() && !$this->isUpdateable()) { //available for creation
+            $resourceResponse = $this->customerResource->save(
+                $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
+            );
         } else if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
-            $resourceObject = $this->customerResource->update(
+            $resourceResponse = $this->customerResource->update(
                 $this->customerId,
                 $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
             );
-        } else if (!$this->isUpdateable() && $this->isCreatable()) { //available for creation
-            $resourceObject = $this->customerResource->save(
-                $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
-            );
         }
-        $this->__setAttributes($resourceObject);
 
-        return $this;
+        if ($resourceResponse == null) {
+            throw new \Exception("You Cant Perform This Operation on an empty plan");
+        } else if ($resourceResponse instanceof \Exception) {
+            throw $resourceResponse;
+        }
+
+        return $this->__setAttributes($resourceResponse);
     }
 
     /**
-     * delete customer by ID
-     * @param $customerId
+     * delete customer
      * @return $this
+     * @throws \Exception
      * @throws \Exception|mixed
      */
-    public function deleteCustomer($customerId)
+    public function delete()
     {
-        //retrieve customer, set customer attributes
-        try {
-            $this->customerResource->delete($customerId);
-            return true;
-        } catch (\Exception $e) {
-            throw $e;
+        if ($this->isDeleteable()) {
+            $resourceResponse = $this->customerResource->delete($this->customerId);
+            if ($resourceResponse instanceof \Exception) {
+                throw $resourceResponse;
+            }
+
+            return !!$resourceResponse['status'];
         }
+
+        throw new \Exception("Customer could not be deleted");
     }
 
     /**
@@ -177,6 +178,7 @@ class Customer implements ModelInterface
     /**
      * Set attributes of customer model object
      * @param $attributes
+     * @return $this
      */
     public function __setAttributes($attributes)
     {
@@ -196,47 +198,7 @@ class Customer implements ModelInterface
         foreach($attributes as $attribute => $value) {
             $this->$attribute = $value;
         }
-    }
 
-    /**
-     * Get specific model attribute
-     * @param string $attribute
-     * @return mixed
-     */
-    public function get($attribute = '')
-    {
-        return $this->$attribute ?: new \Exception(); //@todo: return proper error here
-    }
-
-    /**
-     * @return boolean
-     */
-    private function isUpdateable()
-    {
-        return $this->updateable;
-    }
-
-    /**
-     * @param boolean $updateable
-     */
-    private function setUpdateable($updateable)
-    {
-        $this->updateable = $updateable;
-    }
-
-    /**
-     * @return boolean
-     */
-    private function isCreatable()
-    {
-        return $this->creatable;
-    }
-
-    /**
-     * @param boolean $creatable
-     */
-    private function setCreatable($creatable)
-    {
-        $this->creatable = $creatable;
+        return $this;
     }
 }

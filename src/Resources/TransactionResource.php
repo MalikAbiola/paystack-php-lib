@@ -8,16 +8,10 @@
 
 namespace Paystack\Resources;
 
-
 use GuzzleHttp\Client;
-use Illuminate\Http\Response;
-use Paystack\ExceptionHandler;
-use Paystack\Helpers\Utils;
 
-class TransactionResource
+class TransactionResource extends Resource
 {
-    use Utils;
-
     private $paystackHttpClient;
 
     public function __construct(Client $paystackHttpClient)
@@ -31,13 +25,7 @@ class TransactionResource
             $this->transformUrl(getenv('GET_TRANSACTION'), $id)
         );
 
-        $response = json_decode($request->getBody()->getContents());
-
-        if (Response::HTTP_OK !== $request->getStatusCode()) {
-            return ExceptionHandler::handle($response, $request->getStatusCode());
-        }
-
-        return json_decode(json_encode($response->data), true);
+        return $this->processResourceRequestResponse($request);
     }
 
     public function verify($reference)
@@ -46,13 +34,7 @@ class TransactionResource
             $this->transformUrl(getenv('VERIFY_TRANSACTION'), $reference, ":reference")
         );
 
-        $response = json_decode($request->getBody()->getContents());
-
-        if (Response::HTTP_OK !== $request->getStatusCode()) {
-            return ExceptionHandler::handle($response, $request->getStatusCode());
-        }
-
-        return json_decode(json_encode($response->data), true);
+        return $this->processResourceRequestResponse($request);
     }
 
     public function initialize($body)
@@ -64,13 +46,7 @@ class TransactionResource
             ]
         );
 
-        $response = json_decode($request->getBody()->getContents());
-
-        if (Response::HTTP_OK !== $request->getStatusCode()) {
-            return ExceptionHandler::handle($response, $request->getStatusCode());
-        }
-
-        return json_decode(json_encode($response->data), true);
+        return $this->processResourceRequestResponse($request);
     }
 
     public function chargeAuthorization($body)
@@ -82,12 +58,6 @@ class TransactionResource
             ]
         );
 
-        $response = json_decode($request->getBody()->getContents());
-
-        if (Response::HTTP_OK !== $request->getStatusCode()) {
-            return ExceptionHandler::handle($response, $request->getStatusCode());
-        }
-
-        return json_decode(json_encode($response->data), true);
+        return $this->processResourceRequestResponse($request);
     }
 }
