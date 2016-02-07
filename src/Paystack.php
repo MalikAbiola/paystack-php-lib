@@ -8,6 +8,7 @@
 
 namespace Paystack;
 
+use Paystack\Contracts\TransactionInterface;
 use Paystack\Factories\PaystackHttpClientFactory;
 use Paystack\Models\Customer;
 use Paystack\Models\Plan;
@@ -71,26 +72,30 @@ class Paystack
      */
     public function oneTimeTransaction($amount, $email, $plan = '')
     {
-        $transaction = $plan instanceof Plan ?
-            $this->transactionModel->createOneTimeTransaction($amount, $email, $plan->get('plan_code')) :
-            $this->transactionModel->createOneTimeTransaction($amount, $email, $plan);
+        $transactionData = [
+            "amount"    => $amount,
+            "email"     => $email,
+            "plan"      => $plan instanceof Plan ? $plan->get('plan_code') : $plan
+        ];
 
-        return $transaction->charge();
+        return $this->transactionModel->make(TransactionInterface::TRANSACTION_TYPE_NEW, $transactionData)->charge();
     }
 
-    public function returningTransaction($customerId, $planOrAmount)
+    public function returningTransaction($customer, $planOrAmount)
     {
-        $customer = $this->customerModel->getCustomer($customerId);
-        $transaction = $planOrAmount instanceof Plan ?
-            $this->transactionModel->createReturningCustomerTransaction($customer, $planOrAmount->get('amount')) :
-            $this->transactionModel->createReturningCustomerTransaction($customer, $planOrAmount);
+        $transactionData = [
+            "amount"    => $planOrAmount instanceof Plan ? $planOrAmount->get('amount') : $planOrAmount,
+            "email"     => $customer instanceof Customer ? $customer->get('email') : $customer,
+            "plan"      => $planOrAmount instanceof Plan ? $planOrAmount->get('name') : null
+        ];
 
-        return $transaction->charge();
+        return $this->transactionModel->make(TransactionInterface::TRANSACTION_TYPE_RETURNING, $transactionData)
+            ->charge();
     }
 
-    public function verifyTransaction($transactionRef, $includeCustomer = false)
+    public function verifyTransaction($transactionRef)
     {
-        return $this->transactionModel->verify($transactionRef, $includeCustomer);
+        return $this->transactionModel->verifyTransaction($transactionRef);
     }
 
     public function getPlan($planCode)

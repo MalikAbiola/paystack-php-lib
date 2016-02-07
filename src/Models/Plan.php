@@ -37,7 +37,7 @@ class Plan extends Model implements PlansInterface
 
     protected $currency;
 
-    protected $subscriptions;
+    protected $subscriptions = [];
 
     public function __construct(PlanResource $planResource)
     {
@@ -51,7 +51,7 @@ class Plan extends Model implements PlansInterface
             throw $plan;
         }
 
-        $this->setDeleteable(true);
+        $this->setDeletable(true);
 
         return $this->__setAttributes($plan);
     }
@@ -107,7 +107,7 @@ class Plan extends Model implements PlansInterface
 
     public function delete()
     {
-        if ($this->isDeleteable()) {
+        if ($this->isDeletable()) {
             $resourceResponse = $this->planResource->delete($this->plan_code);
             if ($resourceResponse instanceof \Exception) {
                 throw $resourceResponse;
@@ -126,7 +126,23 @@ class Plan extends Model implements PlansInterface
      */
     public function transform($transformMode = '')
     {
-        // TODO: Implement transform() method.
+        $planObject = [
+            "plan_code" => $this->plan_code,
+            "name" => $this->name,
+            "description" => $this->description,
+            "amount" => $this->interval,
+            "currency" => $this->currency,
+            "hosted_page" => $this->hosted_page,
+            "hosted_page_url" => $this->hosted_page_url,
+            "hosted_page_summary" => $this->hosted_page_summary,
+            "subscription_count" => count($this->subscriptions)
+        ];
+        switch($transformMode) {
+            case PlansInterface::TRANSFORM_TO_JSON_ARRAY:
+                return json_encode($planObject);
+            default:
+                return $planObject;
+        }
     }
 
     public function __setAttributes($attributes)
