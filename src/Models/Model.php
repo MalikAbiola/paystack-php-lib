@@ -33,7 +33,7 @@ abstract class Model implements ModelInterface
         }
 
         if (!is_array($attributes) && count($argsAsArray) == 1 ) {
-            return $this->{$attribute} ?: null;
+            return $this->{$attributes} ?: null;
         }
 
         $attributesGet = [];
