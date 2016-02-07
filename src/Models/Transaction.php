@@ -1,32 +1,42 @@
 <?php
 /**
  * Created by Malik Abiola.
- * Date: 05/02/2016
- * Time: 00:00
+ * Date: 07/02/2016
+ * Time: 15:10
  * IDE: PhpStorm
  */
 
 namespace Paystack\Models;
 
-use Paystack\Contracts\ModelInterface;
+use Paystack\Contracts\TransactionInterface;
 use Paystack\Helpers\Utils;
 use Paystack\Resources\CustomerResource;
 use Paystack\Resources\TransactionResource;
 
-class Transaction implements ModelInterface
+class Transaction extends Model implements TransactionInterface
 {
     use Utils;
 
     private $transactionResource;
     private $customerResource;
-    private $newCustomer = false;
-    private $returningCustomer = false;
 
+    private $transactionType;
+
+    private $customer = [];
+    private $authorization = [];
+    private $id;
+
+    private $transactionRef;
+    private $email;
     private $amount;
-    private $customerEmail;
-    private $planCode;
-    private $transactionReference;
+    private $transactionPlan;
     private $authorizationCode;
+
+    private $status;
+    private $currency;
+    private $transaction_number;
+    private $paid_at;
+
 
     public function __construct(TransactionResource $transactionResource, CustomerResource $customerResource)
     {
@@ -34,143 +44,121 @@ class Transaction implements ModelInterface
         $this->customerResource = $customerResource;
     }
 
-    public function createOneTimeTransaction($amount, $customerEmail, $planCode)
+    public function make($transactionType, $transactionData)
     {
-        $this->customerEmail = $customerEmail;
-        $this->amount = $amount;
-        $this->planCode = $planCode;
-        $this->transactionReference = $this->generateTransactionRef();
-        $this->setNewCustomer(true);
-
-        return $this;
-    }
-
-    public function createReturningCustomerTransaction(Customer $customer, $amount)
-    {
-        $this->customerEmail = $customer->get('email');
-        $this->amount = $amount;
-        $this->transactionReference = $this->generateTransactionRef();
-        $this->authorizationCode = $customer->get('authorization_code');
-        $this->setReturningCustomer(true);
+        $this->setTransactionType($transactionType);
+        $this->transactionRef = $this->generateTransactionRef();
+        $this->amount = $transactionData['amount'];
+        $this->email = $transactionData['email'];
+        $this->transactionPlan = $transactionData['plan'] ?: null;
+        $this->authorizationCode = $transactionData['authorization_code'] ?: null;
 
         return $this;
     }
 
     public function charge()
     {
-        if (!is_null($this->transactionReference))
+        if (!is_null($this->transactionRef))
         {
-            if ($this->isNewCustomer()) {
-                //return authorization data
-                return $this->transactionResource->initialize($this->__getPayload());
-            } else if ($this->isReturningCustomer()) {
-                return $this->transactionResource->chargeAuthorization($this->__getPayload());
+            switch ($this->transactionType) {
+                case TransactionInterface::TRANSACTION_TYPE_RETURNING:
+                    return $this->transactionResource->chargeAuthorization($this->_getPayload());
+                case TransactionInterface::TRANSACTION_TYPE_NEW:
+                    return $this->transactionResource->initialize($this->_getPayload());
+                default:
+                    return new \Exception(); //@todo: replace with proper error code (invlaid transaction exception
             }
         }
 
-        return new \Exception(); //@todo: replace with proper error code
+        return new \Exception(); //@todo: replace with proper error code (transaction could not be created)
     }
 
-    public function verify($reference, $includeCustomer)
+    public function verifyTransaction($transactionRef)
     {
-        try {
-            $transactionData = $this->transactionResource->verify($reference);
-            if($includeCustomer) {
-                $customerData = $transactionData['customer'];
-                $customerData['authorization_code'] = $transactionData['authorization_code'];
-                unset($transactionData['customer']);
-                $customer = new Customer($this->customerResource);
-                $customer->__setAttributes($customerData);
-                return [
-                    'customer' => $customer,
-                    'transaction' => $transactionData
-                ];
-            }
-            return $transactionData;
+        $transactionData = $this->transactionResource->verify($transactionRef);
 
-        } catch (\Exception $e) {
-            throw $e;
+        if ($$transactionData['status'] == TransactionInterface::TRANSACTION_STATUS_SUCCESS) {
+            $this->authorization = $$transactionData['authorization'];
+            $this->customer = $transactionData['customer'];
+            $this->amount = $transactionData['amount'];
+            $this->transactionPlan = $transactionData['plan'];
+
+            return $this;
         }
+
+        return false;
     }
 
-    private function __getPayload()
+    /** @todo
+     * @param $transactionCode
+     */
+    public function getTransactionDetails($transactionCode)
     {
-        $payload = [];
-        if ($this->isNewCustomer()) {
-            $payload = [
-                'amount'    => $this->amount,
-                'reference' => $this->transactionReference,
-                'email'     => $this->customerEmail
-            ];
-            if (!empty($this->planCode)) {
-                $payload['plan'] = $this->planCode;
-            }
-        } else if ($this->isReturningCustomer()) {
-            $payload = [
-                'amount'                => $this->amount,
-                'authorization_code'    => $this->authorizationCode,
-                'reference'             => $this->transactionReference,
-                'email'                 => $this->customerEmail
-            ];
+
+    }
+
+    /**
+     * @return string
+     */
+    private function _getPayload()
+    {
+        $payload = [
+            'amount'    => $this->amount,
+            'reference' => $this->transactionRef,
+            'email'     => $this->email
+        ];
+        if (!empty($this->transactionPlan)) {
+            $payload['plan'] = $this->transactionPlan;
         }
+
+        switch($this->transactionType) {
+            case TransactionInterface::TRANSACTION_TYPE_RETURNING:
+                $payload['authorization_code'] =  $this->authorizationCode;
+                break;
+        }
+
         return $this->toJson($payload);
     }
-    /**
-     * Outward presentation of object
-     * @param $transformMode
-     * @return mixed
-     */
+
+    //@todo properly implement this
     public function transform($transformMode)
     {
-        //@todo
+        return $this->objectToArray($this);
     }
 
+    /**
+     * @param $attributes
+     * @return $this
+     * @throws \Exception
+     */
     public function __setAttributes($attributes)
     {
-        foreach ($attributes as $attribute => $val) {
-            $this->{$attribute} = $val;
+        if(is_array($attributes) && !empty($attributes)) {
+            foreach($attributes as $attribute => $value) {
+                $this->{$attribute} = $value;
+            }
+
+            return $this;
         }
+
+        //@todo: put real exception here cos exception' gon be thrown either ways, so put one that makes sense
+        //or something else that has more meaning
+        throw new \Exception();
     }
 
     /**
-     * @return boolean
-     */
-    private function isReturningCustomer()
-    {
-        return $this->returningCustomer;
-    }
-
-    /**
-     * @param boolean $returningCustomer
-     */
-    private function setReturningCustomer($returningCustomer)
-    {
-        $this->returningCustomer = $returningCustomer;
-    }
-
-    /**
-     * @return boolean
-     */
-    private function isNewCustomer()
-    {
-        return $this->newCustomer;
-    }
-
-    /**
-     * @param boolean $newCustomer
-     */
-    private function setNewCustomer($newCustomer)
-    {
-        $this->newCustomer = $newCustomer;
-    }
-
-    /**
-     * Get specific model attribute
-     * @param string $attribute
      * @return mixed
      */
-    public function get($attribute = '')
+    public function getTransactionType()
     {
-        return $this->{$attribute} ?: new \Exception(); //@todo: return proper error here
+        return $this->transactionType;
+    }
+
+    /**
+     * @param mixed $transactionType
+     */
+    public function setTransactionType($transactionType)
+    {
+        $this->transactionType = $transactionType;
     }
 }

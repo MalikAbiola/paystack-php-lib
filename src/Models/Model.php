@@ -12,9 +12,9 @@ use Paystack\Contracts\ModelInterface;
 
 abstract class Model implements ModelInterface
 {
-    private $updateable = false;
-    private $creatable = false;
-    private $deleteable = false;
+    protected $updateable = false;
+    protected $creatable = false;
+    protected $deletable = false;
 
     abstract public function transform($transformMode);
 
@@ -27,13 +27,13 @@ abstract class Model implements ModelInterface
      */
     public function get($attributes)
     {
-        if (!is_array($attributes)) {
-            $argsAsArray = func_get_args();
-            $attributesGet = [];
-            foreach($argsAsArray as $attribute) {
-                $attributesGet[$attribute] = $this->{$attribute} ?: null;
-            }
-            return $attributesGet;
+        $argsAsArray = func_get_args();
+        if (!is_array($attributes) && count($argsAsArray) > 1 ) {
+            return call_user_func(array(get_class(), "get"), $argsAsArray);
+        }
+
+        if (!is_array($attributes) && count($argsAsArray) == 1 ) {
+            return $this->{$attributes} ?: null;
         }
 
         $attributesGet = [];
@@ -78,16 +78,16 @@ abstract class Model implements ModelInterface
     /**
      * @return boolean
      */
-    public function isDeleteable()
+    public function isDeletable()
     {
-        return $this->deleteable;
+        return $this->deletable;
     }
 
     /**
-     * @param boolean $deleteable
+     * @param boolean $deletable
      */
-    public function setDeleteable($deleteable)
+    public function setDeletable($deletable)
     {
-        $this->deleteable = $deleteable;
+        $this->deletable = $deletable;
     }
 }

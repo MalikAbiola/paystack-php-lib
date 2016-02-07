@@ -11,7 +11,7 @@ namespace Paystack\Models;
 use Paystack\Contracts\ModelInterface;
 use Paystack\Resources\CustomerResource;
 
-class Customer extends Model implements ModelInterface
+class Customer extends Model
 {
     protected $firstName;
     protected $lastName;
@@ -40,7 +40,7 @@ class Customer extends Model implements ModelInterface
             $this->__setAttributes($customerModel);
         }
 
-        $this->setDeleteable(true);
+        $this->setDeletable(true);
         return $this;
     }
 
@@ -138,7 +138,7 @@ class Customer extends Model implements ModelInterface
      */
     public function delete()
     {
-        if ($this->isDeleteable()) {
+        if ($this->isDeletable()) {
             $resourceResponse = $this->customerResource->delete($this->customerId);
             if ($resourceResponse instanceof \Exception) {
                 throw $resourceResponse;
