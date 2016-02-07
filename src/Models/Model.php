@@ -22,13 +22,25 @@ abstract class Model implements ModelInterface
 
     /**
      * Get specific model attribute
-     * @param string $attribute
+     * @param  $attributes
      * @return mixed
-     * @todo: return proper exception error. see if child class can be gotten from here
      */
-    public function get($attribute = '')
+    public function get($attributes)
     {
-        return $this->$attribute ?: new \Exception("Field Not Found");
+        if (!is_array($attributes)) {
+            $argsAsArray = func_get_args();
+            $attributesGet = [];
+            foreach($argsAsArray as $attribute) {
+                $attributesGet[$attribute] = $this->{$attribute} ?: null;
+            }
+            return $attributesGet;
+        }
+
+        $attributesGet = [];
+        foreach($attributes as $attribute) {
+            $attributesGet[$attribute] = $this->{$attribute} ?: null;
+        }
+        return $attributesGet;
     }
 
     /**

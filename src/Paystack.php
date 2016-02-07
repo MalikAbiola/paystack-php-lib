@@ -45,7 +45,7 @@ class Paystack
 
     public function createCustomer($firstName, $lastName, $email, $phone)
     {
-        return $this->customerModel->makeCustomer($firstName, $lastName, $email, $phone)
+        return $this->customerModel->make($firstName, $lastName, $email, $phone)
             ->save()
             ->transform();
     }
@@ -60,7 +60,7 @@ class Paystack
 
     public function deleteCustomer($customerId)
     {
-        return $this->customerModel->deleteCustomer($customerId);
+        return $this->customerModel->getCustomer($customerId)->delete();
     }
 
     /**
@@ -81,8 +81,11 @@ class Paystack
     public function returningTransaction($customerId, $planOrAmount)
     {
         $customer = $this->customerModel->getCustomer($customerId);
-        return $this->transactionModel->createReturningCustomerTransaction($customer, $planOrAmount)
-            ->charge();
+        $transaction = $planOrAmount instanceof Plan ?
+            $this->transactionModel->createReturningCustomerTransaction($customer, $planOrAmount->get('amount')) :
+            $this->transactionModel->createReturningCustomerTransaction($customer, $planOrAmount);
+
+        return $transaction->charge();
     }
 
     public function verifyTransaction($transactionRef, $includeCustomer = false)
