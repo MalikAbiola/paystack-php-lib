@@ -28,6 +28,17 @@ class TransactionResource extends Resource
         return $this->processResourceRequestResponse($request);
     }
 
+    public function getAll($page = '')
+    {
+
+        $request =  $this->paystackHttpClient->get(
+            $this->transformUrl(getenv('GET_TRANSACTION'),'')
+        );
+
+        return $this->processResourceRequestResponse($request);
+
+    }
+
     public function verify($reference)
     {
         $request = $this->paystackHttpClient->get(

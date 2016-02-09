@@ -18,7 +18,7 @@ abstract class Model implements ModelInterface
 
     abstract public function transform($transformMode);
 
-    abstract public function __setAttributes($attributes);
+    abstract public function _setAttributes($attributes);
 
     /**
      * Get specific model attribute

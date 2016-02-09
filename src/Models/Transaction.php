@@ -42,6 +42,7 @@ class Transaction extends Model implements TransactionInterface
     {
         $this->transactionResource = $transactionResource;
         $this->customerResource = $customerResource;
+        $this->resourceName = "TransactionResource";
     }
 
     public function make($transactionType, $transactionData)
@@ -53,12 +54,13 @@ class Transaction extends Model implements TransactionInterface
         $this->transactionPlan = $transactionData['plan'] ?: null;
         $this->authorizationCode = $transactionData['authorization_code'] ?: null;
 
+        $this->setCreatable(true);
         return $this;
     }
 
     public function charge()
     {
-        if (!is_null($this->transactionRef))
+        if (!is_null($this->transactionRef) && $this->isCreatable())
         {
             switch ($this->transactionType) {
                 case TransactionInterface::TRANSACTION_TYPE_RETURNING:
@@ -77,8 +79,8 @@ class Transaction extends Model implements TransactionInterface
     {
         $transactionData = $this->transactionResource->verify($transactionRef);
 
-        if ($$transactionData['status'] == TransactionInterface::TRANSACTION_STATUS_SUCCESS) {
-            $this->authorization = $$transactionData['authorization'];
+        if ($transactionData['status'] == TransactionInterface::TRANSACTION_STATUS_SUCCESS) {
+            $this->authorization = $transactionData['authorization'];
             $this->customer = $transactionData['customer'];
             $this->amount = $transactionData['amount'];
             $this->transactionPlan = $transactionData['plan'];
@@ -89,14 +91,44 @@ class Transaction extends Model implements TransactionInterface
         return false;
     }
 
-    /** @todo
-     * @param $transactionCode
+    /**
+     * Get transaction Info
+     * @param $transactionId
+     * @return Transaction
+     * @throws \Exception|mixed
      */
-    public function getTransactionDetails($transactionCode)
+    public function getTransactionDetails($transactionId)
     {
+        $transactionData = $this->transactionResource->get($transactionId);
 
+        if($transactionData instanceof \Exception) {
+            throw $transactionData;
+        }
+
+        return $this->_setAttributes($transactionData);
     }
 
+    public function getTransactions($page = '')
+    {
+        try {
+            $transactions = [];
+            $transactionData = $this->transactionResource->getAll($page);
+
+            if ($transactionData instanceof \Exception) {
+//                throw $transactionData;
+                echo "erorr";
+            }
+
+            foreach ($transactionData as $transaction) {
+                $transactions[] = $this->_setAttributes($transaction);
+            }
+
+            return $transactions;
+        } catch (\Exception $e) {
+            $e->getTraceAsString();
+            return false;
+        }
+    }
     /**
      * @return string
      */
@@ -107,6 +139,7 @@ class Transaction extends Model implements TransactionInterface
             'reference' => $this->transactionRef,
             'email'     => $this->email
         ];
+
         if (!empty($this->transactionPlan)) {
             $payload['plan'] = $this->transactionPlan;
         }
@@ -120,7 +153,7 @@ class Transaction extends Model implements TransactionInterface
         return $this->toJson($payload);
     }
 
-    //@todo properly implement this
+    //@todo properly implement this, maybe?
     public function transform($transformMode)
     {
         return $this->objectToArray($this);
@@ -131,7 +164,7 @@ class Transaction extends Model implements TransactionInterface
      * @return $this
      * @throws \Exception
      */
-    public function __setAttributes($attributes)
+    public function _setAttributes($attributes)
     {
         if(is_array($attributes) && !empty($attributes)) {
             foreach($attributes as $attribute => $value) {

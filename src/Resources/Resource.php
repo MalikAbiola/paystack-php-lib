@@ -9,7 +9,7 @@
 namespace Paystack\Resources;
 
 use Illuminate\Http\Response;
-use Paystack\ExceptionHandler;
+use Paystack\Exceptions\ExceptionHandler;
 use Paystack\Helpers\Utils;
 use Psr\Http\Message\ResponseInterface;
 
@@ -25,8 +25,8 @@ abstract class Resource
     {
         $response = json_decode($request->getBody()->getContents());
 
-        if (Response::HTTP_OK !== $request->getStatusCode()) {
-            return ExceptionHandler::handle($response, $request->getStatusCode());
+        if (Response::HTTP_OK !== $request->getStatusCode() || Response::HTTP_CREATED !== $request->getStatusCode()) {
+            return ExceptionHandler::handle(get_class($this), $response, $request->getStatusCode());
         }
 
         return json_decode(json_encode($response->data), true);

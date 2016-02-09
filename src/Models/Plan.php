@@ -53,7 +53,7 @@ class Plan extends Model implements PlansInterface
 
         $this->setDeletable(true);
 
-        return $this->__setAttributes($plan);
+        return $this->_setAttributes($plan);
     }
 
     public function make($name, $description, $amount, $currency, array $otherAttributes = [])
@@ -63,7 +63,7 @@ class Plan extends Model implements PlansInterface
         $this->amount = $amount;
         $this->currency = $currency;
 
-        $this->__setAttributes($otherAttributes);
+        $this->_setAttributes($otherAttributes);
         $this->setCreatable(true);
 
         return $this;
@@ -71,7 +71,7 @@ class Plan extends Model implements PlansInterface
 
     public function setUpdateData(array $updateData)
     {
-        $this->__setAttributes($updateData);
+        $this->_setAttributes($updateData);
         $this->setUpdateable(true);
 
         return $this;
@@ -102,19 +102,19 @@ class Plan extends Model implements PlansInterface
             throw $resourceResponse;
         }
 
-        return $this->__setAttributes($resourceResponse);
+        return $this->_setAttributes($resourceResponse);
     }
 
     public function delete()
     {
-        if ($this->isDeletable()) {
-            $resourceResponse = $this->planResource->delete($this->plan_code);
-            if ($resourceResponse instanceof \Exception) {
-                throw $resourceResponse;
-            }
-
-            return !!$resourceResponse['status'];
-        }
+//        if ($this->isDeletable()) {
+//            $resourceResponse = $this->planResource->delete($this->plan_code);
+//            if ($resourceResponse instanceof \Exception) {
+//                throw $resourceResponse;
+//            }
+//
+//            return !!$resourceResponse['status'];
+//        }
 
         throw new \Exception("Plan can't be deleted");
     }
@@ -145,7 +145,7 @@ class Plan extends Model implements PlansInterface
         }
     }
 
-    public function __setAttributes($attributes)
+    public function _setAttributes($attributes)
     {
         if(is_array($attributes) && !empty($attributes)) {
             foreach($attributes as $attribute => $value) {
