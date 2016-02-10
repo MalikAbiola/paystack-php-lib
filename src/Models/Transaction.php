@@ -110,24 +110,18 @@ class Transaction extends Model implements TransactionInterface
 
     public function getTransactions($page = '')
     {
-        try {
-            $transactions = [];
-            $transactionData = $this->transactionResource->getAll($page);
+        $transactions = [];
+        $transactionData = $this->transactionResource->getAll($page);
 
-            if ($transactionData instanceof \Exception) {
-//                throw $transactionData;
-                echo "erorr";
-            }
-
-            foreach ($transactionData as $transaction) {
-                $transactions[] = $this->_setAttributes($transaction);
-            }
-
-            return $transactions;
-        } catch (\Exception $e) {
-            $e->getTraceAsString();
-            return false;
+        if ($transactionData instanceof \Exception) {
+            throw $transactionData;
         }
+
+        foreach ($transactionData as $transaction) {
+            $transactions[] = $this->_setAttributes($transaction);
+        }
+
+        return $transactions;
     }
     /**
      * @return string

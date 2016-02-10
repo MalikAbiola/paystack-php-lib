@@ -15,7 +15,7 @@ class ExceptionHandler
     public static function handle($resourceName, $response, $statusCode)
     {
         switch ($statusCode) {
-            case Response::HTTP_FORBIDDEN:
+            case Response::HTTP_UNAUTHORIZED:
                 return new PaystackUnauthorizedException($response, $statusCode);
             case Response::HTTP_BAD_REQUEST:
                 return new PaystackValidationException($response, $statusCode);

@@ -33,6 +33,10 @@ trait Utils {
         return json_encode($object);
     }
 
+    /**
+     * generates a unique transaction ref used for init-ing transactions
+     * @return mixed|null
+     */
     public function generateTransactionRef()
     {
         try {
@@ -42,17 +46,22 @@ trait Utils {
         }
     }
 
-    public function objectToArray( $object )
+    /**
+     * Converts a bowl of object to an array.
+     * @todo: replace with function that only shows accessible properties of the object
+     * @param $object
+     * @return array
+     */
+    public function objectToArray($object)
     {
-        if( !is_object( $object ) && !is_array( $object ) )
+        if (!is_object($object) && !is_array($object))
         {
             return $object;
         }
-        if( is_object( $object ) )
+        if (is_object($object))
         {
-            $object = get_object_vars( $object );
+            $object = get_object_vars($object);
         }
-        return array_map( 'objectToArray', $object );
+        return array_map('objectToArray', $object);
     }
-
 }

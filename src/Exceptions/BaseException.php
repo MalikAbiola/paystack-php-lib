@@ -9,15 +9,9 @@
 namespace Paystack\Exceptions;
 
 abstract class BaseException extends \Exception {
-    //put your code here
-//
-//    public function __construct($response, $code)
-//    {
-//        parent::__construct($response->message, $code);
-//    }
 
     public function getErrors()
     {
-
+        return $this->getMessage();
     }
 }
