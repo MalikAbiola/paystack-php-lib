@@ -8,7 +8,7 @@
 
 namespace Paystack\Contracts;
 
-interface PlansInterface extends ModelInterface
+interface PlansInterface
 {
     const PLAN_CURRENCY_NGN = "NGN";
     const PLAN_CURRENCY_USD = "USD";

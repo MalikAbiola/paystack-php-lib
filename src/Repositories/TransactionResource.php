@@ -6,9 +6,10 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Resources;
+namespace Paystack\Repositories;
 
 use GuzzleHttp\Client;
+use Paystack\Abstractions\Resource;
 
 class TransactionResource extends Resource
 {

@@ -6,19 +6,13 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Models;
+namespace Paystack\Abstractions;
 
-use Paystack\Contracts\ModelInterface;
-
-abstract class Model implements ModelInterface
+abstract class Model
 {
     protected $updateable = false;
     protected $creatable = false;
     protected $deletable = false;
-
-    abstract public function transform($transformMode);
-
-    abstract public function _setAttributes($attributes);
 
     /**
      * Get specific model attribute
@@ -41,6 +35,25 @@ abstract class Model implements ModelInterface
             $attributesGet[$attribute] = $this->{$attribute} ?: null;
         }
         return $attributesGet;
+    }
+    /**
+     * @param $attributes
+     * @return $this
+     * @throws \Exception
+     */
+    public function _setAttributes($attributes)
+    {
+        if(is_array($attributes) && !empty($attributes)) {
+            foreach($attributes as $attribute => $value) {
+                $this->{$attribute} = $value;
+            }
+
+            return $this;
+        }
+
+        //@todo: put real exception here cos exception' gon be thrown either ways, so put one that makes sense
+        //or something else that has more meaning
+        throw new \Exception();
     }
 
     /**

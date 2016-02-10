@@ -8,10 +8,12 @@
 
 namespace Paystack\Models;
 
+use Paystack\Abstractions\Model;
+use Paystack\Contracts\ModelInterface;
 use Paystack\Contracts\PlansInterface;
-use Paystack\Resources\PlanResource;
+use Paystack\Repositories\PlanResource;
 
-class Plan extends Model implements PlansInterface
+class Plan extends Model implements PlansInterface, ModelInterface
 {
     private $planResource;
 
@@ -143,20 +145,5 @@ class Plan extends Model implements PlansInterface
             default:
                 return $planObject;
         }
-    }
-
-    public function _setAttributes($attributes)
-    {
-        if(is_array($attributes) && !empty($attributes)) {
-            foreach($attributes as $attribute => $value) {
-                $this->{$attribute} = $value;
-            }
-
-            return $this;
-        }
-
-        //@todo: put real exception here cos exception' gon be thrown either ways, so put one that makes sense
-        //or something else that has more meaning
-        throw new \Exception();
     }
 }
