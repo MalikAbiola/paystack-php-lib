@@ -85,8 +85,8 @@ class Paystack
     {
         $transactionData = [
             "amount"    => $planOrAmount instanceof Plan ? $planOrAmount->get('amount') : $planOrAmount,
-            "email"     => $customer instanceof Customer ? $customer->get('email') : $customer,
-            "plan"      => $planOrAmount instanceof Plan ? $planOrAmount->get('name') : null
+            "plan"      => $planOrAmount instanceof Plan ? $planOrAmount->get('plan_code') : '',
+            "email"     => $customer instanceof Customer ? $customer->get('email') : $customer
         ];
 
         return $this->transactionModel->make(TransactionInterface::TRANSACTION_TYPE_RETURNING, $transactionData)

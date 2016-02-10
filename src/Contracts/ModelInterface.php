@@ -21,7 +21,7 @@ interface ModelInterface
      */
     public function transform($transformMode);
 
-    public function __setAttributes($attributes);
+    public function _setAttributes($attributes);
 
     /**
      * Get specific model attribute

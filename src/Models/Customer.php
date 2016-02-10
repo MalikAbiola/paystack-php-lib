@@ -37,7 +37,7 @@ class Customer extends Model
         if ($customerModel instanceof \Exception) {
             throw $customerModel;
         } else {
-            $this->__setAttributes($customerModel);
+            $this->_setAttributes($customerModel);
         }
 
         $this->setDeletable(true);
@@ -89,7 +89,7 @@ class Customer extends Model
                 unset($updateAttributes['last_name']);
             }
 
-            $this->__setAttributes($updateAttributes);
+            $this->_setAttributes($updateAttributes);
             $this->setUpdateable(true);
 
             return $this;
@@ -127,7 +127,7 @@ class Customer extends Model
             throw $resourceResponse;
         }
 
-        return $this->__setAttributes($resourceResponse);
+        return $this->_setAttributes($resourceResponse);
     }
 
     /**
@@ -138,16 +138,16 @@ class Customer extends Model
      */
     public function delete()
     {
-        if ($this->isDeletable()) {
-            $resourceResponse = $this->customerResource->delete($this->customerId);
-            if ($resourceResponse instanceof \Exception) {
-                throw $resourceResponse;
-            }
+//        if ($this->isDeletable()) {
+//            $resourceResponse = $this->customerResource->delete($this->customerId);
+//            if ($resourceResponse instanceof \Exception) {
+//                throw $resourceResponse;
+//            }
+//
+//            return !!$resourceResponse['status'];
+//        }
 
-            return !!$resourceResponse['status'];
-        }
-
-        throw new \Exception("Customer could not be deleted");
+        throw new \Exception("Customer can't be deleted");
     }
 
     /**
@@ -180,7 +180,7 @@ class Customer extends Model
      * @param $attributes
      * @return $this
      */
-    public function __setAttributes($attributes)
+    public function _setAttributes($attributes)
     {
         if (isset($attributes['first_name'])) {
             $this->firstName = $attributes['first_name'];
