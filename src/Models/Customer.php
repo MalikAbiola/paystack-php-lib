@@ -8,10 +8,11 @@
 
 namespace Paystack\Models;
 
+use Paystack\Abstractions\Model;
 use Paystack\Contracts\ModelInterface;
-use Paystack\Resources\CustomerResource;
+use Paystack\Repositories\CustomerResource;
 
-class Customer extends Model
+class Customer extends Model implements ModelInterface
 {
     protected $firstName;
     protected $lastName;

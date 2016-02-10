@@ -6,9 +6,10 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Resources;
+namespace Paystack\Repositories;
 
 use GuzzleHttp\Client;
+use Paystack\Abstractions\Resource;
 use Paystack\Contracts\ResourceInterface;
 
 class PlanResource extends Resource implements ResourceInterface

@@ -6,7 +6,7 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Resources;
+namespace Paystack\Abstractions;
 
 use Illuminate\Http\Response;
 use Paystack\Exceptions\ExceptionHandler;

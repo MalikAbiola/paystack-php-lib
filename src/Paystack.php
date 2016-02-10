@@ -8,22 +8,24 @@
 
 namespace Paystack;
 
-use Paystack\Contracts\TransactionInterface;
 use Paystack\Factories\PaystackHttpClientFactory;
 use Paystack\Models\Customer;
+use Paystack\Models\OneTimeTransaction;
 use Paystack\Models\Plan;
-use Paystack\Models\Transaction;
-use Paystack\Resources\CustomerResource;
-use Paystack\Resources\PlanResource;
-use Paystack\Resources\TransactionResource;
+use Paystack\Models\ReturningTransaction;
+use Paystack\Models\Transaction as TransactionModel;
+use Paystack\Abstractions\Transaction;
+use Paystack\Repositories\CustomerResource;
+use Paystack\Repositories\PlanResource;
+use Paystack\Repositories\TransactionResource;
 
 class Paystack
 {
     private $paystackHttpClient;
     private $customerModel;
-    private $transactionModel;
     private $planModel;
     private $customerResource;
+    private $transactionResource;
 
     public function __construct()
     {
@@ -32,8 +34,7 @@ class Paystack
         $this->customerResource = new CustomerResource($this->paystackHttpClient);
         $this->customerModel = new Customer($this->customerResource);
 
-        $transactionResource = new TransactionResource($this->paystackHttpClient);
-        $this->transactionModel = new Transaction($transactionResource, $this->customerResource);
+        $this->transactionResource = new TransactionResource($this->paystackHttpClient);
 
         $planResource = new PlanResource($this->paystackHttpClient);
         $this->planModel = new Plan($planResource);
@@ -64,38 +65,33 @@ class Paystack
         return $this->customerModel->getCustomer($customerId)->delete();
     }
 
-    /**
-     * @param $amount
-     * @param $email
-     * @param $plan
-     * @return \Exception|mixed
-     */
-    public function oneTimeTransaction($amount, $email, $plan = '')
+    public function startOneTimeTransaction($amount, $email, $plan = '')
     {
-        $transactionData = [
-            "amount"    => $amount,
-            "email"     => $email,
-            "plan"      => $plan instanceof Plan ? $plan->get('plan_code') : $plan
-        ];
-
-        return $this->transactionModel->make(TransactionInterface::TRANSACTION_TYPE_NEW, $transactionData)->charge();
+        return OneTimeTransaction::make(
+            $amount,
+            $email,
+            $plan instanceof Plan ? $plan->get('plan_code') : $plan
+        )->initialize();
     }
 
-    public function returningTransaction($customer, $planOrAmount)
+    public function startReturningTransaction(Customer $customer, $planOrAmount)
     {
-        $transactionData = [
-            "amount"    => $planOrAmount instanceof Plan ? $planOrAmount->get('amount') : $planOrAmount,
-            "plan"      => $planOrAmount instanceof Plan ? $planOrAmount->get('plan_code') : '',
-            "email"     => $customer instanceof Customer ? $customer->get('email') : $customer
-        ];
-
-        return $this->transactionModel->make(TransactionInterface::TRANSACTION_TYPE_RETURNING, $transactionData)
-            ->charge();
+        //@todo;
     }
 
     public function verifyTransaction($transactionRef)
     {
-        return $this->transactionModel->verifyTransaction($transactionRef);
+        return Transaction::verify($this->transactionResource, $transactionRef);
+    }
+
+    public function allTransactions($page = '')
+    {
+        return TransactionModel::all($this->transactionResource, $page);
+    }
+
+    public function myTransactionStats()
+    {
+        return TransactionModel::totals($this->transactionResource);
     }
 
     public function getPlan($planCode)
@@ -120,6 +116,6 @@ class Paystack
 
     public function deletePlan($planCode)
     {
-        return $this->planModel->getPlan($planCode)->delete();
+//        return $this->planModel->getPlan($planCode)->delete();
     }
 }

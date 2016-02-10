@@ -22,12 +22,4 @@ interface ModelInterface
     public function transform($transformMode);
 
     public function _setAttributes($attributes);
-
-    /**
-     * Get specific model attribute
-     * @param array $attributes
-     * @return mixed
-     * @internal param string $attribute
-     */
-    public function get($attributes);
 }
