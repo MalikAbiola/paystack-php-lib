@@ -8,14 +8,31 @@
 
 namespace Paystack\Abstractions;
 
+use Paystack\Factories\PaystackHttpClientFactory;
 use Paystack\Helpers\Utils;
+use Paystack\Models\Transaction as TransactionObject;
 use Paystack\Repositories\TransactionResource;
 
 abstract class Transaction
 {
-    const TRANSACTION_STATUS_SUCCESS = "success";
-
     use Utils;
+
+    const TRANSACTION_STATUS_SUCCESS = "success";
+    protected $transactionResource;
+    protected $paystackHttpClient;
+
+    protected function __construct(TransactionResource $transactionResource)
+    {
+        $this->transactionResource = $transactionResource;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransactionResource()
+    {
+        return $this->transactionResource;
+    }
 
     abstract protected function _requestPayload();
 
@@ -24,9 +41,10 @@ abstract class Transaction
         return self::class;
     }
 
-    public static function verify(TransactionResource $transactionResource, $transactionRef)
+    public static function verify($transactionRef)
     {
-        $transactionData = $transactionResource->verify($transactionRef);
+
+        $transactionData = self::getTransactionResource()->verify($transactionRef);
         if ($transactionData['status'] == self::TRANSACTION_STATUS_SUCCESS) {
             return [
                 'authorization' => $transactionData['authorization'],
@@ -39,15 +57,40 @@ abstract class Transaction
         return false;
     }
 
-
-
-    public function _toString()
+    public static function details($transactionId)
     {
+        $transactionData = self::getTransactionResource()->get($transactionId);
 
+        if($transactionData instanceof \Exception) {
+            throw $transactionData;
+        }
+
+        return TransactionObject::make($transactionData);
     }
 
-    public function _toArray()
+    public static function all($page)
     {
-        return $this->objectToArray($this);
+        $transactions = [];
+        $transactionData = self::getTransactionResource()->getAll($page);
+
+        if ($transactionData instanceof \Exception) {
+            throw $transactionData;
+        }
+
+        foreach ($transactionData as $transaction) {
+            $transactions[] = TransactionObject::make($transaction);
+        }
+
+        return $transactions;
+    }
+
+    /**
+     * @todo
+     * @return array
+     *
+     */
+    public static function totals()
+    {
+        return [];
     }
 }

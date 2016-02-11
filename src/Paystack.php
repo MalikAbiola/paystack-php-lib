@@ -13,7 +13,6 @@ use Paystack\Models\Customer;
 use Paystack\Models\OneTimeTransaction;
 use Paystack\Models\Plan;
 use Paystack\Models\ReturningTransaction;
-use Paystack\Models\Transaction as TransactionModel;
 use Paystack\Abstractions\Transaction;
 use Paystack\Repositories\CustomerResource;
 use Paystack\Repositories\PlanResource;
@@ -74,24 +73,29 @@ class Paystack
         )->initialize();
     }
 
-    public function startReturningTransaction(Customer $customer, $planOrAmount)
+    public function startReturningTransaction($authorization, $amount, $email, $plan = '')
     {
-        //@todo;
+        return ReturningTransaction::make(
+            $authorization,
+            $amount,
+            $email,
+            $plan instanceof Plan ? $plan->get('plan_code') : $plan
+        )->charge();
     }
 
     public function verifyTransaction($transactionRef)
     {
-        return Transaction::verify($this->transactionResource, $transactionRef);
+        return Transaction::verify($transactionRef);
     }
 
     public function allTransactions($page = '')
     {
-        return TransactionModel::all($this->transactionResource, $page);
+        return Transaction::all($page);
     }
 
     public function myTransactionStats()
     {
-        return TransactionModel::totals($this->transactionResource);
+        return Transaction::totals();
     }
 
     public function getPlan($planCode)

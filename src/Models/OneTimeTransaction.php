@@ -23,7 +23,7 @@ class OneTimeTransaction extends Transaction
     private $email;
     private $plan;
 
-    private function __construct($transactionRef, $amount, $email, $plan)
+    protected function __construct($transactionRef, $amount, $email, $plan)
     {
         $this->transactionRef = $transactionRef;
         $this->amount = $amount;
@@ -31,6 +31,7 @@ class OneTimeTransaction extends Transaction
         $this->plan = $plan;
 
         $this->transactionResource = new TransactionResource(PaystackHttpClientFactory::make());
+        parent::__construct($this->transactionResource);
     }
 
     public static function make($amount, $email, $plan)
