@@ -24,7 +24,7 @@ class ReturningTransaction extends Transaction
     private $email;
     private $plan;
 
-    private function __construct($transactionRef, $authorization, $amount, $email, $plan)
+    protected function __construct($transactionRef, $authorization, $amount, $email, $plan)
     {
         $this->transactionRef = $transactionRef;
         $this->authorization = $authorization;
@@ -33,6 +33,7 @@ class ReturningTransaction extends Transaction
         $this->plan = $plan;
 
         $this->transactionResource = new TransactionResource(PaystackHttpClientFactory::make());
+        parent::__construct($this->transactionResource);
     }
 
     public static function make($authorization, $amount, $email, $plan)
