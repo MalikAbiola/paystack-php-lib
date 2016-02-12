@@ -17,6 +17,8 @@ class ExceptionHandler
         switch ($statusCode) {
             case Response::HTTP_UNAUTHORIZED:
                 return new PaystackUnauthorizedException($response, $statusCode);
+            case Response::HTTP_NOT_FOUND:
+                return new PaystackNotFoundException($response, $statusCode);
             case Response::HTTP_BAD_REQUEST:
                 return new PaystackValidationException($response, $statusCode);
             case Response::HTTP_INTERNAL_SERVER_ERROR:
