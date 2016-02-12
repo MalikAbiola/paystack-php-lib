@@ -90,11 +90,11 @@ class Plan extends Model implements PlansInterface, ModelInterface
         $resourceResponse = null;
 
         if ($this->isCreatable() && !$this->isUpdateable()) { //available for creation
-            $resourceResponse = $this->planResource->save($this->transform(PlansInterface::TRANSFORM_TO_JSON_ARRAY));
+            $resourceResponse = $this->planResource->save($this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY));
         } else if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
             $resourceResponse = $this->planResource->update(
                 $this->plan_code,
-                $this->transform(PlansInterface::TRANSFORM_TO_JSON_ARRAY)
+                $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
             );
         }
 
@@ -140,7 +140,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
             "subscription_count" => count($this->subscriptions)
         ];
         switch($transformMode) {
-            case PlansInterface::TRANSFORM_TO_JSON_ARRAY:
+            case ModelInterface::TRANSFORM_TO_JSON_ARRAY:
                 return json_encode($planObject);
             default:
                 return $planObject;

@@ -9,13 +9,16 @@
 namespace Paystack\Models;
 
 
-use Paystack\Abstractions\Transaction;
+use Paystack\Contracts\TransactionContract;
 use Paystack\Exceptions\PaystackInvalidTransactionException;
 use Paystack\Factories\PaystackHttpClientFactory;
+use Paystack\Helpers\Utils;
 use Paystack\Repositories\TransactionResource;
 
-class ReturningTransaction extends Transaction
+class ReturningTransaction implements TransactionContract
 {
+    use Utils;
+
     private $transactionResource;
 
     private $transactionRef;
@@ -33,7 +36,6 @@ class ReturningTransaction extends Transaction
         $this->plan = $plan;
 
         $this->transactionResource = new TransactionResource(PaystackHttpClientFactory::make());
-        parent::__construct($this->transactionResource);
     }
 
     public static function make($authorization, $amount, $email, $plan)
@@ -48,7 +50,7 @@ class ReturningTransaction extends Transaction
             new PaystackInvalidTransactionException(["message" => "Transaction Reference Not Generated."]);
     }
 
-    protected function _requestPayload()
+    public function _requestPayload()
     {
         $payload = [
             'authorization_code'    => $this->authorization,

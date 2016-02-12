@@ -31,12 +31,18 @@ class TransactionResource extends Resource
 
     public function getAll($page = '')
     {
-
+        $page = !empty($page) ? "/page={$page}" : '';
         $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(getenv('GET_TRANSACTION'),'') . !empty($page) ? "/page={$page}" : ''
+            $this->transformUrl(getenv('GET_TRANSACTION'),'') . $page
         );
 
         return $this->processResourceRequestResponse($request);
+
+    }
+
+
+    public function getTransactionTotals()
+    {
 
     }
 

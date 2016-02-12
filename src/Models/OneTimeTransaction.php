@@ -9,13 +9,15 @@
 namespace Paystack\Models;
 
 
-use Paystack\Abstractions\Transaction;
+use Paystack\Contracts\TransactionContract;
 use Paystack\Exceptions\PaystackInvalidTransactionException;
 use Paystack\Factories\PaystackHttpClientFactory;
+use Paystack\Helpers\Utils;
 use Paystack\Repositories\TransactionResource;
 
-class OneTimeTransaction extends Transaction
+class OneTimeTransaction implements TransactionContract
 {
+    use Utils;
     private $transactionResource;
 
     private $transactionRef;
@@ -31,7 +33,6 @@ class OneTimeTransaction extends Transaction
         $this->plan = $plan;
 
         $this->transactionResource = new TransactionResource(PaystackHttpClientFactory::make());
-        parent::__construct($this->transactionResource);
     }
 
     public static function make($amount, $email, $plan)
@@ -46,7 +47,7 @@ class OneTimeTransaction extends Transaction
             new PaystackInvalidTransactionException(["message" => "Transaction Reference Not Generated."]);
     }
 
-    protected function _requestPayload()
+    public function _requestPayload()
     {
         $payload = [
             'amount'    => $this->amount,
