@@ -26,7 +26,11 @@ class Paystack
     private $planModel;
     private $customerResource;
     private $transactionResource;
+    private $planResource;
 
+    /**
+     * Paystack constructor.
+     */
     public function __construct()
     {
         $this->paystackHttpClient = PaystackHttpClientFactory::make();
@@ -36,15 +40,47 @@ class Paystack
 
         $this->transactionResource = new TransactionResource($this->paystackHttpClient);
 
-        $planResource = new PlanResource($this->paystackHttpClient);
-        $this->planModel = new Plan($planResource);
+        $this->planResource = new PlanResource($this->paystackHttpClient);
+        $this->planModel = new Plan($this->planResource);
     }
 
+    /**
+     * Get customer by ID
+     * @param $customerId
+     * @return mixed
+     * @throws \Exception|mixed
+     */
     public function getCustomer($customerId)
     {
         return $this->customerModel->getCustomer($customerId)->transform();
     }
 
+    /**
+     * Get all customers
+     * @param string $page
+     * @return \Exception|mixed
+     * @throws \Exception|mixed
+     */
+    public function getCustomers($page = '')
+    {
+        $customers = $this->getCustomerResource()->getAll($page);
+
+        if ($customers instanceof \Exception) {
+            throw $customers;
+        }
+
+        return $customers;
+    }
+    /**
+     * Create new customer
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $phone
+     * @return mixed
+     * @throws \Exception|mixed
+     * @throws null
+     */
     public function createCustomer($firstName, $lastName, $email, $phone)
     {
         return $this->customerModel->make($firstName, $lastName, $email, $phone)
@@ -52,6 +88,14 @@ class Paystack
             ->transform();
     }
 
+    /**
+     * Update customer by customer id/code
+     * @param $customerId
+     * @param $updateData
+     * @return mixed
+     * @throws \Exception|mixed
+     * @throws null
+     */
     public function updateCustomerData($customerId, $updateData)
     {
         return $this->customerModel->getCustomer($customerId)
@@ -60,16 +104,53 @@ class Paystack
             ->transform();
     }
 
+    /**
+     * Delete customer by Id/Code
+     * @param $customerId
+     */
     public function deleteCustomer($customerId)
     {
 //        return $this->customerModel->getCustomer($customerId)->delete();
     }
 
+    /**
+     * Get plan by plan id/code
+     * @param $planCode
+     * @return mixed
+     * @throws \Exception|mixed
+     */
     public function getPlan($planCode)
     {
         return $this->planModel->getPlan($planCode)->transform();
     }
 
+    /**
+     * Get all plans
+     * @param string $page
+     * @return \Exception|mixed
+     * @throws \Exception|mixed
+     */
+    public function getPlans($page = '')
+    {
+        $plans = $this->getPlanResource()->getAll($page);
+
+        if ($plans instanceof \Exception) {
+            throw $plans;
+        }
+
+        return $plans;
+    }
+
+    /**
+     * Create new plan
+     * @param $name
+     * @param $description
+     * @param $amount
+     * @param $currency
+     * @return mixed
+     * @throws \Exception|mixed
+     * @throws null
+     */
     public function createPlan($name, $description, $amount, $currency)
     {
         return $this->planModel->make($name, $description, $amount, $currency)
@@ -77,6 +158,14 @@ class Paystack
             ->transform();
     }
 
+    /**
+     * Update plan
+     * @param $planCode
+     * @param $updateData
+     * @return mixed
+     * @throws \Exception|mixed
+     * @throws null
+     */
     public function updatePlan($planCode, $updateData)
     {
         return $this->planModel->getPlan($planCode)
@@ -85,11 +174,22 @@ class Paystack
             ->transform();
     }
 
+    /**
+     * delete plans
+     * @param $planCode
+     */
     public function deletePlan($planCode)
     {
 //        return $this->planModel->getPlan($planCode)->delete();
     }
 
+    /**
+     * Init a one time transaction to get payment page url
+     * @param $amount
+     * @param $email
+     * @param string $plan
+     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     */
     public function startOneTimeTransaction($amount, $email, $plan = '')
     {
         return OneTimeTransaction::make(
@@ -99,7 +199,15 @@ class Paystack
         )->initialize();
     }
 
-    public function startReturningTransaction($authorization, $amount, $email, $plan = '')
+    /**
+     * Charge a returning customer
+     * @param $authorization
+     * @param $amount
+     * @param $email
+     * @param string $plan
+     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     */
+    public function chargeReturningTransaction($authorization, $amount, $email, $plan = '')
     {
         return ReturningTransaction::make(
             $authorization,
@@ -109,6 +217,12 @@ class Paystack
         )->charge();
     }
 
+    /**
+     * Charge a customer for plan
+     * @param Customer $customer
+     * @param Plan $plan
+     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     */
     public function chargeCustomerForPlan(Customer $customer, Plan $plan)
     {
         return ReturningTransaction::make(
@@ -119,6 +233,11 @@ class Paystack
         )->charge();
     }
 
+    /**
+     * Verify transaction
+     * @param $transactionRef
+     * @return array|bool
+     */
     public function verifyTransaction($transactionRef)
     {
         $transactionData = $this->getTransactionResource()->verify($transactionRef);
@@ -134,6 +253,12 @@ class Paystack
         return false;
     }
 
+    /**
+     * Get transaction details
+     * @param $transactionId
+     * @return static
+     * @throws \Exception|mixed
+     */
     public function transactionDetails($transactionId)
     {
         $transactionData = $this->getTransactionResource()->get($transactionId);
@@ -145,6 +270,12 @@ class Paystack
         return Transaction::make($transactionData);
     }
 
+    /**
+     * Get all transactions. per page
+     * @param $page
+     * @return array
+     * @throws \Exception|mixed
+     */
     public function allTransactions($page)
     {
         $transactions = [];
@@ -161,14 +292,14 @@ class Paystack
         return $transactions;
     }
 
-    /**
-     * @todo
-     * @return array
-     *
-     */
     public function transactionsTotals()
     {
-        return $this->getTransactionResource()->getTransactionTotals();
+        $transactions = $this->getTransactionResource()->getTransactionTotals();
+        if ($transactions instanceof \Exception) {
+            throw $transactions;
+        }
+
+        return $transactions;
     }
 
     /**
@@ -217,5 +348,21 @@ class Paystack
     public function setPaystackHttpClient($paystackHttpClient)
     {
         $this->paystackHttpClient = $paystackHttpClient;
+    }
+
+    /**
+     * @return PlanResource
+     */
+    public function getPlanResource()
+    {
+        return $this->planResource;
+    }
+
+    /**
+     * @param PlanResource $planResource
+     */
+    public function setPlanResource($planResource)
+    {
+        $this->planResource = $planResource;
     }
 }

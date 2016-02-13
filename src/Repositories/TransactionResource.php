@@ -15,11 +15,20 @@ class TransactionResource extends Resource
 {
     private $paystackHttpClient;
 
+    /**
+     * TransactionResource constructor.
+     * @param Client $paystackHttpClient
+     */
     public function __construct(Client $paystackHttpClient)
     {
         $this->paystackHttpClient = $paystackHttpClient;
     }
 
+    /**
+     * get transaction by id
+     * @param $id
+     * @return \Exception|mixed
+     */
     public function get($id)
     {
         $request = $this->paystackHttpClient->get(
@@ -29,6 +38,11 @@ class TransactionResource extends Resource
         return $this->processResourceRequestResponse($request);
     }
 
+    /**
+     * Get all transactions
+     * @param string $page
+     * @return \Exception|mixed
+     */
     public function getAll($page = '')
     {
         $page = !empty($page) ? "/page={$page}" : '';
@@ -40,12 +54,23 @@ class TransactionResource extends Resource
 
     }
 
-
+    /**
+     * Get transactions totals
+     */
     public function getTransactionTotals()
     {
+        $request = $this->paystackHttpClient->get(
+            getenv('GET_TRANSACTION_TOTALS')
+        );
 
+        return $this->processResourceRequestResponse($request);
     }
 
+    /**
+     * Verify Transaction by transaction reference
+     * @param $reference
+     * @return \Exception|mixed
+     */
     public function verify($reference)
     {
         $request = $this->paystackHttpClient->get(
@@ -55,6 +80,11 @@ class TransactionResource extends Resource
         return $this->processResourceRequestResponse($request);
     }
 
+    /**
+     * Initialize one time transaction
+     * @param $body
+     * @return \Exception|mixed
+     */
     public function initialize($body)
     {
         $request = $this->paystackHttpClient->post(
@@ -67,10 +97,32 @@ class TransactionResource extends Resource
         return $this->processResourceRequestResponse($request);
     }
 
+    /**
+     * charge returning transaction
+     * @param $body
+     * @return \Exception|mixed
+     */
     public function chargeAuthorization($body)
     {
         $request = $this->paystackHttpClient->post(
             getenv('CHARGE_AUTHORIZATION'),
+            [
+                'body'  => is_array($body) ? $this->toJson($body) : $body
+            ]
+        );
+
+        return $this->processResourceRequestResponse($request);
+    }
+
+    /**
+     * Charge Token
+     * @param $body
+     * @return \Exception|mixed
+     */
+    public function chargeToken($body)
+    {
+        $request = $this->paystackHttpClient->post(
+            getenv('CHARGE_TOKEN'),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]

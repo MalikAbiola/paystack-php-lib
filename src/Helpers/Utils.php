@@ -4,6 +4,7 @@
  * Date: 04/02/2016
  * Time: 22:17
  * IDE: PhpStorm
+ * Helper functions
  */
 
 namespace Paystack\Helpers;

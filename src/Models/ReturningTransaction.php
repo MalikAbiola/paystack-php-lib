@@ -4,18 +4,19 @@
  * Date: 10/02/2016
  * Time: 16:20
  * IDE: PhpStorm
+ * Create returning transaction
  */
 
 namespace Paystack\Models;
 
 
+use Paystack\Abstractions\BaseTransaction;
 use Paystack\Contracts\TransactionContract;
 use Paystack\Exceptions\PaystackInvalidTransactionException;
-use Paystack\Factories\PaystackHttpClientFactory;
 use Paystack\Helpers\Utils;
 use Paystack\Repositories\TransactionResource;
 
-class ReturningTransaction implements TransactionContract
+class ReturningTransaction extends BaseTransaction implements TransactionContract
 {
     use Utils;
 
@@ -27,7 +28,24 @@ class ReturningTransaction implements TransactionContract
     private $email;
     private $plan;
 
-    protected function __construct($transactionRef, $authorization, $amount, $email, $plan)
+    /**
+     * ReturningTransaction constructor.
+     * @param $transactionRef
+     * @param $authorization
+     * @param $amount
+     * @param $email
+     * @param $plan
+     * @param TransactionResource $transactionResource
+     */
+    protected function __construct
+    (
+        $transactionRef,
+        $authorization,
+        $amount,
+        $email,
+        $plan,
+        TransactionResource $transactionResource
+    )
     {
         $this->transactionRef = $transactionRef;
         $this->authorization = $authorization;
@@ -35,14 +53,33 @@ class ReturningTransaction implements TransactionContract
         $this->email = $email;
         $this->plan = $plan;
 
-        $this->transactionResource = new TransactionResource(PaystackHttpClientFactory::make());
+        $this->transactionResource = $transactionResource;
     }
 
+    /**
+     * Create a new returning transaction object
+     * @param $authorization
+     * @param $amount
+     * @param $email
+     * @param $plan
+     * @return static
+     */
     public static function make($authorization, $amount, $email, $plan)
     {
-        return new static(self::generateTransactionRef(), $authorization, $amount, $email, $plan);
+        return new static(
+            self::generateTransactionRef(),
+            $authorization,
+            $amount,
+            $email,
+            $plan,
+            self::getTransactionResource()
+        );
     }
 
+    /**
+     * Charge returning transaction
+     * @return \Exception|mixed|PaystackInvalidTransactionException
+     */
     public function charge()
     {
         return !is_null($this->transactionRef) ?
@@ -50,6 +87,10 @@ class ReturningTransaction implements TransactionContract
             new PaystackInvalidTransactionException(["message" => "Transaction Reference Not Generated."]);
     }
 
+    /**
+     * Get returning transaction request body
+     * @return string
+     */
     public function _requestPayload()
     {
         $payload = [
