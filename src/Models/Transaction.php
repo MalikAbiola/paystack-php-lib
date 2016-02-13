@@ -10,28 +10,34 @@ namespace Paystack\Models;
 
 use Paystack\Abstractions\Model;
 use Paystack\Contracts\ModelInterface;
-use Paystack\Helpers\Utils;
 
 class Transaction extends Model implements ModelInterface
 {
-    use Utils;
+    /**
+     * Transaction constructor.
+     * @param $attributes
+     */
     private function __construct($attributes)
     {
         $this->_setAttributes($attributes);
     }
 
+    /**
+     * make new transaction object
+     * @param $attributes
+     * @return static
+     */
     public static function make($attributes)
     {
         return new static($attributes);
     }
 
-    public function transform($transformMode)
-    {
-        // TODO: Implement transform() method.
-    }
-
+    /**
+     * convert transaction object to array
+     * @return mixed
+     */
     public function _toArray()
     {
-        return $this->objectToArray($this);
+        return $this->transform();
     }
 }

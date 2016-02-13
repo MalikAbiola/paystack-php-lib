@@ -20,6 +20,10 @@ interface ModelInterface
      * @return mixed
      */
     public function transform($transformMode);
-
+    /**
+     * Set attributes of the model
+     * @param $attributes
+     * @return mixed
+     */
     public function _setAttributes($attributes);
 }

@@ -19,15 +19,22 @@ class PaystackValidationException extends BaseException
         parent::__construct($response->message, $code);
     }
 
+    /**
+     * Get validation errors that occurred in requests
+     * @return array
+     */
     public function getValidationErrors()
     {
         $errors = [];
-        foreach ($this->response->error as $error => $reason){
-            $errors[] = [
-                'attribute' => $error,
-                'reason'    => $reason->message
-            ];
+        if (($this->response->error)) {
+            foreach ($this->response->error as $error => $reason){
+                $errors[] = [
+                    'attribute' => $error,
+                    'reason'    => $reason->message
+                ];
+            }
         }
+
         return $errors;
     }
 }

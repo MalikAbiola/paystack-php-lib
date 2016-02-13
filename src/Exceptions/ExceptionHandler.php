@@ -12,6 +12,13 @@ use Illuminate\Http\Response;
 
 class ExceptionHandler
 {
+    /**
+     * Handles errors encountered and returns the kind of exception they are
+     * @param $resourceName
+     * @param $response
+     * @param $statusCode
+     * @return \Exception|PaystackNotFoundException|PaystackUnauthorizedException|PaystackValidationException
+     */
     public static function handle($resourceName, $response, $statusCode)
     {
         switch ($statusCode) {

@@ -4,20 +4,19 @@
  * Date: 10/02/2016
  * Time: 16:10
  * IDE: PhpStorm
+ * Create one time transactions
  */
 
 namespace Paystack\Models;
 
 
+use Paystack\Abstractions\BaseTransaction;
 use Paystack\Contracts\TransactionContract;
 use Paystack\Exceptions\PaystackInvalidTransactionException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Helpers\Utils;
 use Paystack\Repositories\TransactionResource;
 
-class OneTimeTransaction implements TransactionContract
+class OneTimeTransaction extends BaseTransaction implements TransactionContract
 {
-    use Utils;
     private $transactionResource;
 
     private $transactionRef;
@@ -25,21 +24,40 @@ class OneTimeTransaction implements TransactionContract
     private $email;
     private $plan;
 
-    protected function __construct($transactionRef, $amount, $email, $plan)
+    /**
+     * OneTimeTransaction constructor.
+     * @param $transactionRef
+     * @param $amount
+     * @param $email
+     * @param $plan
+     * @param TransactionResource $transactionResource
+     */
+    protected function __construct($transactionRef, $amount, $email, $plan, TransactionResource $transactionResource)
     {
         $this->transactionRef = $transactionRef;
         $this->amount = $amount;
         $this->email = $email;
         $this->plan = $plan;
 
-        $this->transactionResource = new TransactionResource(PaystackHttpClientFactory::make());
+        $this->transactionResource = $transactionResource;
     }
 
+    /**
+     * Make a new one time transaction object
+     * @param $amount
+     * @param $email
+     * @param $plan
+     * @return static
+     */
     public static function make($amount, $email, $plan)
     {
-        return new static(self::generateTransactionRef(), $amount, $email, $plan);
+        return new static(self::generateTransactionRef(), $amount, $email, $plan, self::getTransactionResource());
     }
 
+    /**
+     * Initialize one time transaction to get payment url
+     * @return \Exception|mixed|PaystackInvalidTransactionException
+     */
     public function initialize()
     {
         return !is_null($this->transactionRef) ?
@@ -47,6 +65,10 @@ class OneTimeTransaction implements TransactionContract
             new PaystackInvalidTransactionException(["message" => "Transaction Reference Not Generated."]);
     }
 
+    /**
+     * Get transaction request body.
+     * @return string
+     */
     public function _requestPayload()
     {
         $payload = [

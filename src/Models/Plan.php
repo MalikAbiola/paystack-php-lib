@@ -41,11 +41,22 @@ class Plan extends Model implements PlansInterface, ModelInterface
 
     protected $subscriptions = [];
 
+    /**
+     * Plan constructor.
+     * @param PlanResource $planResource
+     */
     public function __construct(PlanResource $planResource)
     {
         $this->planResource = $planResource;
     }
 
+    /**
+     * Get plan by plan code
+     * @param $planCode
+     * @return $this
+     * @throws
+     * @throws \Exception
+     */
     public function getPlan($planCode)
     {
         $plan = $this->planResource->get($planCode);
@@ -58,6 +69,15 @@ class Plan extends Model implements PlansInterface, ModelInterface
         return $this->_setAttributes($plan);
     }
 
+    /**
+     * Create new Plan Object
+     * @param $name
+     * @param $description
+     * @param $amount
+     * @param $currency
+     * @param array $otherAttributes
+     * @return $this
+     */
     public function make($name, $description, $amount, $currency, array $otherAttributes = [])
     {
         $this->name = $name;
@@ -71,6 +91,11 @@ class Plan extends Model implements PlansInterface, ModelInterface
         return $this;
     }
 
+    /**
+     * set attributes to update
+     * @param array $updateData
+     * @return $this
+     */
     public function setUpdateData(array $updateData)
     {
         $this->_setAttributes($updateData);
@@ -80,6 +105,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
+     * Save/Update plan object
      * @return $this|Plan
      * @throws \Exception
      * @throws \Exception|mixed
@@ -99,7 +125,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
         }
 
         if ($resourceResponse == null) {
-            throw new \Exception("You Cant Perform This Operation on an empty plan");
+            throw new \InvalidArgumentException("You Cant Perform This Operation on an empty plan");
         } else if ($resourceResponse instanceof \Exception) {
             throw $resourceResponse;
         }
@@ -107,6 +133,10 @@ class Plan extends Model implements PlansInterface, ModelInterface
         return $this->_setAttributes($resourceResponse);
     }
 
+    /**
+     * delete Plan
+     * @throws \Exception
+     */
     public function delete()
     {
 //        if ($this->isDeletable()) {

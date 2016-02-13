@@ -10,6 +10,7 @@ namespace Paystack\Models;
 
 use Paystack\Abstractions\Model;
 use Paystack\Contracts\ModelInterface;
+use Paystack\Exceptions\PaystackValidationException;
 use Paystack\Repositories\CustomerResource;
 
 class Customer extends Model implements ModelInterface
@@ -37,10 +38,9 @@ class Customer extends Model implements ModelInterface
         $customerModel = $this->customerResource->get($customerId);
         if ($customerModel instanceof \Exception) {
             throw $customerModel;
-        } else {
-            $this->_setAttributes($customerModel);
         }
 
+        $this->_setAttributes($customerModel);
         $this->setDeletable(true);
         return $this;
     }
@@ -61,12 +61,8 @@ class Customer extends Model implements ModelInterface
         $this->email = $email;
         $this->phone = $phone;
 
-        if (!empty($otherAttributes)) {
-            foreach($otherAttributes as $key => $value) {
-                $this->$key = $value;
-            }
-        }
-        //set createable
+        $this->_setAttributes($otherAttributes);
+        //set creatable
         $this->setCreatable(true);
 
         return $this;
@@ -80,24 +76,14 @@ class Customer extends Model implements ModelInterface
      */
     public function setUpdateData($updateAttributes)
     {
-        if (!empty($updateAttributes)) {
-            if (isset($updateAttributes['first_name'])) {
-                $this->firstName = $updateAttributes['first_name'];
-                unset($updateAttributes['first_name']);
-            }
-            if (isset($updateAttributes['last_name'])) {
-                $this->lastName = $updateAttributes['last_name'];
-                unset($updateAttributes['last_name']);
-            }
-
-            $this->_setAttributes($updateAttributes);
-            $this->setUpdateable(true);
-
-            return $this;
-        } else {
-            //replace with more specific exception
-            throw new \Exception();
+        if (empty($updateAttributes)) {
+            throw new \InvalidArgumentException("Update Attributes Empty");
         }
+
+        $this->_setAttributes($updateAttributes);
+        $this->setUpdateable(true);
+
+        return $this;
     }
 
     /**
@@ -123,7 +109,7 @@ class Customer extends Model implements ModelInterface
         }
 
         if ($resourceResponse == null) {
-            throw new \Exception("You Cant Perform This Operation on an empty plan");
+            throw new \InvalidArgumentException("You Cant Perform This Operation on an empty customer object");
         } else if ($resourceResponse instanceof \Exception) {
             throw $resourceResponse;
         }
@@ -149,57 +135,5 @@ class Customer extends Model implements ModelInterface
 //        }
 
         throw new \Exception("Customer can't be deleted");
-    }
-
-    /**
-     * get Outward presentation of object
-     * @param $transformMode
-     * @return mixed
-     */
-    public function transform($transformMode = "")
-    {
-        switch($transformMode) {
-            case ModelInterface::TRANSFORM_TO_JSON_ARRAY:
-                return json_encode([
-                    'first_name'    => $this->firstName,
-                    'last_name'     => $this->lastName,
-                    'email'         => $this->email,
-                    'phone'         => $this->phone
-                ]);
-            default:
-                return [
-                    'first_name'    => $this->firstName,
-                    'last_name'     => $this->lastName,
-                    'email'         => $this->email,
-                    'phone'         => $this->phone
-                ];
-        }
-    }
-
-    /**
-     * Set attributes of customer model object
-     * @param $attributes
-     * @return $this
-     */
-    public function _setAttributes($attributes)
-    {
-        if (isset($attributes['first_name'])) {
-            $this->firstName = $attributes['first_name'];
-            unset($attributes['first_name']);
-        }
-        if (isset($attributes['last_name'])) {
-            $this->lastName = $attributes['last_name'];
-            unset($attributes['last_name']);
-        }
-        if (isset($attributes['id'])) {
-            $this->lastName = $attributes['id'];
-            unset($attributes['id']);
-        }
-
-        foreach($attributes as $attribute => $value) {
-            $this->$attribute = $value;
-        }
-
-        return $this;
     }
 }
