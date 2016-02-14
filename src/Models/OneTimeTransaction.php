@@ -17,7 +17,7 @@ use Paystack\Repositories\TransactionResource;
 
 class OneTimeTransaction extends BaseTransaction implements TransactionContract
 {
-    private $transactionResource;
+    protected $transactionResource;
 
     private $transactionRef;
     private $amount;

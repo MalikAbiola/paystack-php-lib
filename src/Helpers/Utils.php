@@ -63,6 +63,6 @@ trait Utils {
         {
             $object = get_object_vars($object);
         }
-        return array_map('objectToArray', $object);
+        return array_map(array(get_class(), "objectToArray"), $object);
     }
 }

@@ -20,7 +20,7 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
 {
     use Utils;
 
-    private $transactionResource;
+    protected $transactionResource;
 
     private $transactionRef;
     private $authorization;
