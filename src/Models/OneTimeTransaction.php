@@ -13,11 +13,10 @@ namespace Paystack\Models;
 use Paystack\Abstractions\BaseTransaction;
 use Paystack\Contracts\TransactionContract;
 use Paystack\Exceptions\PaystackInvalidTransactionException;
-use Paystack\Repositories\TransactionResource;
 
 class OneTimeTransaction extends BaseTransaction implements TransactionContract
 {
-    protected $transactionResource;
+//    protected $transactionResource;
 
     private $transactionRef;
     private $amount;
@@ -30,16 +29,15 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
      * @param $amount
      * @param $email
      * @param $plan
-     * @param TransactionResource $transactionResource
      */
-    protected function __construct($transactionRef, $amount, $email, $plan, TransactionResource $transactionResource)
+    protected function __construct($transactionRef, $amount, $email, $plan)
     {
         $this->transactionRef = $transactionRef;
         $this->amount = $amount;
         $this->email = $email;
         $this->plan = $plan;
 
-        $this->transactionResource = $transactionResource;
+//        $this->transactionResource = $transactionResource;
     }
 
     /**
@@ -51,7 +49,7 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
      */
     public static function make($amount, $email, $plan)
     {
-        return new static(self::generateTransactionRef(), $amount, $email, $plan, self::getTransactionResource());
+        return new static(self::generateTransactionRef(), $amount, $email, $plan);
     }
 
     /**
@@ -61,8 +59,17 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
     public function initialize()
     {
         return !is_null($this->transactionRef) ?
-            $this->transactionResource->initialize($this->_requestPayload()) :
-            new PaystackInvalidTransactionException(["message" => "Transaction Reference Not Generated."]);
+           $this->getTransactionResource()->initialize($this->_requestPayload()) :
+            new PaystackInvalidTransactionException(
+                json_decode(
+                    json_encode(
+                        [
+                            "message" => "Transaction Reference Not Generated."
+                        ]
+                    ),
+                    false
+                )
+            );
     }
 
     /**

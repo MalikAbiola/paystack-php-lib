@@ -33,7 +33,7 @@ class PlanResource extends Resource implements ResourceInterface
     public function get($id)
     {
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(getenv('PLANS_URL'), $id)
+            $this->transformUrl(self::env('PLANS_URL'), $id)
         );
         return $this->processResourceRequestResponse($request);
     }
@@ -47,7 +47,7 @@ class PlanResource extends Resource implements ResourceInterface
     {
         $page = !empty($page) ? "/page={$page}" : '';
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(getenv('PLANS_URL'), "") . $page
+            $this->transformUrl(self::env('PLANS_URL'), "") . $page
         );
 
         return $this->processResourceRequestResponse($request);
@@ -61,7 +61,7 @@ class PlanResource extends Resource implements ResourceInterface
     public function save($body)
     {
         $request = $this->paystackHttpClient->post(
-            $this->transformUrl(getenv('PLANS_URL'), ""),
+            $this->transformUrl(self::env('PLANS_URL'), ""),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -79,7 +79,7 @@ class PlanResource extends Resource implements ResourceInterface
     public function update($id, $body)
     {
         $request = $this->paystackHttpClient->put(
-            $this->transformUrl(getenv('PLANS_URL'), $id),
+            $this->transformUrl(self::env('PLANS_URL'), $id),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -96,7 +96,7 @@ class PlanResource extends Resource implements ResourceInterface
     public function delete($id)
     {
         $request = $this->paystackHttpClient->delete(
-            $this->transformUrl(getenv('PLANS_URL'), $id)
+            $this->transformUrl(self::env('PLANS_URL'), $id)
         );
 
         return $this->processResourceRequestResponse($request);

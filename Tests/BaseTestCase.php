@@ -11,6 +11,9 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
     protected $customerResource;
     protected $customer;
 
+    protected $planResource;
+    protected $plan;
+
     protected $transactionRequestArray;
 
     protected $customerCreateResponseData = [
@@ -22,8 +25,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "domain"=> "test",
         "customer_code"=> "CUS_docpswclqcq6oha",
         "id"=> 4158,
-        "createdAt"=> "2016-02-14T10=>15=>33.481Z",
-        "updatedAt"=> "2016-02-14T10=>15=>33.481Z"
+        "createdAt"=> "2016-02-14T10:15:33.481Z",
+        "updatedAt"=> "2016-02-14T10:15:33.481Z"
     ];
 
     protected $customerRetrievedResponseData = [
@@ -39,8 +42,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "customer_code"=> "CUS_k324c8osdjcohgt",
         "id"=> 4166,
         "integration"=> 100082,
-        "createdAt"=> "2016-02-14T10=>56=>55.000Z",
-        "updatedAt"=> "2016-02-14T10=>56=>55.000Z",
+        "createdAt"=> "2016-02-14T10:56:55.000Z",
+        "updatedAt"=> "2016-02-14T10:56:55.000Z",
         "total_transactions"=> 0,
         "total_transaction_value"=> 0
     ];
@@ -55,8 +58,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "customer_code"=> "CUS_k324c8osdjcohgt",
         "id"=> 4166,
         "integration"=> 100082,
-        "createdAt"=> "2016-02-14T10=>56=>55.000Z",
-        "updatedAt"=> "2016-02-14T19=>22=>41.000Z"
+        "createdAt"=> "2016-02-14T10:56:55.000Z",
+        "updatedAt"=> "2016-02-14T19:22:41.000Z"
     ];
 
     protected $customerData = [
@@ -64,6 +67,95 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         'last_name' => 'last_name',
         'email' => 'email@email.com',
         'phone' => '2348032145698'
+    ];
+
+    protected $planCreatedResourceResponseData = [
+        "name"=> "new_test_plan",
+        "description"=> "New Test Plan",
+        "amount"=> 10000,
+        "currency"=> "NGN",
+        "integration"=> 100082,
+        "domain"=> "test",
+        "plan_code"=> "PLN_qxcu4d3ws1its7n",
+        "interval"=> "monthly",
+        "send_invoices"=> true,
+        "send_sms"=> true,
+        "hosted_page"=> false,
+        "id"=> 65,
+        "createdAt"=> "2016-02-15T13:13:32.055Z",
+        "updatedAt"=> "2016-02-15T13:13:32.055Z"
+    ];
+
+    protected $planRetrievedResourceResponseData = [
+        "subscriptions"=> [],
+        "integration"=> 100082,
+        "domain"=> "test",
+        "name"=> "new_test_plan",
+        "plan_code"=> "PLN_qxcu4d3ws1its7n",
+        "description"=> "New Test Plan",
+        "amount"=> 10000,
+        "interval"=> "monthly",
+        "send_invoices"=> true,
+        "send_sms"=> true,
+        "hosted_page"=> false,
+        "hosted_page_url"=> null,
+        "hosted_page_summary"=> null,
+        "currency"=> "NGN",
+        "id"=> 65,
+        "createdAt"=> "2016-02-15T13:13:32.000Z",
+        "updatedAt"=> "2016-02-15T13:13:32.000Z"
+    ];
+
+    protected $planUpdatedResourceResponseData = [
+        "domain"=> "test",
+        "name"=> "new_test_plan",
+        "plan_code"=> "PLN_qxcu4d3ws1its7n",
+        "description"=> "new plan description",
+        "amount"=> 10000,
+        "interval"=> "monthly",
+        "send_invoices"=> true,
+        "send_sms"=> true,
+        "hosted_page"=> false,
+        "hosted_page_url"=> null,
+        "hosted_page_summary"=> null,
+        "currency"=> "NGN",
+        "id"=> 65,
+        "integration"=> 100082,
+        "createdAt"=> "2016-02-15T13:13:32.000Z",
+        "updatedAt"=> "2016-02-15T13:15:30.000Z"
+    ];
+
+    protected $planData = [
+        'name' => 'new_test_plan',
+        'description' => 'New Test Plan',
+        'amount' => 10000,
+        'currency' => 'NGN'
+    ];
+
+    protected $initOneTimeTransactionResourceResponseData = [
+        "authorization_url"=> "https=>//standard.paystack.co/pay/u0w3i084gp",
+        "access_code"=> "u0w3i084gp",
+        "reference"=> "radnosm160202014046"
+    ];
+
+    protected $chargeReturningTransactionResourceResponseData = [
+        "amount"=> 10000,
+        "transaction_date"=> "2016-02-02T02:41:25.000Z",
+        "status"=> "success",
+        "reference"=> "radnosm160202014046",
+        "domain"=> "test",
+        "authorization"=> [
+            "authorization_code"=> "AUTH_jonwwppn",
+            "card_type"=> "visa",
+            "last4"=> "1381",
+            "bank"=> null
+        ],
+        "customer"=> [
+            "first_name"=> null,
+            "last_name"=> null,
+            "email"=> "testuser@test.com"
+        ],
+        "plan"=> 0
     ];
 
     public function setUp()
