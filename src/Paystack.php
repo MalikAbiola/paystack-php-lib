@@ -8,7 +8,6 @@
 
 namespace Paystack;
 
-use Paystack\Contracts\TransactionContract;
 use Paystack\Factories\PaystackHttpClientFactory;
 use Paystack\Models\Customer;
 use Paystack\Models\OneTimeTransaction;
@@ -18,6 +17,7 @@ use Paystack\Models\Transaction;
 use Paystack\Repositories\CustomerResource;
 use Paystack\Repositories\PlanResource;
 use Paystack\Repositories\TransactionResource;
+use Paystack\Helpers\Transaction as TransactionHelper;
 
 class Paystack
 {
@@ -27,6 +27,7 @@ class Paystack
     private $customerResource;
     private $transactionResource;
     private $planResource;
+    private $transactionHelper;
 
     /**
      * Paystack constructor.
@@ -42,6 +43,8 @@ class Paystack
 
         $this->planResource = new PlanResource($this->paystackHttpClient);
         $this->planModel = new Plan($this->planResource);
+
+        $this->transactionHelper = TransactionHelper::make();
     }
 
     /**
@@ -218,39 +221,13 @@ class Paystack
     }
 
     /**
-     * Charge a customer for plan
-     * @param Customer $customer
-     * @param Plan $plan
-     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
-     */
-    public function chargeCustomerForPlan(Customer $customer, Plan $plan)
-    {
-        return ReturningTransaction::make(
-            $customer->get('authorization_code'),
-            $plan->get('amount'),
-            $customer->get('email'),
-            $plan->get('plan_code')
-        )->charge();
-    }
-
-    /**
      * Verify transaction
      * @param $transactionRef
      * @return array|bool
      */
     public function verifyTransaction($transactionRef)
     {
-        $transactionData = $this->getTransactionResource()->verify($transactionRef);
-        if ($transactionData['status'] == TransactionContract::TRANSACTION_STATUS_SUCCESS) {
-            return [
-                'authorization' => $transactionData['authorization'],
-                'customer'      => $transactionData['customer'],
-                'amount'        => $transactionData['amount'],
-                'plan'          => $transactionData['plan']
-            ];
-        }
-
-        return false;
+        return $this->transactionHelper->verify($transactionRef);
     }
 
     /**
@@ -261,13 +238,7 @@ class Paystack
      */
     public function transactionDetails($transactionId)
     {
-        $transactionData = $this->getTransactionResource()->get($transactionId);
-
-        if($transactionData instanceof \Exception) {
-            throw $transactionData;
-        }
-
-        return Transaction::make($transactionData);
+        return $this->transactionHelper->details($transactionId);
     }
 
     /**
@@ -278,28 +249,12 @@ class Paystack
      */
     public function allTransactions($page)
     {
-        $transactions = [];
-        $transactionData = $this->getTransactionResource()->getAll($page);
-
-        if ($transactionData instanceof \Exception) {
-            throw $transactionData;
-        }
-
-        foreach ($transactionData as $transaction) {
-            $transactions[] = Transaction::make($transaction);
-        }
-
-        return $transactions;
+        return $this->transactionHelper->allTransactions($page);
     }
 
     public function transactionsTotals()
     {
-        $transactions = $this->getTransactionResource()->getTransactionTotals();
-        if ($transactions instanceof \Exception) {
-            throw $transactions;
-        }
-
-        return $transactions;
+        return $this->transactionHelper->transactionsTotals();
     }
 
     /**

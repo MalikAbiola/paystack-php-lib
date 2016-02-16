@@ -22,7 +22,7 @@ trait Utils {
      * @param string $key
      * @return mixed
      */
-    public function transformUrl($url, $id, $key = '')
+    public static function transformUrl($url, $id, $key = '')
     {
         return str_replace(!empty($key) ? $key : ':id', $id, $url);
     }

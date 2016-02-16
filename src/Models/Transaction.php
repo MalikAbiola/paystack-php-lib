@@ -10,6 +10,7 @@ namespace Paystack\Models;
 
 use Paystack\Abstractions\Model;
 use Paystack\Contracts\ModelInterface;
+use Paystack\Helpers\Transaction as TransactionHelper;
 
 class Transaction extends Model implements ModelInterface
 {
@@ -30,6 +31,14 @@ class Transaction extends Model implements ModelInterface
     public static function make($attributes)
     {
         return new static($attributes);
+    }
+
+    /**
+     * Verify this transaction
+     */
+    public function verify()
+    {
+        return TransactionHelper::make()->verify($this->get('reference'));
     }
 
     /**
