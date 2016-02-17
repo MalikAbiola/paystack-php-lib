@@ -26,15 +26,26 @@ class PaystackValidationException extends BaseException
     public function getValidationErrors()
     {
         $errors = [];
-        if (($this->response->error)) {
-            foreach ($this->response->error as $error => $reason){
+        if (isset($this->response->errors)) {
+            foreach ($this->response->errors as $error => $reasons){
                 $errors[] = [
                     'attribute' => $error,
-                    'reason'    => $reason->message
+                    'reason'    => $this->getValidationReasonsAsString($reasons)
                 ];
             }
         }
 
         return $errors;
+    }
+
+    private function getValidationReasonsAsString($reasons)
+    {
+        $concatenatedReasons = "";
+
+        foreach ($reasons as $reason) {
+            $concatenatedReasons .= "{$reason->message} \r\n";
+        }
+
+        return $concatenatedReasons;
     }
 }

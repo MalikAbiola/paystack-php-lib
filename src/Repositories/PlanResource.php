@@ -45,7 +45,7 @@ class PlanResource extends Resource implements ResourceInterface
      */
     public function getAll($page = null)
     {
-        $page = !empty($page) ? "/page={$page}" : '';
+        $page = !empty($page) ? "page={$page}" : '';
         $request = $this->paystackHttpClient->get(
             $this->transformUrl(self::env('PLANS_URL'), "") . $page
         );

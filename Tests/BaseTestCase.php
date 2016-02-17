@@ -8,6 +8,13 @@ namespace Paystack\Tests;
  */
 class BaseTestCase extends \PHPUnit_Framework_TestCase {
     //put your code here
+    protected $fakeAuthHeader = [
+        'headers'     => [
+            'Authorization'    => "Bearer ",
+            'Content-Type' => 'application/json',
+        ]
+    ];
+
     protected $customerResource;
     protected $customer;
 
@@ -447,6 +454,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         ],
         "plan" => 0
     ];
+
+
 
     public function setUp()
     {
