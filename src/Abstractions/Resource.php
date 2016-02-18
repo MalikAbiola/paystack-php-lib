@@ -16,6 +16,16 @@ use Psr\Http\Message\ResponseInterface;
 abstract class Resource
 {
     use Utils;
+
+    const INITIALIZE_TRANSACTION = '/transaction/initialize';
+    const VERIFY_TRANSACTION = '/transaction/verify/:reference';
+    const GET_TRANSACTION='/transaction/:id';
+    const GET_TRANSACTION_TOTALS='/transaction/totals';
+    const CHARGE_AUTHORIZATION='/transaction/charge_authorization';
+    const CHARGE_TOKEN='/transaction/charge_token';
+    const CUSTOMERS_URL='/customer/:id';
+    const PLANS_URL='/plan/:id';
+
     /**
      * Checks request response and dispatch result to appropriate handler
      * @param ResponseInterface $request

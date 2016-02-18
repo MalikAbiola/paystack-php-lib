@@ -37,7 +37,7 @@ class CustomerResource extends Resource implements ResourceInterface
     public function get($id)
     {
         $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(self::env('CUSTOMERS_URL'), $id)
+            $this->transformUrl(Resource::CUSTOMERS_URL, $id)
         );
 
        return $this->processResourceRequestResponse($request);
@@ -52,7 +52,7 @@ class CustomerResource extends Resource implements ResourceInterface
     {
         $page = !empty($page) ? "page={$page}" : '';
         $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(self::env('CUSTOMERS_URL'), "") . $page
+            $this->transformUrl(Resource::CUSTOMERS_URL, "") . $page
         );
 
         return $this->processResourceRequestResponse($request);
@@ -66,7 +66,7 @@ class CustomerResource extends Resource implements ResourceInterface
     public function save($body)
     {
         $request =  $this->paystackHttpClient->post(
-            $this->transformUrl(self::env('CUSTOMERS_URL'), ""),
+            $this->transformUrl(Resource::CUSTOMERS_URL, ""),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -84,7 +84,7 @@ class CustomerResource extends Resource implements ResourceInterface
     public function update($id, $body)
     {
         $request =  $this->paystackHttpClient->put(
-            $this->transformUrl(self::env('CUSTOMERS_URL'), $id),
+            $this->transformUrl(Resource::CUSTOMERS_URL, $id),
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -101,7 +101,7 @@ class CustomerResource extends Resource implements ResourceInterface
     public function delete($id)
     {
         $request =  $this->paystackHttpClient->delete(
-            $this->transformUrl(self::env('CUSTOMERS_URL'), $id)
+            $this->transformUrl(Resource::CUSTOMERS_URL, $id)
         );
 
         return $this->processResourceRequestResponse($request);
