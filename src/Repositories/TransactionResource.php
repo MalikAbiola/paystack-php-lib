@@ -32,7 +32,7 @@ class TransactionResource extends Resource
     public function get($id)
     {
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(self::env('GET_TRANSACTION'), $id)
+            $this->transformUrl(RESOURCE::GET_TRANSACTION, $id)
         );
 
         return $this->processResourceRequestResponse($request);
@@ -47,7 +47,7 @@ class TransactionResource extends Resource
     {
         $page = !empty($page) ? "/page={$page}" : '';
         $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(self::env('GET_TRANSACTION'),'') . $page
+            $this->transformUrl(RESOURCE::GET_TRANSACTION,'') . $page
         );
 
         return $this->processResourceRequestResponse($request);
@@ -60,7 +60,7 @@ class TransactionResource extends Resource
     public function getTransactionTotals()
     {
         $request = $this->paystackHttpClient->get(
-            self::env('GET_TRANSACTION_TOTALS')
+            Resource::GET_TRANSACTION_TOTALS
         );
 
         return $this->processResourceRequestResponse($request);
@@ -74,7 +74,7 @@ class TransactionResource extends Resource
     public function verify($reference)
     {
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(self::env('VERIFY_TRANSACTION'), $reference, ":reference")
+            $this->transformUrl(Resource::VERIFY_TRANSACTION, $reference, ":reference")
         );
 
         return $this->processResourceRequestResponse($request);
@@ -88,7 +88,7 @@ class TransactionResource extends Resource
     public function initialize($body)
     {
         $request = $this->paystackHttpClient->post(
-            self::env('INITIALIZE_TRANSACTION'),
+            Resource::INITIALIZE_TRANSACTION,
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -105,7 +105,7 @@ class TransactionResource extends Resource
     public function chargeAuthorization($body)
     {
         $request = $this->paystackHttpClient->post(
-            self::env('CHARGE_AUTHORIZATION'),
+            Resource::CHARGE_AUTHORIZATION,
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
@@ -122,7 +122,7 @@ class TransactionResource extends Resource
     public function chargeToken($body)
     {
         $request = $this->paystackHttpClient->post(
-            self::env('CHARGE_TOKEN'),
+            Resource::CHARGE_TOKEN,
             [
                 'body'  => is_array($body) ? $this->toJson($body) : $body
             ]
