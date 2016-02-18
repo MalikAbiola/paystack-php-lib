@@ -1,5 +1,13 @@
 language: php
 php:
-- 5.5
-- hhvm
-script: phpunit
+  - 5.5
+  - 5.6
+  - 7.0
+
+install: travis_retry composer install --no-interaction --prefer-source
+
+script:
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml.dist
+  - phpunit --coverage-text --coverage-clover=coverage.clover
+  - phpunit --coverage-clover build/logs/clover.xml
