@@ -1,22 +1,18 @@
 <?php
 /**
  * Created by Malik Abiola.
- * Date: 08/02/2016
- * Time: 22:21
+ * Date: 14/02/2016
+ * Time: 20:15
  * IDE: PhpStorm
  */
 
 namespace Paystack\Exceptions;
 
-abstract class BaseException extends \Exception {
 
+class PaystackUnsupportedOperationException extends BaseException
+{
     public function __construct($message, $code)
     {
         parent::__construct($message, $code);
-    }
-
-    public function getErrors()
-    {
-        return $this->getMessage();
     }
 }

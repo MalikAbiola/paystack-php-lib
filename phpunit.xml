@@ -7,9 +7,10 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="true"
+         stopOnFailure="false"
          syntaxCheck="true"
          verbose="true"
+         debug="true"
         >
     <testsuites>
         <testsuite name="Paystack PHP Library Test Suite">
@@ -18,7 +19,7 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">app/</directory>
+            <directory suffix=".php">src/</directory>
         </whitelist>
     </filter>
     <php>

@@ -20,8 +20,6 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
 {
     use Utils;
 
-    private $transactionResource;
-
     private $transactionRef;
     private $authorization;
     private $amount;
@@ -35,7 +33,6 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
      * @param $amount
      * @param $email
      * @param $plan
-     * @param TransactionResource $transactionResource
      */
     protected function __construct
     (
@@ -43,8 +40,7 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
         $authorization,
         $amount,
         $email,
-        $plan,
-        TransactionResource $transactionResource
+        $plan
     )
     {
         $this->transactionRef = $transactionRef;
@@ -52,8 +48,6 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
         $this->amount = $amount;
         $this->email = $email;
         $this->plan = $plan;
-
-        $this->transactionResource = $transactionResource;
     }
 
     /**
@@ -71,8 +65,7 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
             $authorization,
             $amount,
             $email,
-            $plan,
-            self::getTransactionResource()
+            $plan
         );
     }
 
@@ -83,8 +76,17 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
     public function charge()
     {
         return !is_null($this->transactionRef) ?
-            $this->transactionResource->chargeAuthorization($this->_requestPayload()) :
-            new PaystackInvalidTransactionException(["message" => "Transaction Reference Not Generated."]);
+            $this->getTransactionResource()->chargeAuthorization($this->_requestPayload()) :
+            new PaystackInvalidTransactionException(
+                json_decode(
+                    json_encode(
+                        [
+                            "message" => "Transaction Reference Not Generated."
+                        ]
+                    ),
+                    false
+                )
+            );
     }
 
     /**

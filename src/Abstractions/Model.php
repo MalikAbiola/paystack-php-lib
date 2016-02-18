@@ -64,7 +64,7 @@ abstract class Model
      */
     public function _setAttributes($attributes)
     {
-        if(is_array($attributes) && !empty($attributes)) {
+        if(is_array($attributes)) {
             foreach($attributes as $attribute => $value) {
                 $this->{$attribute} = $value;
             }
@@ -93,6 +93,15 @@ abstract class Model
     }
 
     /**
+     * Explicitly convert model object to array
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->objectToArray($this);
+    }
+
+    /**
      * check if model is updatable
      * @return boolean
      */
@@ -105,7 +114,7 @@ abstract class Model
      * set model updateable
      * @param boolean $updateable
      */
-    public function setUpdateable($updateable)
+    protected function setUpdateable($updateable)
     {
         $this->updateable = $updateable;
     }
@@ -123,7 +132,7 @@ abstract class Model
      * set model can be created
      * @param boolean $creatable
      */
-    public function setCreatable($creatable)
+    protected function setCreatable($creatable)
     {
         $this->creatable = $creatable;
     }
@@ -141,7 +150,7 @@ abstract class Model
      * set model deletable
      * @param boolean $deletable
      */
-    public function setDeletable($deletable)
+    protected function setDeletable($deletable)
     {
         $this->deletable = $deletable;
     }

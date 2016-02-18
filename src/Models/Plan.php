@@ -11,6 +11,7 @@ namespace Paystack\Models;
 use Paystack\Abstractions\Model;
 use Paystack\Contracts\ModelInterface;
 use Paystack\Contracts\PlansInterface;
+use Paystack\Exceptions\PaystackUnsupportedOperationException;
 use Paystack\Repositories\PlanResource;
 
 class Plan extends Model implements PlansInterface, ModelInterface
@@ -117,7 +118,9 @@ class Plan extends Model implements PlansInterface, ModelInterface
 
         if ($this->isCreatable() && !$this->isUpdateable()) { //available for creation
             $resourceResponse = $this->planResource->save($this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY));
-        } else if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
+        }
+
+        if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
             $resourceResponse = $this->planResource->update(
                 $this->plan_code,
                 $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
@@ -126,7 +129,9 @@ class Plan extends Model implements PlansInterface, ModelInterface
 
         if ($resourceResponse == null) {
             throw new \InvalidArgumentException("You Cant Perform This Operation on an empty plan");
-        } else if ($resourceResponse instanceof \Exception) {
+        }
+
+        if ($resourceResponse instanceof \Exception) {
             throw $resourceResponse;
         }
 
@@ -135,6 +140,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
 
     /**
      * delete Plan
+     * @return $this
      * @throws \Exception
      */
     public function delete()
@@ -148,7 +154,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
 //            return !!$resourceResponse['status'];
 //        }
 
-        throw new \Exception("Plan can't be deleted");
+        throw new PaystackUnsupportedOperationException("Plan can't be deleted", 405);
     }
 
     /**
@@ -162,7 +168,8 @@ class Plan extends Model implements PlansInterface, ModelInterface
             "plan_code" => $this->plan_code,
             "name" => $this->name,
             "description" => $this->description,
-            "amount" => $this->interval,
+            "amount" => $this->amount,
+            "interval" => $this->interval,
             "currency" => $this->currency,
             "hosted_page" => $this->hosted_page,
             "hosted_page_url" => $this->hosted_page_url,

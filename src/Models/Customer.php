@@ -10,13 +10,13 @@ namespace Paystack\Models;
 
 use Paystack\Abstractions\Model;
 use Paystack\Contracts\ModelInterface;
-use Paystack\Exceptions\PaystackValidationException;
+use Paystack\Exceptions\PaystackUnsupportedOperationException;
 use Paystack\Repositories\CustomerResource;
 
 class Customer extends Model implements ModelInterface
 {
-    protected $firstName;
-    protected $lastName;
+    protected $first_name;
+    protected $last_name;
     protected $email;
     protected $phone;
     protected $customerId;
@@ -47,17 +47,17 @@ class Customer extends Model implements ModelInterface
 
     /**
      * set up a new customer object
-     * @param $firstName
-     * @param $lastName
+     * @param $first_name
+     * @param $last_name
      * @param $email
      * @param $phone
      * @param array $otherAttributes
      * @return $this
      */
-    public function make($firstName, $lastName, $email, $phone, $otherAttributes = [])
+    public function make($first_name, $last_name, $email, $phone, $otherAttributes = [])
     {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
         $this->email = $email;
         $this->phone = $phone;
 
@@ -101,7 +101,9 @@ class Customer extends Model implements ModelInterface
             $resourceResponse = $this->customerResource->save(
                 $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
             );
-        } else if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
+        }
+
+        if ($this->isUpdateable() && !$this->isCreatable()) { //available for update
             $resourceResponse = $this->customerResource->update(
                 $this->customerId,
                 $this->transform(ModelInterface::TRANSFORM_TO_JSON_ARRAY)
@@ -110,7 +112,9 @@ class Customer extends Model implements ModelInterface
 
         if ($resourceResponse == null) {
             throw new \InvalidArgumentException("You Cant Perform This Operation on an empty customer object");
-        } else if ($resourceResponse instanceof \Exception) {
+        }
+
+        if ($resourceResponse instanceof \Exception) {
             throw $resourceResponse;
         }
 
@@ -134,6 +138,6 @@ class Customer extends Model implements ModelInterface
 //            return !!$resourceResponse['status'];
 //        }
 
-        throw new \Exception("Customer can't be deleted");
+        throw new PaystackUnsupportedOperationException("Customer can't be deleted", 405);
     }
 }

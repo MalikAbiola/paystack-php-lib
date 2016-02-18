@@ -12,7 +12,7 @@ namespace Paystack\Exceptions;
 class PaystackNotFoundException extends BaseException
 {
     public function __construct($response, $code)
-{
-    parent::__construct($response->message, $code);
-}
+    {
+        parent::__construct(isset($response->message) ? $response->message : "Resource Not Found", $code);
+    }
 }

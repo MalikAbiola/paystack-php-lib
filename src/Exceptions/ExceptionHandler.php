@@ -28,8 +28,11 @@ class ExceptionHandler
                 return new PaystackNotFoundException($response, $statusCode);
             case Response::HTTP_BAD_REQUEST:
                 return new PaystackValidationException($response, $statusCode);
+            case Response::HTTP_GATEWAY_TIMEOUT:
+                return new PaystackInternalServerError($response, $statusCode);
             case Response::HTTP_INTERNAL_SERVER_ERROR:
-                return new \Exception("Internal Server Error.");
+//                @todo: when this happens, send email with details to paystack.
+                return new PaystackInternalServerError("Internal Server Error.", $statusCode);
             default:
                 return new \Exception("Unknown Error Occurred.", $statusCode);
         }

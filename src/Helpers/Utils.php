@@ -9,6 +9,7 @@
 
 namespace Paystack\Helpers;
 
+use Illuminate\Support\Str;
 use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
 use Rhumsaa\Uuid\Uuid;
 
@@ -18,9 +19,10 @@ trait Utils {
      * Transform url by replacing dummy data
      * @param $url
      * @param $id
+     * @param string $key
      * @return mixed
      */
-    public function transformUrl($url, $id, $key = '')
+    public static function transformUrl($url, $id, $key = '')
     {
         return str_replace(!empty($key) ? $key : ':id', $id, $url);
     }
@@ -38,7 +40,7 @@ trait Utils {
      * generates a unique transaction ref used for init-ing transactions
      * @return mixed|null
      */
-    public function generateTransactionRef()
+    public static function generateTransactionRef()
     {
         try {
             return str_replace("-", "", Uuid::uuid1()->toString());
@@ -63,6 +65,39 @@ trait Utils {
         {
             $object = get_object_vars($object);
         }
-        return array_map('objectToArray', $object);
+        return array_map(array(get_class(), "objectToArray"), $object);
+    }
+
+    /**
+     * Gets the value of an environment variable. Supports boolean, empty and null.
+     * From Laravel/lumen-framework/src/helpers.php
+     * @param  string  $key
+     * @param  mixed   $default
+     * @return mixed
+     */
+    public static function env($key, $default = null)
+    {
+        $value = getenv($key);
+        if ($value === false) {
+            return value($default);
+        }
+        switch (strtolower($value)) {
+            case 'true':
+            case '(true)':
+                return true;
+            case 'false':
+            case '(false)':
+                return false;
+            case 'empty':
+            case '(empty)':
+                return '';
+            case 'null':
+            case '(null)':
+                return;
+        }
+        if (Str::startsWith($value, '"') && Str::endsWith($value, '"')) {
+            return substr($value, 1, -1);
+        }
+        return $value;
     }
 }

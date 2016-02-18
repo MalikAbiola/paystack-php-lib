@@ -11,15 +11,17 @@ namespace Paystack\Factories;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
+use Paystack\Helpers\Utils;
 
 class PaystackHttpClientFactory {
+    use Utils;
 
     public static function make($config = [])
     {
         //determine which mode/key to use
-        $authorization = getenv('PAYSTACK_MODE') == 'test' ?
-            getenv('PAYSTACK_TEST_SECRET_KEY') :
-            getenv('PAYSTACK_LIVE_SECRET_KEY');
+        $authorization = self::env('PAYSTACK_MODE') == 'test' ?
+            self::env('PAYSTACK_TEST_SECRET_KEY') :
+            self::env('PAYSTACK_LIVE_SECRET_KEY');
 
         $defaults = [
             'base_uri' => "https://api.paystack.co",
