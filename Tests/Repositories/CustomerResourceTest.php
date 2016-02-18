@@ -14,7 +14,7 @@ use Paystack\Repositories\CustomerResource;
  */
 class CustomerResourceTest extends BaseTestCase
 {
-    private $paystackHttpClient;
+    protected $paystackHttpClient;
 
     public function setUp()
     {

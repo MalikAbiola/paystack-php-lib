@@ -17,7 +17,6 @@ use Paystack\Repositories\TransactionResource;
 
 class TransactionHelpersTest extends BaseTestCase
 {
-    private $transactionResource;
 
     public function setUp()
     {

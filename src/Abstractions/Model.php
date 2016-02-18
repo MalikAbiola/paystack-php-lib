@@ -93,6 +93,15 @@ abstract class Model
     }
 
     /**
+     * Explicitly convert model object to array
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->objectToArray($this);
+    }
+
+    /**
      * check if model is updatable
      * @return boolean
      */

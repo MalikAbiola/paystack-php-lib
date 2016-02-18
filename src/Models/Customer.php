@@ -47,17 +47,17 @@ class Customer extends Model implements ModelInterface
 
     /**
      * set up a new customer object
-     * @param $firstName
-     * @param $lastName
+     * @param $first_name
+     * @param $last_name
      * @param $email
      * @param $phone
      * @param array $otherAttributes
      * @return $this
      */
-    public function make($firstName, $lastName, $email, $phone, $otherAttributes = [])
+    public function make($first_name, $last_name, $email, $phone, $otherAttributes = [])
     {
-        $this->first_name = $firstName;
-        $this->last_name = $lastName;
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
         $this->email = $email;
         $this->phone = $phone;
 

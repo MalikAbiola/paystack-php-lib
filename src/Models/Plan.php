@@ -140,6 +140,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
 
     /**
      * delete Plan
+     * @return $this
      * @throws \Exception
      */
     public function delete()

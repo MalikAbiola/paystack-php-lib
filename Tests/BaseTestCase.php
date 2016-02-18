@@ -21,6 +21,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
     protected $planResource;
     protected $plan;
 
+    protected $paystackHttpClient;
+
+    protected $transactionResource;
+
     protected $transactionRequestArray;
 
     protected $customerCreateResponseData = [
@@ -35,7 +39,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "createdAt"=> "2016-02-14T10:15:33.481Z",
         "updatedAt"=> "2016-02-14T10:15:33.481Z"
     ];
-
     protected $customerRetrievedResponseData = [
         "transactions"=> [],
         "subscriptions"=> [],
@@ -54,7 +57,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "total_transactions"=> 0,
         "total_transaction_value"=> 0
     ];
-
     protected $customerUpdatedResponseData = [
         "first_name"=> "first_name",
         "last_name"=> "new_last_name",
@@ -68,7 +70,125 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "createdAt"=> "2016-02-14T10:56:55.000Z",
         "updatedAt"=> "2016-02-14T19:22:41.000Z"
     ];
-
+    protected $customersRetrievedResponseData = [
+        [
+            "integration" =>  100082,
+            "first_name" =>  null,
+            "last_name" =>  null,
+            "email" =>  "email@email.com",
+            "phone" =>  null,
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_7hs14ranchjust4",
+            "id" =>  4578,
+            "createdAt" =>  "2016-02-17T17:44:37.000Z",
+            "updatedAt" =>  "2016-02-17T17:44:37.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "new_last_name_e",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_0zebihimtknqq6g",
+            "id" =>  4575,
+            "createdAt" =>  "2016-02-17T17:26:16.000Z",
+            "updatedAt" =>  "2016-02-17T17:26:23.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "new_last_name_e",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_7m9lsn3wg1okb66",
+            "id" =>  4574,
+            "createdAt" =>  "2016-02-17T17:22:32.000Z",
+            "updatedAt" =>  "2016-02-17T17:22:38.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "new_last_name_e",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_2x84ajdrp7e7cto",
+            "id" =>  4571,
+            "createdAt" =>  "2016-02-17T17:03:27.000Z",
+            "updatedAt" =>  "2016-02-17T17:03:34.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "new_last_name_e",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_1c1zp6vxa8v0aua",
+            "id" =>  4527,
+            "createdAt" =>  "2016-02-17T14:26:29.000Z",
+            "updatedAt" =>  "2016-02-17T14:26:39.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "new_last_name_e",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_3ohvst0iox1e9f8",
+            "id" =>  4506,
+            "createdAt" =>  "2016-02-17T13:19:25.000Z",
+            "updatedAt" =>  "2016-02-17T13:19:36.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "new_last_name",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_k324c8osdjcohgt",
+            "id" =>  4166,
+            "createdAt" =>  "2016-02-14T10:56:55.000Z",
+            "updatedAt" =>  "2016-02-14T19:22:41.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "last_name",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_fkhi6ypqfndzua4",
+            "id" =>  4165,
+            "createdAt" =>  "2016-02-14T10:55:09.000Z",
+            "updatedAt" =>  "2016-02-14T10:55:09.000Z"
+        ],
+        [
+            "integration" =>  100082,
+            "first_name" =>  "first_name",
+            "last_name" =>  "last_name",
+            "email" =>  "email@email.com",
+            "phone" =>  "2348032145698",
+            "metadata" =>  null,
+            "domain" =>  "test",
+            "customer_code" =>  "CUS_nc97lzm7u6k0uz9",
+            "id" =>  4164,
+            "createdAt" =>  "2016-02-14T10:46:29.000Z",
+            "updatedAt" =>  "2016-02-14T10:46:29.000Z"
+        ]
+    ];
     protected $customerData = [
         'first_name' => 'first_name',
         'last_name' => 'last_name',
@@ -92,7 +212,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "createdAt"=> "2016-02-15T13:13:32.055Z",
         "updatedAt"=> "2016-02-15T13:13:32.055Z"
     ];
-
     protected $planRetrievedResourceResponseData = [
         "subscriptions"=> [],
         "integration"=> 100082,
@@ -112,7 +231,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "createdAt"=> "2016-02-15T13:13:32.000Z",
         "updatedAt"=> "2016-02-15T13:13:32.000Z"
     ];
-
     protected $planUpdatedResourceResponseData = [
         "domain"=> "test",
         "name"=> "new_test_plan",
@@ -131,7 +249,141 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "createdAt"=> "2016-02-15T13:13:32.000Z",
         "updatedAt"=> "2016-02-15T13:15:30.000Z"
     ];
-
+    protected $plansRetrievedResourceResponseData = [
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "TestPlan",
+            "plan_code" =>  "PLN_3yjwpipkqymanb5",
+            "description" =>  "test plan",
+            "amount" =>  2000,
+            "interval" =>  "monthly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  true,
+            "hosted_page_url" =>  "WescosaTestPlan",
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  50,
+            "createdAt" =>  "2016-02-06T15:51:51.000Z",
+            "updatedAt" =>  "2016-02-06T15:51:51.000Z"
+        ],
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "new_test_plan",
+            "plan_code" =>  "PLN_qxcu4d3ws1its7n",
+            "description" =>  "new plan description",
+            "amount" =>  10000,
+            "interval" =>  "monthly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  false,
+            "hosted_page_url" =>  null,
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  65,
+            "createdAt" =>  "2016-02-15T13:13:32.000Z",
+            "updatedAt" =>  "2016-02-15T13:15:30.000Z"
+        ],
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "new_test_plan",
+            "plan_code" =>  "PLN_rklaibixjjywxa2",
+            "description" =>  "New Test Plan",
+            "amount" =>  10000,
+            "interval" =>  "weekly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  false,
+            "hosted_page_url" =>  null,
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  68,
+            "createdAt" =>  "2016-02-17T14:09:31.000Z",
+            "updatedAt" =>  "2016-02-17T14:09:35.000Z"
+        ],
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "new_test_plan",
+            "plan_code" =>  "PLN_2fb699wfezb0gyr",
+            "description" =>  "New Test Plan",
+            "amount" =>  10000,
+            "interval" =>  "weekly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  false,
+            "hosted_page_url" =>  null,
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  69,
+            "createdAt" =>  "2016-02-17T14:18:47.000Z",
+            "updatedAt" =>  "2016-02-17T14:18:53.000Z"
+        ],
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "new_test_plan",
+            "plan_code" =>  "PLN_vaj2ot80m76s4iw",
+            "description" =>  "New Test Plan",
+            "amount" =>  10000,
+            "interval" =>  "weekly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  false,
+            "hosted_page_url" =>  null,
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  70,
+            "createdAt" =>  "2016-02-17T14:24:12.000Z",
+            "updatedAt" =>  "2016-02-17T14:24:18.000Z"
+        ],
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "new_test_plan",
+            "plan_code" =>  "PLN_6voibagfhozg0je",
+            "description" =>  "New Test Plan",
+            "amount" =>  10000,
+            "interval" =>  "weekly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  false,
+            "hosted_page_url" =>  null,
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  71,
+            "createdAt" =>  "2016-02-17T14:26:48.000Z",
+            "updatedAt" =>  "2016-02-17T14:26:53.000Z"
+        ],
+        [
+            "subscriptions" =>  [],
+            "integration" =>  100082,
+            "domain" =>  "test",
+            "name" =>  "new_test_plan",
+            "plan_code" =>  "PLN_vmt89e4k3y44bxr",
+            "description" =>  "New Test Plan",
+            "amount" =>  10000,
+            "interval" =>  "weekly",
+            "send_invoices" =>  true,
+            "send_sms" =>  true,
+            "hosted_page" =>  false,
+            "hosted_page_url" =>  null,
+            "hosted_page_summary" =>  null,
+            "currency" =>  "NGN",
+            "id" =>  72,
+            "createdAt" =>  "2016-02-17T17:03:41.000Z",
+            "updatedAt" =>  "2016-02-17T17:03:44.000Z"
+        ]
+    ];
     protected $planData = [
         'name' => 'new_test_plan',
         'description' => 'New Test Plan',
@@ -144,7 +396,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "access_code"=> "u0w3i084gp",
         "reference"=> "radnosm160202014046"
     ];
-
     protected $chargeReturningTransactionResourceResponseData = [
         "amount"=> 10000,
         "transaction_date"=> "2016-02-02T02:41:25.000Z",
@@ -164,7 +415,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         ],
         "plan"=> 0
     ];
-
     protected $transactionDetailsResponseData = [
         "integration"=> 100082,
         "customer"=> [
@@ -214,7 +464,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "createdAt"=> "2016-02-15T17:49:21.000Z",
         "updatedAt"=> null
     ];
-
     protected $allTransactionsResponseData = [
         [
             "integration" => 100082,
@@ -428,13 +677,11 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
             "updatedAt" => null
         ]
     ];
-
     protected $transactionTotalsResponseData = [
         "total_volume" => 5000,
         "total_transactions" => 1,
         "pending_transfers" => 5000
     ];
-
     protected $verifyTransactionResponseData = [
         "amount" => 5000,
         "transaction_date" => "2016-02-02T02:41:25.000Z",
@@ -455,8 +702,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "plan" => 0
     ];
 
-
-
     public function setUp()
     {
         parent::setUp();
@@ -465,6 +710,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
 
     public function tearDown()
     {
-        parent::tearDown(); // TODO: Change the autogenerated stub
+        parent::tearDown();
     }
 }

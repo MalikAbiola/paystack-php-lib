@@ -10,9 +10,9 @@ namespace Paystack\Contracts;
 
 interface ModelInterface
 {
-    const TRANSFORM_TO_JSON_ARRAY = 1;
-    const TRANSFORM_TO_ARRAY = 2;
-    const TRANSFORM_TO_STRING = 3;
+    const TRANSFORM_TO_JSON_ARRAY = "json";
+    const TRANSFORM_TO_ARRAY = "array";
+    const TRANSFORM_TO_STRING = "string";
 
     /**
      * Outward presentation of object
@@ -26,4 +26,10 @@ interface ModelInterface
      * @return mixed
      */
     public function _setAttributes($attributes);
+
+    /**
+     * Convert object to array
+     * @return array
+     */
+    public function toArray();
 }

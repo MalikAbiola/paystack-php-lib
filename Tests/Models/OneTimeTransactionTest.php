@@ -16,7 +16,6 @@ use Paystack\Repositories\TransactionResource;
 
 class OneTimeTransactionTest extends BaseTestCase
 {
-    private $transactionResource;
 
     public function setUp()
     {

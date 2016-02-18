@@ -17,7 +17,7 @@ use Paystack\Repositories\PlanResource;
 
 class PlanResourceTest extends BaseTestCase
 {
-    private $paystackHttpClient;
+    protected $paystackHttpClient;
 
     public function setUp()
     {
