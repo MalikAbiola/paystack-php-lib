@@ -1,6 +1,7 @@
 <?php
 
 namespace Paystack\Tests;
+use Paystack\Abstractions\Resource;
 use Paystack\Helpers\Utils;
 
 /**
@@ -16,11 +17,6 @@ class UtilsTest extends BaseTestCase
         $this->assertNotEquals(Utils::generateTransactionRef(), Utils::generateTransactionRef());
     }
 
-    public function testGetEnvReturnsEnvValue()
-    {
-        $this->assertEquals('/transaction/initialize', Utils::env('INITIALIZE_TRANSACTION'));
-    }
-
     public function testGetEnvReturnsDefaultValueWhenKeyNotFound()
     {
         $this->assertEquals("key", Utils::env("NOT_FOUND_KEY", 'key'));
@@ -28,11 +24,11 @@ class UtilsTest extends BaseTestCase
 
     public function testTransformUrlReturnsTransformedUrl()
     {
-        $this->assertEquals('/customer/1', Utils::transformUrl(Utils::env('CUSTOMERS_URL'), 1));
+        $this->assertEquals('/customer/1', Utils::transformUrl(Resource::CUSTOMERS_URL, 1));
         $this->assertEquals(
             '/transaction/verify/transaction_reference',
             Utils::transformUrl(
-                Utils::env('VERIFY_TRANSACTION'),
+                Resource::VERIFY_TRANSACTION,
                 'transaction_reference',
                 ':reference'
             )
