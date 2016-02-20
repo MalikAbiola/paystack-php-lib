@@ -6,10 +6,10 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Abstractions;
+namespace MAbiola\Paystack\Abstractions;
 
-use Paystack\Contracts\ModelInterface;
-use Paystack\Helpers\Utils;
+use MAbiola\Paystack\Contracts\ModelInterface;
+use MAbiola\Paystack\Helpers\Utils;
 
 abstract class Model
 {

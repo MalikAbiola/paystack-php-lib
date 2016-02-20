@@ -6,11 +6,11 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Abstractions;
+namespace MAbiola\Paystack\Abstractions;
 
 use Illuminate\Http\Response;
-use Paystack\Exceptions\ExceptionHandler;
-use Paystack\Helpers\Utils;
+use MAbiola\Paystack\Exceptions\ExceptionHandler;
+use MAbiola\Paystack\Helpers\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 abstract class Resource

@@ -6,12 +6,12 @@
  * IDE: PhpStorm
  * Create Guzzle HTTP Client that handles making requests and all
  */
-namespace Paystack\Factories;
+namespace MAbiola\Paystack\Factories;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
-use Paystack\Helpers\Utils;
+use MAbiola\Paystack\Helpers\Utils;
 
 class PaystackHttpClientFactory {
     use Utils;

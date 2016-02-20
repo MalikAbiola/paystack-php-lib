@@ -1,8 +1,8 @@
 <?php
 
-namespace Paystack\Tests;
-use Paystack\Abstractions\Resource;
-use Paystack\Helpers\Utils;
+namespace MAbiola\Paystack\Tests;
+use MAbiola\Paystack\Abstractions\Resource;
+use MAbiola\Paystack\Helpers\Utils;
 
 /**
  * Created by Malik Abiola.

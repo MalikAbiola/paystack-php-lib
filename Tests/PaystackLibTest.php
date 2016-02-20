@@ -6,21 +6,21 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 
-use Paystack\Exceptions\PaystackNotFoundException;
-use Paystack\Exceptions\PaystackUnauthorizedException;
-use Paystack\Exceptions\PaystackUnsupportedOperationException;
-use Paystack\Exceptions\PaystackValidationException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Helpers\Transaction;
-use Paystack\Models\Customer;
-use Paystack\Models\Plan;
-use Paystack\Paystack;
-use Paystack\Repositories\CustomerResource;
-use Paystack\Repositories\PlanResource;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
+use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
+use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
+use MAbiola\Paystack\Exceptions\PaystackValidationException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Helpers\Transaction;
+use MAbiola\Paystack\Models\Customer;
+use MAbiola\Paystack\Models\Plan;
+use MAbiola\Paystack\Paystack;
+use MAbiola\Paystack\Repositories\CustomerResource;
+use MAbiola\Paystack\Repositories\PlanResource;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 class PaystackLibTest extends BaseTestCase
 {
@@ -438,7 +438,7 @@ class PaystackLibTest extends BaseTestCase
 
         $transaction =  $this->paystack->transactionDetails('9663');
 
-        $this->assertInstanceOf(\Paystack\Models\Transaction::class, $transaction);
+        $this->assertInstanceOf(\MAbiola\Paystack\Models\Transaction::class, $transaction);
         $this->assertEquals($this->transactionDetailsResponseData['reference'], $transaction->get('reference'));
 
         $this->assertTrue(is_array($transaction->_toArray()));
@@ -479,7 +479,7 @@ class PaystackLibTest extends BaseTestCase
 
         $this->assertTrue(is_array($allTransactions));
         $this->assertCount(4, $allTransactions);
-        $this->assertInstanceOf(\Paystack\Models\Transaction::class, $allTransactions[0]);
+        $this->assertInstanceOf(\MAbiola\Paystack\Models\Transaction::class, $allTransactions[0]);
         $this->assertArrayHasKey('customer', $allTransactions[0]->get(['customer']));
     }
 

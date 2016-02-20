@@ -1,10 +1,10 @@
 <?php
-namespace Paystack\Tests;
-use Paystack\Exceptions\PaystackNotFoundException;
-use Paystack\Exceptions\PaystackUnauthorizedException;
-use Paystack\Exceptions\PaystackValidationException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Repositories\CustomerResource;
+namespace MAbiola\Paystack\Tests;
+use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
+use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
+use MAbiola\Paystack\Exceptions\PaystackValidationException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Repositories\CustomerResource;
 
 /**
  * Created by Malik Abiola.

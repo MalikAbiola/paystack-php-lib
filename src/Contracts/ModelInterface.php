@@ -6,7 +6,7 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Contracts;
+namespace MAbiola\Paystack\Contracts;
 
 interface ModelInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Paystack\Exceptions;
+namespace MAbiola\Paystack\Exceptions;
 
 use Illuminate\Http\Response;
-use Paystack\Tests\BaseTestCase;
+use MAbiola\Paystack\Tests\BaseTestCase;
 
 /**
  * Created by Malik Abiola.

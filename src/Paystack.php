@@ -6,18 +6,17 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack;
+namespace MAbiola\Paystack;
 
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Models\Customer;
-use Paystack\Models\OneTimeTransaction;
-use Paystack\Models\Plan;
-use Paystack\Models\ReturningTransaction;
-use Paystack\Models\Transaction;
-use Paystack\Repositories\CustomerResource;
-use Paystack\Repositories\PlanResource;
-use Paystack\Repositories\TransactionResource;
-use Paystack\Helpers\Transaction as TransactionHelper;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Models\Customer;
+use MAbiola\Paystack\Models\OneTimeTransaction;
+use MAbiola\Paystack\Models\Plan;
+use MAbiola\Paystack\Models\ReturningTransaction;
+use MAbiola\Paystack\Repositories\CustomerResource;
+use MAbiola\Paystack\Repositories\PlanResource;
+use MAbiola\Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Helpers\Transaction as TransactionHelper;
 
 class Paystack
 {

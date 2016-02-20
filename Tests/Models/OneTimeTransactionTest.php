@@ -6,13 +6,13 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 
-use Paystack\Exceptions\PaystackInvalidTransactionException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Models\OneTimeTransaction;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Models\OneTimeTransaction;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 class OneTimeTransactionTest extends BaseTestCase
 {

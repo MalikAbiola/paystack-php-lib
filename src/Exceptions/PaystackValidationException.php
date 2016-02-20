@@ -6,7 +6,7 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Exceptions;
+namespace MAbiola\Paystack\Exceptions;
 
 
 class PaystackValidationException extends BaseException

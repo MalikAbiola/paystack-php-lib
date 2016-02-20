@@ -6,14 +6,14 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 
-use Paystack\Exceptions\PaystackUnsupportedOperationException;
-use Paystack\Exceptions\PaystackValidationException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Models\Plan;
-use Paystack\Repositories\PlanResource;
+use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
+use MAbiola\Paystack\Exceptions\PaystackValidationException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Models\Plan;
+use MAbiola\Paystack\Repositories\PlanResource;
 
 class PlanTests extends BaseTestCase
 {

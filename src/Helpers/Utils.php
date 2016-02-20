@@ -7,7 +7,7 @@
  * Helper functions
  */
 
-namespace Paystack\Helpers;
+namespace MAbiola\Paystack\Helpers;
 
 use Illuminate\Support\Str;
 use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;

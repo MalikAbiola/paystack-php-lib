@@ -1,5 +1,5 @@
 <?php
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 /**
  * Description of BaseTestCase

@@ -6,11 +6,11 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Models;
+namespace MAbiola\Paystack\Models;
 
-use Paystack\Abstractions\Model;
-use Paystack\Contracts\ModelInterface;
-use Paystack\Helpers\Transaction as TransactionHelper;
+use MAbiola\Paystack\Abstractions\Model;
+use MAbiola\Paystack\Contracts\ModelInterface;
+use MAbiola\Paystack\Helpers\Transaction as TransactionHelper;
 
 class Transaction extends Model implements ModelInterface
 {

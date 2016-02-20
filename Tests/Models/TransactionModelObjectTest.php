@@ -6,10 +6,10 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 
-use Paystack\Models\Transaction;
+use MAbiola\Paystack\Models\Transaction;
 
 class TransactionModelObjectTest extends BaseTestCase
 {

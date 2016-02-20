@@ -6,13 +6,13 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Models;
+namespace MAbiola\Paystack\Models;
 
-use Paystack\Abstractions\Model;
-use Paystack\Contracts\ModelInterface;
-use Paystack\Contracts\PlansInterface;
-use Paystack\Exceptions\PaystackUnsupportedOperationException;
-use Paystack\Repositories\PlanResource;
+use MAbiola\Paystack\Abstractions\Model;
+use MAbiola\Paystack\Contracts\ModelInterface;
+use MAbiola\Paystack\Contracts\PlansInterface;
+use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
+use MAbiola\Paystack\Repositories\PlanResource;
 
 class Plan extends Model implements PlansInterface, ModelInterface
 {

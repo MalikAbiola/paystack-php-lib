@@ -6,14 +6,14 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 
-use Paystack\Exceptions\PaystackNotFoundException;
-use Paystack\Exceptions\PaystackUnauthorizedException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Helpers\Transaction;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
+use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Helpers\Transaction;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 class TransactionHelpersTest extends BaseTestCase
 {
@@ -36,7 +36,7 @@ class TransactionHelpersTest extends BaseTestCase
 
         $transaction = $transactionHelper->details('9663');
 
-        $this->assertInstanceOf(\Paystack\Models\Transaction::class, $transaction);
+        $this->assertInstanceOf(\MAbiola\Paystack\Models\Transaction::class, $transaction);
         $this->assertEquals($this->transactionDetailsResponseData['reference'], $transaction->get('reference'));
 
         $this->assertTrue(is_array($transaction->_toArray()));
@@ -74,7 +74,7 @@ class TransactionHelpersTest extends BaseTestCase
 
         $this->assertTrue(is_array($allTransactions));
         $this->assertCount(4, $allTransactions);
-        $this->assertInstanceOf(\Paystack\Models\Transaction::class, $allTransactions[0]);
+        $this->assertInstanceOf(\MAbiola\Paystack\Models\Transaction::class, $allTransactions[0]);
         $this->assertArrayHasKey('customer', $allTransactions[0]->get(['customer']));
     }
 

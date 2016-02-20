@@ -6,11 +6,11 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Abstractions;
+namespace MAbiola\Paystack\Abstractions;
 
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Helpers\Utils;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Helpers\Utils;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 abstract class BaseTransaction
 {

@@ -6,10 +6,10 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Repositories;
+namespace MAbiola\Paystack\Repositories;
 
 use GuzzleHttp\Client;
-use Paystack\Abstractions\Resource;
+use MAbiola\Paystack\Abstractions\Resource;
 
 class TransactionResource extends Resource
 {
