@@ -1,8 +1,8 @@
 <?php
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 use GuzzleHttp\Client;
-use Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
 /**
  * Description of PaystackHttpClientFactoryTest
  *

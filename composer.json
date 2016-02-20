@@ -1,14 +1,15 @@
 {
-    "name": "mabiola/ppaystack-php-lib",
-    "version": "0.0.1",
-    "description": "Php libary wrapper for paystack.co",
+    "name": "mabiola/paystack-php-lib",
+    "version": "0.1.0",
+    "description": "A PHP Library for https://paystack.co",
     "keywords": ["library", "Paystack"],
     "type": "library",
     "require": {
         "vlucas/phpdotenv": "~1.0",
         "illuminate/support": "~5.1-dev",
         "illuminate/http": "~5.1-dev",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "ramsey/uuid": "^2.8"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -23,8 +24,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Paystack\\": "src/",
-            "Paystack\\Tests\\": "Tests/"
+            "MAbiola\\Paystack\\": "src/",
+            "MAbiola\\Paystack\\Tests\\": "Tests/"
         }
     }
 
