@@ -6,12 +6,11 @@ A PHP library for Paystack.
 [![Build Status](https://travis-ci.org/MalikAbiola/paystack-php-lib.svg?branch=master)](https://travis-ci.org/MalikAbiola/paystack-php-lib)
 [![Coverage Status](https://coveralls.io/repos/github/MalikAbiola/paystack-php-lib/badge.svg?branch=master)](https://coveralls.io/github/MalikAbiola/paystack-php-lib?branch=master)
 # Requirements #
-----------
+
  - PHP 5.5+
  - [Composer](https://getcomposer.org/doc/00-intro.md "Composer")
 
 # Installation #
-----------
 
 ### Via Composer ###
 Add the following to your `composer.json` file and run `composer install`
@@ -37,7 +36,6 @@ Then use composer's autoload.
 Seriously, please... use composer. Thank you.
 
 # Configurations #
-----------
 
 Add the following keys to your .env file.
 
@@ -54,7 +52,7 @@ Replace the keys with your actual Paystack keys - you can find this on the `Deve
 That's is! You are ready to receive payments!
 
 # Usage #
-----------
+
 Using the library is simple, make a Paystack Library object and use this object to perform operations on Paystack.
 To create the Paystack Library object, do;
 
@@ -191,11 +189,11 @@ Now lets walk through some of the operations you can perform with the object you
 	- **PaystackValidationException:** Thrown when validation errors occur. You can view validation errors by calling `getValidationErrors()` on the exception object. `getValidationErrors()` returns an array with attributes failing validation and the reasons.
 
 # Contributing #
------------
+
 I very much welcome your contributions, fork and send me a pull request. Remember to write tests. Or you can open issues to report bugs.
 
 Also, if you like this library, star the repo.  Or if you have questions or just want to give me a shout, you can reach me on [twitter](https://twitter.com/MalikAbiola_)
 
 # License #
------------
+
 MIT.
