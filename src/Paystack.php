@@ -32,7 +32,7 @@ class Paystack
     /**
      * Paystack constructor.
      */
-    public function __construct()
+    private function __construct()
     {
         $this->paystackHttpClient = PaystackHttpClientFactory::make();
 
@@ -45,6 +45,15 @@ class Paystack
         $this->planModel = new Plan($this->planResource);
 
         $this->transactionHelper = TransactionHelper::make();
+    }
+
+    /**
+     * Make a new Paystack library object
+     * @return Paystack
+     */
+    public static function make()
+    {
+        return new static;
     }
 
     /**
