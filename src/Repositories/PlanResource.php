@@ -6,11 +6,11 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Repositories;
+namespace MAbiola\Paystack\Repositories;
 
 use GuzzleHttp\Client;
-use Paystack\Abstractions\Resource;
-use Paystack\Contracts\ResourceInterface;
+use MAbiola\Paystack\Abstractions\Resource;
+use MAbiola\Paystack\Contracts\ResourceInterface;
 
 class PlanResource extends Resource implements ResourceInterface
 {

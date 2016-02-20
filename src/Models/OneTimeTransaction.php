@@ -7,12 +7,12 @@
  * Create one time transactions
  */
 
-namespace Paystack\Models;
+namespace MAbiola\Paystack\Models;
 
 
-use Paystack\Abstractions\BaseTransaction;
-use Paystack\Contracts\TransactionContract;
-use Paystack\Exceptions\PaystackInvalidTransactionException;
+use MAbiola\Paystack\Abstractions\BaseTransaction;
+use MAbiola\Paystack\Contracts\TransactionContract;
+use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;
 
 class OneTimeTransaction extends BaseTransaction implements TransactionContract
 {

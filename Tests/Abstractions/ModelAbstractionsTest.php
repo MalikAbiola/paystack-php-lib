@@ -6,11 +6,11 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Models\Plan;
-use Paystack\Repositories\PlanResource;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Models\Plan;
+use MAbiola\Paystack\Repositories\PlanResource;
 
 class ModelAbstractionsTest extends BaseTestCase
 {

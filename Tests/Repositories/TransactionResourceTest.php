@@ -6,14 +6,14 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
-use Paystack\Exceptions\PaystackInternalServerError;
-use Paystack\Exceptions\PaystackUnauthorizedException;
-use Paystack\Exceptions\PaystackValidationException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Helpers\Utils;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Exceptions\PaystackInternalServerError;
+use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
+use MAbiola\Paystack\Exceptions\PaystackValidationException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Helpers\Utils;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 class TransactionResourceTest extends BaseTestCase
 {

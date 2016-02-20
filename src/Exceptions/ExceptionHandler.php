@@ -6,7 +6,7 @@
  * Time: 23:59
  * IDE: PhpStorm
  */
-namespace Paystack\Exceptions;
+namespace MAbiola\Paystack\Exceptions;
 
 use Illuminate\Http\Response;
 

@@ -1,9 +1,9 @@
 <?php
-namespace Paystack\Tests;
-use Paystack\Exceptions\PaystackUnsupportedOperationException;
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Models\Customer;
-use Paystack\Repositories\CustomerResource;
+namespace MAbiola\Paystack\Tests;
+use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Models\Customer;
+use MAbiola\Paystack\Repositories\CustomerResource;
 
 /**
  * Created by Malik Abiola.

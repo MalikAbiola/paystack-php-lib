@@ -6,12 +6,12 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Models;
+namespace MAbiola\Paystack\Models;
 
-use Paystack\Abstractions\Model;
-use Paystack\Contracts\ModelInterface;
-use Paystack\Exceptions\PaystackUnsupportedOperationException;
-use Paystack\Repositories\CustomerResource;
+use MAbiola\Paystack\Abstractions\Model;
+use MAbiola\Paystack\Contracts\ModelInterface;
+use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
+use MAbiola\Paystack\Repositories\CustomerResource;
 
 class Customer extends Model implements ModelInterface
 {

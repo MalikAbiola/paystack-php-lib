@@ -7,14 +7,14 @@
  * Create returning transaction
  */
 
-namespace Paystack\Models;
+namespace MAbiola\Paystack\Models;
 
 
-use Paystack\Abstractions\BaseTransaction;
-use Paystack\Contracts\TransactionContract;
-use Paystack\Exceptions\PaystackInvalidTransactionException;
-use Paystack\Helpers\Utils;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Abstractions\BaseTransaction;
+use MAbiola\Paystack\Contracts\TransactionContract;
+use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;
+use MAbiola\Paystack\Helpers\Utils;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 class ReturningTransaction extends BaseTransaction implements TransactionContract
 {

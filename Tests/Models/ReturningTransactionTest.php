@@ -6,12 +6,12 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Tests;
+namespace MAbiola\Paystack\Tests;
 
 
-use Paystack\Factories\PaystackHttpClientFactory;
-use Paystack\Models\ReturningTransaction;
-use Paystack\Repositories\TransactionResource;
+use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Models\ReturningTransaction;
+use MAbiola\Paystack\Repositories\TransactionResource;
 
 class ReturningTransactionTest extends BaseTestCase
 {

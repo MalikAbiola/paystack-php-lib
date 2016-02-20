@@ -6,12 +6,12 @@
  * IDE: PhpStorm
  */
 
-namespace Paystack\Helpers;
+namespace MAbiola\Paystack\Helpers;
 
 
-use Paystack\Abstractions\BaseTransaction;
-use Paystack\Contracts\TransactionContract;
-use Paystack\Models\Transaction as TransactionObject;
+use MAbiola\Paystack\Abstractions\BaseTransaction;
+use MAbiola\Paystack\Contracts\TransactionContract;
+use MAbiola\Paystack\Models\Transaction as TransactionObject;
 
 class Transaction extends BaseTransaction
 {
@@ -48,7 +48,7 @@ class Transaction extends BaseTransaction
     /**
      * Get transaction details
      * @param $transactionId
-     * @return \Paystack\Models\Transaction
+     * @return \MAbiola\Paystack\Models\Transaction
      * @throws \Exception|mixed
      */
     public function details($transactionId)
