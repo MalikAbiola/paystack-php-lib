@@ -1,4 +1,4 @@
-## PHP Library [Paystack.co](http://paystack.co "Paystack.co")  (Unofficial) ##
+# PHP Library For [Paystack.co](http://paystack.co "Paystack.co")  (Unofficial) #
 A PHP library for Paystack.
 
 ###Latest Version###
@@ -122,7 +122,7 @@ Now lets walk through some of the operations you can perform with the object you
 
 	- **Retrieve Plan Details**
 
-		You can retrieve the details of a plan by passing the customer code to the `getPlan` to get a customer object.
+		You can retrieve the details of a plan by passing the plan code to the `getPlan` to get a plan object.
 
 
 			$plan = $paystackLibObject->getPlan('plan_code');
