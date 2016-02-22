@@ -21,7 +21,7 @@ Then use composer's autoload.
 
 	require_once __DIR__ . '/vendor/autoload.php';
 
-**NOTE:** if you are using a PHP Framework for example, [Laravel](https://laravel.com/), you do not need to add the composer autoload to your file(s) as it is already done. (see it in `bootstrap/app.php`).
+**NOTE:** if you are using a PHP Framework for example, [Laravel](https://laravel.com/), you do not need to add the composer autoload to your file(s) as it is already done. (see it in `bootstrap/autoload`; `bootstrap/app.php` for Lumen; ).
 
 ### Other Installation Methods ###
 
@@ -64,7 +64,7 @@ Now lets walk through some of the operations you can perform with the object you
 
 	According to [Paystack's documentation](https://developers.paystack.co/docs/), to charge a customer, you create a one time transaction for which you get an authorization url which you redirect your page to so that your customer can enter their card details and pay for your service(s). To do this with the library, pass the amount to be charged, the customer email, and the optional plan (if this is a transaction to create a subscription. you can either enter the plan code here or the plan object - more on this coming soon).
 
-		$getAuthorization = $paystackLibObject->startOneTimeTransaction('10000', 'me@me.com);
+		$getAuthorization = $paystackLibObject->startOneTimeTransaction('10000', 'me@me.com');
 
 	You will expect an array that contains the authorization url `authorization_url` to redirect to to accept this payment, and the unique auto-generated transaction reference `reference`.
 
@@ -144,7 +144,7 @@ Now lets walk through some of the operations you can perform with the object you
 
 			$updatedPlan = $paystackLibObject->updatePlan('plan_code', ['hosted_page_url' => 'http://somerandomu.rl', 'hosted_page' => true]);
 
-		If the operation is successful, the customer object is returned.
+		If the operation is successful, the plan object is returned.
 
 	- **Retrieve All Plans**
 
