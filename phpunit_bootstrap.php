@@ -2,4 +2,5 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-Dotenv::load(__DIR__);
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();

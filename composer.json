@@ -1,11 +1,11 @@
 {
     "name": "mabiola/paystack-php-lib",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A PHP Library for https://paystack.co",
     "keywords": ["library", "Paystack"],
     "type": "library",
     "require": {
-        "vlucas/phpdotenv": "~1.0",
+        "vlucas/phpdotenv": "~2.2",
         "illuminate/support": "~5.1-dev",
         "illuminate/http": "~5.1-dev",
         "guzzlehttp/guzzle": "~6.0",

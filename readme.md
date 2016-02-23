@@ -1,8 +1,8 @@
-## PHP Library [Paystack.co](http://paystack.co "Paystack.co")  (Unofficial) ##
+# PHP Library For [Paystack.co](http://paystack.co "Paystack.co")  (Unofficial) #
 A PHP library for Paystack.
 
 ###Latest Version###
-	0.1.0
+	0.1.1
 [![Build Status](https://travis-ci.org/MalikAbiola/paystack-php-lib.svg?branch=master)](https://travis-ci.org/MalikAbiola/paystack-php-lib)
 [![Coverage Status](https://coveralls.io/repos/github/MalikAbiola/paystack-php-lib/badge.svg?branch=master)](https://coveralls.io/github/MalikAbiola/paystack-php-lib?branch=master)
 # Requirements #
@@ -21,7 +21,7 @@ Then use composer's autoload.
 
 	require_once __DIR__ . '/vendor/autoload.php';
 
-**NOTE:** if you are using a PHP Framework for example, [Laravel](https://laravel.com/), you do not need to add the composer autoload to your file(s) as it is already done. (see it in `bootstrap/app.php`).
+**NOTE:** if you are using a PHP Framework for example, [Laravel](https://laravel.com/), you do not need to add the composer autoload to your file(s) as it is already done. (see it in `bootstrap/autoload`; `bootstrap/app.php` for Lumen; ).
 
 ### Other Installation Methods ###
 
@@ -64,7 +64,7 @@ Now lets walk through some of the operations you can perform with the object you
 
 	According to [Paystack's documentation](https://developers.paystack.co/docs/), to charge a customer, you create a one time transaction for which you get an authorization url which you redirect your page to so that your customer can enter their card details and pay for your service(s). To do this with the library, pass the amount to be charged, the customer email, and the optional plan (if this is a transaction to create a subscription. you can either enter the plan code here or the plan object - more on this coming soon).
 
-		$getAuthorization = $paystackLibObject->startOneTimeTransaction('10000', 'me@me.com);
+		$getAuthorization = $paystackLibObject->startOneTimeTransaction('10000', 'me@me.com');
 
 	You will expect an array that contains the authorization url `authorization_url` to redirect to to accept this payment, and the unique auto-generated transaction reference `reference`.
 
@@ -122,7 +122,7 @@ Now lets walk through some of the operations you can perform with the object you
 
 	- **Retrieve Plan Details**
 
-		You can retrieve the details of a plan by passing the customer code to the `getPlan` to get a customer object.
+		You can retrieve the details of a plan by passing the plan code to the `getPlan` to get a plan object.
 
 
 			$plan = $paystackLibObject->getPlan('plan_code');
@@ -144,7 +144,7 @@ Now lets walk through some of the operations you can perform with the object you
 
 			$updatedPlan = $paystackLibObject->updatePlan('plan_code', ['hosted_page_url' => 'http://somerandomu.rl', 'hosted_page' => true]);
 
-		If the operation is successful, the customer object is returned.
+		If the operation is successful, the plan object is returned.
 
 	- **Retrieve All Plans**
 
