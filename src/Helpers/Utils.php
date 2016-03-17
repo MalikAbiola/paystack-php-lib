@@ -13,7 +13,8 @@ use Illuminate\Support\Str;
 use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
 use Rhumsaa\Uuid\Uuid;
 
-trait Utils {
+trait Utils
+{
 
     /**
      * Transform url by replacing dummy data
@@ -32,7 +33,8 @@ trait Utils {
      * @param $object
      * @return string
      */
-    public function toJson($object) {
+    public function toJson($object)
+    {
         return json_encode($object);
     }
 
@@ -57,12 +59,10 @@ trait Utils {
      */
     public function objectToArray($object)
     {
-        if (!is_object($object) && !is_array($object))
-        {
+        if (!is_object($object) && !is_array($object)) {
             return $object;
         }
-        if (is_object($object))
-        {
+        if (is_object($object)) {
             $object = get_object_vars($object);
         }
         return array_map(array(get_class(), "objectToArray"), $object);

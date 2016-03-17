@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Exceptions;
 
-
 class PaystackNotFoundException extends BaseException
 {
     public function __construct($response, $code)

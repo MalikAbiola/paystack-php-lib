@@ -9,7 +9,6 @@
 
 namespace MAbiola\Paystack\Models;
 
-
 use MAbiola\Paystack\Abstractions\BaseTransaction;
 use MAbiola\Paystack\Contracts\TransactionContract;
 use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;
@@ -34,15 +33,14 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
      * @param $email
      * @param $plan
      */
-    protected function __construct
-    (
+    protected function __construct(
         $transactionRef,
         $authorization,
         $amount,
         $email,
         $plan
-    )
-    {
+    ) {
+    
         $this->transactionRef = $transactionRef;
         $this->authorization = $authorization;
         $this->amount = $amount;

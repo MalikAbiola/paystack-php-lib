@@ -9,7 +9,6 @@
 
 namespace MAbiola\Paystack\Models;
 
-
 use MAbiola\Paystack\Abstractions\BaseTransaction;
 use MAbiola\Paystack\Contracts\TransactionContract;
 use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;

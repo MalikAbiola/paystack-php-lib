@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Exceptions;
 
-
 class PaystackInvalidTransactionException extends BaseException
 {
     /**

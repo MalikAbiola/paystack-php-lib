@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Exceptions;
 
-
 class PaystackUnauthorizedException extends BaseException
 {
     public function __construct($response, $code)
