@@ -105,7 +105,7 @@ class CustomerResourceTest extends BaseTestCase
     public function testUpdateCustomerThrowsException($createdCustomer)
     {
         $customerResource = new CustomerResource($this->paystackHttpClient);
-        $updatedCustomer = $customerResource->update($createdCustomer['customer_code'], ['email' => '']);
+        $updatedCustomer = $customerResource->update($createdCustomer['customer_code'], ['email' => 'this-is-an-invalid-email']);
         $validationErrors = $updatedCustomer->getValidationErrors();
 
         $this->assertInstanceOf(PaystackValidationException::class, $updatedCustomer);

@@ -25,13 +25,13 @@ class PaystackHttpClientFactory
             self::env('PAYSTACK_LIVE_SECRET_KEY');
 
         $defaults = [
-            'base_uri' => "https://api.paystack.co",
-            'headers'     => [
-                'Authorization'    => "Bearer " . $authorization,
-                'Content-Type' => 'application/json',
+            'base_uri'      => "https://api.paystack.co",
+            'headers'       => [
+                'Authorization' => "Bearer " . $authorization,
+                'Content-Type'  => 'application/json',
             ],
-            'http_errors' => false,
-            'handler'     => HandlerStack::create(new CurlHandler()) //use native curl
+            'http_errors'   => false,
+            'handler'       => HandlerStack::create(new CurlHandler()) //use native curl
         ];
 
         if (!empty($config)) {
