@@ -47,7 +47,7 @@ class TransactionResource extends Resource
     {
         $page = !empty($page) ? "/page={$page}" : '';
         $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(RESOURCE::GET_TRANSACTION,'') . $page
+            $this->transformUrl(RESOURCE::GET_TRANSACTION, '') . $page
         );
 
         return $this->processResourceRequestResponse($request);

@@ -81,8 +81,7 @@ class Paystack
             throw $customers;
         }
 
-        foreach ($customers as $customer)
-        {
+        foreach ($customers as $customer) {
             $customerObject = new Customer($this->getCustomerResource());
             $customerObjects[] = $customerObject->_setAttributes($customer);
         }

@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Helpers;
 
-
 use MAbiola\Paystack\Abstractions\BaseTransaction;
 use MAbiola\Paystack\Contracts\TransactionContract;
 use MAbiola\Paystack\Models\Transaction as TransactionObject;
@@ -55,7 +54,7 @@ class Transaction extends BaseTransaction
     {
         $transactionData = $this->getTransactionResource()->get($transactionId);
 
-        if($transactionData instanceof \Exception) {
+        if ($transactionData instanceof \Exception) {
             throw $transactionData;
         }
 

@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Exceptions;
 
-
 class PaystackUnsupportedOperationException extends BaseException
 {
     public function __construct($message, $code)

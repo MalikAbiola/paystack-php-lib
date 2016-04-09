@@ -13,7 +13,8 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
 use MAbiola\Paystack\Helpers\Utils;
 
-class PaystackHttpClientFactory {
+class PaystackHttpClientFactory
+{
     use Utils;
 
     public static function make($config = [])

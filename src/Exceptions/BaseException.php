@@ -8,7 +8,8 @@
 
 namespace MAbiola\Paystack\Exceptions;
 
-abstract class BaseException extends \Exception {
+abstract class BaseException extends \Exception
+{
 
     public function __construct($message, $code)
     {

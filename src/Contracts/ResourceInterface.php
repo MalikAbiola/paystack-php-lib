@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Contracts;
 
-
 interface ResourceInterface
 {
 
