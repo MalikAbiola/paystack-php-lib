@@ -15,7 +15,7 @@ A PHP library for Paystack.
 ### Via Composer ###
 Add the following to your `composer.json` file and run `composer install`
 
-	"mabiola/paystack-php-lib" : "~0.1"
+	"mabiola/paystack-php-lib" : "~1.0"
 
 Then use composer's autoload.
 
