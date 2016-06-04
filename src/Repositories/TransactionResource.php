@@ -32,7 +32,7 @@ class TransactionResource extends Resource
     public function get($id)
     {
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(RESOURCE::GET_TRANSACTION, $id)
+            $this->transformUrl(Resource::GET_TRANSACTION, $id)
         );
 
         return $this->processResourceRequestResponse($request);
@@ -47,7 +47,7 @@ class TransactionResource extends Resource
     {
         $page = !empty($page) ? "/page={$page}" : '';
         $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(RESOURCE::GET_TRANSACTION,'') . $page
+            $this->transformUrl(Resource::GET_TRANSACTION, '') . $page
         );
 
         return $this->processResourceRequestResponse($request);

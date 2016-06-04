@@ -2,7 +2,7 @@
 A PHP library for Paystack.
 
 ###Latest Version###
-	0.1.1
+	1.0.0
 [![Build Status](https://travis-ci.org/MalikAbiola/paystack-php-lib.svg?branch=master)](https://travis-ci.org/MalikAbiola/paystack-php-lib)
 [![Coverage Status](https://coveralls.io/repos/github/MalikAbiola/paystack-php-lib/badge.svg?branch=master)](https://coveralls.io/github/MalikAbiola/paystack-php-lib?branch=master)
 # Requirements #
@@ -57,6 +57,10 @@ Using the library is simple, make a Paystack Library object and use this object 
 To create the Paystack Library object, do;
 
 	$paystackLibObject = \MAbiola\Paystack\Paystack::make();
+
+or if you'd rather provide the exact key (if you are not using an env file);
+
+    $paystackLibObject = \MAbiola\Paystack\Paystack::make("my-paystack-private-key");
 
 Now lets walk through some of the operations you can perform with the object you just created.
 

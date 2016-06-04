@@ -40,7 +40,7 @@ class CustomerResource extends Resource implements ResourceInterface
             $this->transformUrl(Resource::CUSTOMERS_URL, $id)
         );
 
-       return $this->processResourceRequestResponse($request);
+        return $this->processResourceRequestResponse($request);
     }
 
     /**

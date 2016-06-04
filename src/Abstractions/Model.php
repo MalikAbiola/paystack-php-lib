@@ -41,17 +41,17 @@ abstract class Model
         //get function args
         $argsAsArray = func_get_args();
         //is attributes passed as args is an array and count greater than 1
-        if (!is_array($attributes) && count($argsAsArray) > 1 ) {
+        if (!is_array($attributes) && count($argsAsArray) > 1) {
             //recalls itself to get attributes as array
             return call_user_func(array(get_class(), "get"), $argsAsArray);
         }
         //if just args is not an array or comma separated list
-        if (!is_array($attributes) && count($argsAsArray) == 1 ) {
+        if (!is_array($attributes) && count($argsAsArray) == 1) {
             return isset($this->{$attributes}) ? $this->{$attributes} : null;
         }
 
         $attributesGet = [];
-        foreach($attributes as $attribute) {
+        foreach ($attributes as $attribute) {
             $attributesGet[$attribute] = isset($this->{$attribute}) ? $this->{$attribute} : null;
         }
         return $attributesGet;
@@ -64,8 +64,8 @@ abstract class Model
      */
     public function _setAttributes($attributes)
     {
-        if(is_array($attributes)) {
-            foreach($attributes as $attribute => $value) {
+        if (is_array($attributes)) {
+            foreach ($attributes as $attribute => $value) {
                 $this->{$attribute} = $value;
             }
 
@@ -84,7 +84,7 @@ abstract class Model
      */
     public function transform($transformMode = "")
     {
-        switch($transformMode) {
+        switch ($transformMode) {
             case ModelInterface::TRANSFORM_TO_JSON_ARRAY:
                 return json_encode($this->objectToArray($this));
             default:

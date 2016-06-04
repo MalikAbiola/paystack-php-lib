@@ -8,7 +8,6 @@
 
 namespace MAbiola\Paystack\Exceptions;
 
-
 class PaystackValidationException extends BaseException
 {
     private $response;
@@ -27,7 +26,7 @@ class PaystackValidationException extends BaseException
     {
         $errors = [];
         if (isset($this->response->errors)) {
-            foreach ($this->response->errors as $error => $reasons){
+            foreach ($this->response->errors as $error => $reasons) {
                 $errors[] = [
                     'attribute' => $error,
                     'reason'    => $this->getValidationReasonsAsString($reasons)

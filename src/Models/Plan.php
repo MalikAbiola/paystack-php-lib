@@ -61,7 +61,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
     public function getPlan($planCode)
     {
         $plan = $this->planResource->get($planCode);
-        if($plan instanceof \Exception) {
+        if ($plan instanceof \Exception) {
             throw $plan;
         }
 
@@ -176,7 +176,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
             "hosted_page_summary" => $this->hosted_page_summary,
             "subscription_count" => count($this->subscriptions)
         ];
-        switch($transformMode) {
+        switch ($transformMode) {
             case ModelInterface::TRANSFORM_TO_JSON_ARRAY:
                 return json_encode($planObject);
             default:

@@ -30,10 +30,11 @@ class Paystack
 
     /**
      * Paystack constructor.
+     * @param $key
      */
-    private function __construct()
+    private function __construct($key)
     {
-        $this->paystackHttpClient = PaystackHttpClientFactory::make();
+        $this->paystackHttpClient = $this->makePaystackHttpClient($key);
 
         $this->customerResource = new CustomerResource($this->paystackHttpClient);
         $this->customerModel = new Customer($this->customerResource);
@@ -44,15 +45,17 @@ class Paystack
         $this->planModel = new Plan($this->planResource);
 
         $this->transactionHelper = TransactionHelper::make();
+        $this->transactionHelper->setTransactionResource($this->transactionResource);
     }
 
     /**
      * Make a new Paystack library object
+     * @param null $key
      * @return Paystack
      */
-    public static function make()
+    public static function make($key = null)
     {
-        return new self;
+        return new self($key);
     }
 
     /**
@@ -81,8 +84,7 @@ class Paystack
             throw $customers;
         }
 
-        foreach ($customers as $customer)
-        {
+        foreach ($customers as $customer) {
             $customerObject = new Customer($this->getCustomerResource());
             $customerObjects[] = $customerObject->_setAttributes($customer);
         }
@@ -391,5 +393,33 @@ class Paystack
     public function setTransactionHelper($transactionHelper)
     {
         $this->transactionHelper = $transactionHelper;
+    }
+
+    /**
+     * Make a HTTP Client for making requests
+     * @param $key
+     * @return \GuzzleHttp\Client
+     */
+    private function makePaystackHttpClient($key)
+    {
+        return is_null($key) ?
+            PaystackHttpClientFactory::make() :
+            PaystackHttpClientFactory::make(
+                [
+                    'headers'   => [
+                        'Authorization' => "Bearer " . $key,
+                        'Content-Type'  => 'application/json'
+                    ]
+                ]
+            );
+    }
+
+    /**
+     * Get the created HTTP Client
+     * @return \GuzzleHttp\Client
+     */
+    public function getPaystackHttpClient()
+    {
+        return $this->paystackHttpClient;
     }
 }
