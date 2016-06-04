@@ -9,6 +9,7 @@
 namespace MAbiola\Paystack\Tests;
 
 use MAbiola\Paystack\Exceptions\PaystackInternalServerError;
+use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
 use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
 use MAbiola\Paystack\Exceptions\PaystackValidationException;
 use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
@@ -29,7 +30,7 @@ class TransactionResourceTest extends BaseTestCase
     {
         $transactionRequestBody = [
             'amount' => $this->planData['amount'],
-            'email' => $this->customerData['email'],
+            'email' => $this->getFakedCustomerData()['email'],
             'plan' => '',
             'reference' => Utils::generateTransactionRef()
         ];
@@ -122,7 +123,7 @@ class TransactionResourceTest extends BaseTestCase
         $transactionResource = new TransactionResource($this->paystackHttpClient);
         $transactionDetails = $transactionResource->get($transactionData['reference']);
 
-        $this->assertInstanceOf(PaystackInternalServerError::class, $transactionDetails);
+        $this->assertInstanceOf(PaystackNotFoundException::class, $transactionDetails);
     }
 
     public function testGetTransactionsTotals()

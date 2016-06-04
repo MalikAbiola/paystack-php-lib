@@ -31,6 +31,7 @@ class PaystackHttpClientFactory
                 'Content-Type'  => 'application/json',
             ],
             'http_errors'   => false,
+            'verify'        => self::env('PAYSTACK_MODE') == 'test' ? false : true, //add so local developments can work
             'handler'       => HandlerStack::create(new CurlHandler()) //use native curl
         ];
 

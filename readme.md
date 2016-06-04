@@ -58,6 +58,10 @@ To create the Paystack Library object, do;
 
 	$paystackLibObject = \MAbiola\Paystack\Paystack::make();
 
+or if you'd rather provide the exact key (if you are not using an env file);
+
+    $paystackLibObject = \MAbiola\Paystack\Paystack::make("my-paystack-private-key");
+
 Now lets walk through some of the operations you can perform with the object you just created.
 
 1. **Initialize a One Time Transaction**

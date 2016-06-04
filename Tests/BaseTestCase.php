@@ -6,6 +6,9 @@ namespace MAbiola\Paystack\Tests;
  *
  * @author Doctormaliko
  */
+
+use Faker\Factory as Faker;
+
 class BaseTestCase extends \PHPUnit_Framework_TestCase {
     //put your code here
     protected $fakeAuthHeader = [
@@ -702,10 +705,24 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase {
         "plan" => 0
     ];
 
+    public function getFakedCustomerData(array $specifics = [])
+    {
+        $faker = Faker::create();
+
+        return array_merge(
+            [
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'email' => $faker->email,
+                'phone' => $faker->phoneNumber
+            ],
+            $specifics
+        );
+    }
+
     public function setUp()
     {
         parent::setUp();
-
     }
 
     public function tearDown()
