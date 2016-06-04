@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 13/02/2016
  * Time: 08:30
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Abstractions;
 
 use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
@@ -19,7 +18,8 @@ abstract class BaseTransaction
     protected $transactionResource;
 
     /**
-     * Get set transaction resource
+     * Get set transaction resource.
+     *
      * @return mixed
      */
     public function getTransactionResource()
@@ -28,7 +28,8 @@ abstract class BaseTransaction
     }
 
     /**
-     * Set transaction resource
+     * Set transaction resource.
+     *
      * @param mixed $transactionResource
      */
     public function setTransactionResource(TransactionResource $transactionResource)

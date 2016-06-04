@@ -3,12 +3,10 @@
  * Created by Malik Abiola.
  * Date: 17/02/2016
  * Time: 17:21
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
 
-use MAbiola\Paystack\Exceptions\PaystackInternalServerError;
 use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
 use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
 use MAbiola\Paystack\Exceptions\PaystackValidationException;
@@ -29,10 +27,10 @@ class TransactionResourceTest extends BaseTestCase
     public function testInitializeSuccessful()
     {
         $transactionRequestBody = [
-            'amount' => $this->planData['amount'],
-            'email' => $this->getFakedCustomerData()['email'],
-            'plan' => '',
-            'reference' => Utils::generateTransactionRef()
+            'amount'    => $this->planData['amount'],
+            'email'     => $this->getFakedCustomerData()['email'],
+            'plan'      => '',
+            'reference' => Utils::generateTransactionRef(),
         ];
         $transactionResource = new TransactionResource($this->paystackHttpClient);
         $initTransaction = $transactionResource->initialize($transactionRequestBody);
@@ -75,6 +73,7 @@ class TransactionResourceTest extends BaseTestCase
 
     /**
      * @depends testInitializeSuccessful
+     *
      * @param $initData
      */
     public function testVerifyTransactionReturnsVerificationData($initData)
@@ -89,6 +88,7 @@ class TransactionResourceTest extends BaseTestCase
 
     /**
      * @depends testInitializeSuccessful
+     *
      * @param $initData
      */
     public function testVerifyTransactionReturnsError($initData)
@@ -101,6 +101,7 @@ class TransactionResourceTest extends BaseTestCase
 
     /**
      * @depends testGetAllTransactions
+     *
      * @param $transactionData
      */
     public function testGetTransactionDetailsReturnsTransactionDetails($transactionData)
@@ -116,6 +117,7 @@ class TransactionResourceTest extends BaseTestCase
 
     /**
      * @depends testInitializeSuccessful
+     *
      * @param $transactionData
      */
     public function testGetTransactionDetailsReturnsError($transactionData)
@@ -143,7 +145,7 @@ class TransactionResourceTest extends BaseTestCase
         $transactionTotals = $transactionResource->getTransactionTotals();
 
         $this->assertInstanceOf(PaystackUnauthorizedException::class, $transactionTotals);
-        $this->assertStringStartsWith("Format is Authorization", $transactionTotals->getErrors());
+        $this->assertStringStartsWith('Format is Authorization', $transactionTotals->getErrors());
     }
 
     public function testChargeAuthorizationReturnsError()

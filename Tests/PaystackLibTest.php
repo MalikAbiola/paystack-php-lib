@@ -3,11 +3,9 @@
  * Created by Malik Abiola.
  * Date: 02/02/2016
  * Time: 02:06
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
-
 
 use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
 use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
@@ -139,7 +137,7 @@ class PaystackLibTest extends BaseTestCase
     public function testCreateCustomerReturnsException()
     {
         $this->setExpectedException(PaystackValidationException::class);
-        $this->paystack->createCustomer('','','','');
+        $this->paystack->createCustomer('', '', '', '');
     }
 
     public function testUpdateCustomerReturnsCustomer()
@@ -215,7 +213,7 @@ class PaystackLibTest extends BaseTestCase
     public function testGetPlanReturnsException()
     {
         $errorResponse = new \stdClass();
-        $errorResponse->message = "Paystack Validation Exception";
+        $errorResponse->message = 'Paystack Validation Exception';
 
         $mockPlanResource = \Mockery::mock($this->planResource)->makePartial();
         $mockPlanResource->shouldReceive('get')
@@ -280,7 +278,7 @@ class PaystackLibTest extends BaseTestCase
     {
         $this->paystack->setPlanModel(new Plan($this->planResource));
         $this->setExpectedException(PaystackValidationException::class);
-        $createdPlan = $this->paystack->createPlan('','','','')->save();
+        $createdPlan = $this->paystack->createPlan('', '', '', '')->save();
     }
 
     public function testUpdatePlanReturnsUpdatedPlan()
@@ -302,7 +300,7 @@ class PaystackLibTest extends BaseTestCase
     public function testUpdatePlanThrowsException()
     {
         $errorResponse = new \stdClass();
-        $errorResponse->message = "Paystack Validation Exception";
+        $errorResponse->message = 'Paystack Validation Exception';
 
         $mockPlanResource = \Mockery::mock($this->planResource)->makePartial();
         $mockPlanResource->shouldReceive('get')->withAnyArgs()->andReturn($this->planRetrievedResourceResponseData);
@@ -352,7 +350,6 @@ class PaystackLibTest extends BaseTestCase
     {
         $this->setExpectedException(PaystackValidationException::class);
         $initOneTimeTransaction = $this->paystack->startOneTimeTransaction('', '', '');
-
     }
 
     public function testReturningTransactionSuccessful()
@@ -365,7 +362,7 @@ class PaystackLibTest extends BaseTestCase
         $this->paystack->setTransactionResource($mockTransactionResource);
 
         $chargeReturningTransaction = $this->paystack->chargeReturningTransaction(
-            "AUTH_jonwwppn",
+            'AUTH_jonwwppn',
             $this->planData['amount'],
             $this->customerData['email'],
             ''
@@ -436,7 +433,7 @@ class PaystackLibTest extends BaseTestCase
         $transactionHelper->setTransactionResource($mockTransactionResource);
         $this->paystack->setTransactionHelper($transactionHelper);
 
-        $transaction =  $this->paystack->transactionDetails('9663');
+        $transaction = $this->paystack->transactionDetails('9663');
 
         $this->assertInstanceOf(\MAbiola\Paystack\Models\Transaction::class, $transaction);
         $this->assertEquals($this->transactionDetailsResponseData['reference'], $transaction->get('reference'));
@@ -447,7 +444,7 @@ class PaystackLibTest extends BaseTestCase
     public function testGetTransactionDetailsThrowsException()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Transaction Not Found";
+        $invalidResponse->message = 'Transaction Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('get')
@@ -486,7 +483,7 @@ class PaystackLibTest extends BaseTestCase
     public function testGetAllTransactionsReturnsException()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Transaction Not Found";
+        $invalidResponse->message = 'Transaction Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('getAll')
@@ -525,7 +522,7 @@ class PaystackLibTest extends BaseTestCase
     public function testGetTotalsThrowExceptions()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Authorization Not Found";
+        $invalidResponse->message = 'Authorization Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('getTransactionTotals')
@@ -543,7 +540,7 @@ class PaystackLibTest extends BaseTestCase
     public function testMakePaystackLib()
     {
         $this->setExpectedException(PaystackUnauthorizedException::class);
-        $paystackLib = Paystack::make("some-fake-random-key");
+        $paystackLib = Paystack::make('some-fake-random-key');
         $paystackLib->transactionsTotals();
     }
 

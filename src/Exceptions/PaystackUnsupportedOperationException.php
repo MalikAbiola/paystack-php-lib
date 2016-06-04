@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 14/02/2016
  * Time: 20:15
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Exceptions;
 
 class PaystackUnsupportedOperationException extends BaseException

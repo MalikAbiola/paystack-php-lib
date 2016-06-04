@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 06/02/2016
  * Time: 16:02
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Abstractions;
 
 use Illuminate\Http\Response;
@@ -19,16 +18,18 @@ abstract class Resource
 
     const INITIALIZE_TRANSACTION = '/transaction/initialize';
     const VERIFY_TRANSACTION = '/transaction/verify/:reference';
-    const GET_TRANSACTION='/transaction/:id';
-    const GET_TRANSACTION_TOTALS='/transaction/totals';
-    const CHARGE_AUTHORIZATION='/transaction/charge_authorization';
-    const CHARGE_TOKEN='/transaction/charge_token';
-    const CUSTOMERS_URL='/customer/:id';
-    const PLANS_URL='/plan/:id';
+    const GET_TRANSACTION = '/transaction/:id';
+    const GET_TRANSACTION_TOTALS = '/transaction/totals';
+    const CHARGE_AUTHORIZATION = '/transaction/charge_authorization';
+    const CHARGE_TOKEN = '/transaction/charge_token';
+    const CUSTOMERS_URL = '/customer/:id';
+    const PLANS_URL = '/plan/:id';
 
     /**
-     * Checks request response and dispatch result to appropriate handler
+     * Checks request response and dispatch result to appropriate handler.
+     *
      * @param ResponseInterface $request
+     *
      * @return \Exception|mixed
      */
     public function processResourceRequestResponse(ResponseInterface $request)

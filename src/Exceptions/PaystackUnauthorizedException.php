@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 08/02/2016
  * Time: 22:21
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Exceptions;
 
 class PaystackUnauthorizedException extends BaseException

@@ -4,16 +4,14 @@
  * Date: 10/02/2016
  * Time: 16:20
  * IDE: PhpStorm
- * Create returning transaction
+ * Create returning transaction.
  */
-
 namespace MAbiola\Paystack\Models;
 
 use MAbiola\Paystack\Abstractions\BaseTransaction;
 use MAbiola\Paystack\Contracts\TransactionContract;
 use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;
 use MAbiola\Paystack\Helpers\Utils;
-use MAbiola\Paystack\Repositories\TransactionResource;
 
 class ReturningTransaction extends BaseTransaction implements TransactionContract
 {
@@ -27,6 +25,7 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
 
     /**
      * ReturningTransaction constructor.
+     *
      * @param $transactionRef
      * @param $authorization
      * @param $amount
@@ -40,7 +39,6 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
         $email,
         $plan
     ) {
-    
         $this->transactionRef = $transactionRef;
         $this->authorization = $authorization;
         $this->amount = $amount;
@@ -49,11 +47,13 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
     }
 
     /**
-     * Create a new returning transaction object
+     * Create a new returning transaction object.
+     *
      * @param $authorization
      * @param $amount
      * @param $email
      * @param $plan
+     *
      * @return static
      */
     public static function make($authorization, $amount, $email, $plan)
@@ -68,7 +68,8 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
     }
 
     /**
-     * Charge returning transaction
+     * Charge returning transaction.
+     *
      * @return \Exception|mixed|PaystackInvalidTransactionException
      */
     public function charge()
@@ -79,7 +80,7 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
                 json_decode(
                     json_encode(
                         [
-                            "message" => "Transaction Reference Not Generated."
+                            'message' => 'Transaction Reference Not Generated.',
                         ]
                     ),
                     false
@@ -88,7 +89,8 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
     }
 
     /**
-     * Get returning transaction request body
+     * Get returning transaction request body.
+     *
      * @return string
      */
     public function _requestPayload()
@@ -97,7 +99,7 @@ class ReturningTransaction extends BaseTransaction implements TransactionContrac
             'authorization_code'    => $this->authorization,
             'amount'                => $this->amount,
             'reference'             => $this->transactionRef,
-            'email'                 => $this->email
+            'email'                 => $this->email,
         ];
 
         if (!empty($this->plan)) {

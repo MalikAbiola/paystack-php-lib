@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 18/02/2016
  * Time: 15:27
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
 
 use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
@@ -32,6 +31,7 @@ class ModelAbstractionsTest extends BaseTestCase
 
     /**
      * @depends testSetAttributesReturnsAttributes
+     *
      * @param Plan $plan
      */
     public function testGetAttributes($plan)

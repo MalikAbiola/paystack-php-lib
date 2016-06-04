@@ -1,5 +1,7 @@
 <?php
+
 namespace MAbiola\Paystack\Tests;
+
 use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
 use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
 use MAbiola\Paystack\Models\Customer;
@@ -9,11 +11,10 @@ use MAbiola\Paystack\Repositories\CustomerResource;
  * Created by Malik Abiola.
  * Date: 14/02/2016
  * Time: 10:55
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-class CustomerTests extends BaseTestCase
+class CustomerTest extends BaseTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -59,7 +60,6 @@ class CustomerTests extends BaseTestCase
         $this->assertEquals($this->customerData['last_name'], $retrievedCustomer->get('last_name'));
         $this->assertEquals($this->customerData['email'], $retrievedCustomer->get('email'));
         $this->assertEquals($this->customerData['phone'], $retrievedCustomer->get('phone'));
-
     }
 
     public function testGetCustomerThrowsException()

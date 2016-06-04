@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 06/02/2016
  * Time: 15:50
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Repositories;
 
 use GuzzleHttp\Client;
@@ -18,6 +17,7 @@ class PlanResource extends Resource implements ResourceInterface
 
     /**
      * PlanResource constructor.
+     *
      * @param Client $paystackHttpClient
      */
     public function __construct(Client $paystackHttpClient)
@@ -26,8 +26,10 @@ class PlanResource extends Resource implements ResourceInterface
     }
 
     /**
-     * Get Plan by id/code
+     * Get Plan by id/code.
+     *
      * @param $id
+     *
      * @return \Exception|mixed
      */
     public function get($id)
@@ -35,35 +37,40 @@ class PlanResource extends Resource implements ResourceInterface
         $request = $this->paystackHttpClient->get(
             $this->transformUrl(Resource::PLANS_URL, $id)
         );
+
         return $this->processResourceRequestResponse($request);
     }
 
     /**
-     * get all plans. per page
+     * get all plans. per page.
+     *
      * @param null $page
+     *
      * @return \Exception|mixed
      */
     public function getAll($page = null)
     {
         $page = !empty($page) ? "page={$page}" : '';
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(Resource::PLANS_URL, "") . $page
+            $this->transformUrl(Resource::PLANS_URL, '').$page
         );
 
         return $this->processResourceRequestResponse($request);
     }
 
     /**
-     * save new plan
+     * save new plan.
+     *
      * @param $body
+     *
      * @return \Exception|mixed
      */
     public function save($body)
     {
         $request = $this->paystackHttpClient->post(
-            $this->transformUrl(Resource::PLANS_URL, ""),
+            $this->transformUrl(Resource::PLANS_URL, ''),
             [
-                'body'  => is_array($body) ? $this->toJson($body) : $body
+                'body'  => is_array($body) ? $this->toJson($body) : $body,
             ]
         );
 
@@ -71,9 +78,11 @@ class PlanResource extends Resource implements ResourceInterface
     }
 
     /**
-     * update plan
+     * update plan.
+     *
      * @param $id
      * @param $body
+     *
      * @return \Exception|mixed
      */
     public function update($id, $body)
@@ -81,7 +90,7 @@ class PlanResource extends Resource implements ResourceInterface
         $request = $this->paystackHttpClient->put(
             $this->transformUrl(Resource::PLANS_URL, $id),
             [
-                'body'  => is_array($body) ? $this->toJson($body) : $body
+                'body'  => is_array($body) ? $this->toJson($body) : $body,
             ]
         );
 
@@ -89,8 +98,10 @@ class PlanResource extends Resource implements ResourceInterface
     }
 
     /**
-     * delete plan
+     * delete plan.
+     *
      * @param $id
+     *
      * @return \Exception|mixed
      */
     public function delete($id)

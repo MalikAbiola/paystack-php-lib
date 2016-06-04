@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 08/02/2016
  * Time: 22:37
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Exceptions;
 
 class PaystackValidationException extends BaseException
@@ -19,7 +18,8 @@ class PaystackValidationException extends BaseException
     }
 
     /**
-     * Get validation errors that occurred in requests
+     * Get validation errors that occurred in requests.
+     *
      * @return array
      */
     public function getValidationErrors()
@@ -29,7 +29,7 @@ class PaystackValidationException extends BaseException
             foreach ($this->response->errors as $error => $reasons) {
                 $errors[] = [
                     'attribute' => $error,
-                    'reason'    => $this->getValidationReasonsAsString($reasons)
+                    'reason'    => $this->getValidationReasonsAsString($reasons),
                 ];
             }
         }
@@ -39,7 +39,7 @@ class PaystackValidationException extends BaseException
 
     private function getValidationReasonsAsString($reasons)
     {
-        $concatenatedReasons = "";
+        $concatenatedReasons = '';
 
         foreach ($reasons as $reason) {
             $concatenatedReasons .= "{$reason->message} \r\n";

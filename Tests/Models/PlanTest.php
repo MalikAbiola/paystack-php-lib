@@ -3,11 +3,9 @@
  * Created by Malik Abiola.
  * Date: 15/02/2016
  * Time: 13:35
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
-
 
 use MAbiola\Paystack\Exceptions\PaystackUnsupportedOperationException;
 use MAbiola\Paystack\Exceptions\PaystackValidationException;
@@ -15,7 +13,7 @@ use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
 use MAbiola\Paystack\Models\Plan;
 use MAbiola\Paystack\Repositories\PlanResource;
 
-class PlanTests extends BaseTestCase
+class PlanTest extends BaseTestCase
 {
     public function setUp()
     {
@@ -43,7 +41,7 @@ class PlanTests extends BaseTestCase
     public function testCreatePlanReturnsException()
     {
         $errorResponse = new \stdClass();
-        $errorResponse->message = "Paystack Validation Exception";
+        $errorResponse->message = 'Paystack Validation Exception';
 
         $mockPlanResource = \Mockery::mock($this->planResource)->makePartial();
         $mockPlanResource->shouldReceive('save')
@@ -105,7 +103,7 @@ class PlanTests extends BaseTestCase
     public function testRetrievePlanThrowsException()
     {
         $errorResponse = new \stdClass();
-        $errorResponse->message = "Paystack Validation Exception";
+        $errorResponse->message = 'Paystack Validation Exception';
 
         $mockPlanResource = \Mockery::mock($this->planResource)->makePartial();
         $mockPlanResource->shouldReceive('get')
