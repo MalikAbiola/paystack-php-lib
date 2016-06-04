@@ -9,11 +9,12 @@ use MAbiola\Paystack\Tests\BaseTestCase;
  * Created by Malik Abiola.
  * Date: 17/02/2016
  * Time: 18:35
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
 class ExceptionHandlerTest extends BaseTestCase
 {
     private $response;
+
     public function setUp()
     {
         parent::setUp();
@@ -23,19 +24,19 @@ class ExceptionHandlerTest extends BaseTestCase
 
     public function testExceptionHandlerHandlesUnauthorizedError()
     {
-        $this->response->message = "Unauthorized";
+        $this->response->message = 'Unauthorized';
         $exception = ExceptionHandler::handle(
             '',
             $this->response,
             Response::HTTP_UNAUTHORIZED
         );
         $this->assertInstanceOf(PaystackUnauthorizedException::class, $exception);
-        $this->assertStringStartsWith("Unauthorized", $exception->getErrors());
+        $this->assertStringStartsWith('Unauthorized', $exception->getErrors());
     }
 
     public function testExceptionHandlerHandlesNotFoundErrors()
     {
-        $this->response->message = "Not Found";
+        $this->response->message = 'Not Found';
         $exception = ExceptionHandler::handle(
             '',
             $this->response,
@@ -47,7 +48,7 @@ class ExceptionHandlerTest extends BaseTestCase
 
     public function testExceptionHandlerHandlesBadRequestErrors()
     {
-        $this->response->message = "A validation error has occured";
+        $this->response->message = 'A validation error has occured';
 
         $exception = ExceptionHandler::handle(
             '',
@@ -60,7 +61,7 @@ class ExceptionHandlerTest extends BaseTestCase
 
     public function testExceptionHandlerHandlesGateWayTimeoutExceptions()
     {
-        $this->response->message = "";
+        $this->response->message = '';
 
         $exception = ExceptionHandler::handle(
             '',
@@ -72,7 +73,7 @@ class ExceptionHandlerTest extends BaseTestCase
 
     public function testExceptionHandlerHandlesInternalServerErrors()
     {
-        $this->response->message = "Internal Server Error";
+        $this->response->message = 'Internal Server Error';
 
         $exception = ExceptionHandler::handle(
             '',
@@ -84,7 +85,7 @@ class ExceptionHandlerTest extends BaseTestCase
 
     public function testExceptionHandlerHandlesUnknownError()
     {
-        $this->response->message = "Internal Server Error";
+        $this->response->message = 'Internal Server Error';
 
         $exception = ExceptionHandler::handle(
             '',

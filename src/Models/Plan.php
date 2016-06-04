@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 05/02/2016
  * Time: 22:55
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Models;
 
 use MAbiola\Paystack\Abstractions\Model;
@@ -44,6 +43,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
 
     /**
      * Plan constructor.
+     *
      * @param PlanResource $planResource
      */
     public function __construct(PlanResource $planResource)
@@ -52,11 +52,14 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
-     * Get plan by plan code
+     * Get plan by plan code.
+     *
      * @param $planCode
-     * @return $this
+     *
      * @throws
      * @throws \Exception
+     *
+     * @return $this
      */
     public function getPlan($planCode)
     {
@@ -71,12 +74,14 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
-     * Create new Plan Object
+     * Create new Plan Object.
+     *
      * @param $name
      * @param $description
      * @param $amount
      * @param $currency
      * @param array $otherAttributes
+     *
      * @return $this
      */
     public function make($name, $description, $amount, $currency, array $otherAttributes = [])
@@ -93,8 +98,10 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
-     * set attributes to update
+     * set attributes to update.
+     *
      * @param array $updateData
+     *
      * @return $this
      */
     public function setUpdateData(array $updateData)
@@ -106,11 +113,13 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
-     * Save/Update plan object
-     * @return $this|Plan
+     * Save/Update plan object.
+     *
      * @throws \Exception
      * @throws \Exception|mixed
      * @throws null
+     *
+     * @return $this|Plan
      */
     public function save()
     {
@@ -128,7 +137,7 @@ class Plan extends Model implements PlansInterface, ModelInterface
         }
 
         if ($resourceResponse == null) {
-            throw new \InvalidArgumentException("You Cant Perform This Operation on an empty plan");
+            throw new \InvalidArgumentException('You Cant Perform This Operation on an empty plan');
         }
 
         if ($resourceResponse instanceof \Exception) {
@@ -139,13 +148,15 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
-     * delete Plan
-     * @return $this
+     * delete Plan.
+     *
      * @throws \Exception
+     *
+     * @return $this
      */
     public function delete()
     {
-//        if ($this->isDeletable()) {
+        //        if ($this->isDeletable()) {
 //            $resourceResponse = $this->planResource->delete($this->plan_code);
 //            if ($resourceResponse instanceof \Exception) {
 //                throw $resourceResponse;
@@ -158,23 +169,25 @@ class Plan extends Model implements PlansInterface, ModelInterface
     }
 
     /**
-     * Outward presentation of object
+     * Outward presentation of object.
+     *
      * @param $transformMode
+     *
      * @return mixed
      */
     public function transform($transformMode = '')
     {
         $planObject = [
-            "plan_code" => $this->plan_code,
-            "name" => $this->name,
-            "description" => $this->description,
-            "amount" => $this->amount,
-            "interval" => $this->interval,
-            "currency" => $this->currency,
-            "hosted_page" => $this->hosted_page,
-            "hosted_page_url" => $this->hosted_page_url,
-            "hosted_page_summary" => $this->hosted_page_summary,
-            "subscription_count" => count($this->subscriptions)
+            'plan_code'           => $this->plan_code,
+            'name'                => $this->name,
+            'description'         => $this->description,
+            'amount'              => $this->amount,
+            'interval'            => $this->interval,
+            'currency'            => $this->currency,
+            'hosted_page'         => $this->hosted_page,
+            'hosted_page_url'     => $this->hosted_page_url,
+            'hosted_page_summary' => $this->hosted_page_summary,
+            'subscription_count'  => count($this->subscriptions),
         ];
         switch ($transformMode) {
             case ModelInterface::TRANSFORM_TO_JSON_ARRAY:

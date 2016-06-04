@@ -4,9 +4,8 @@
  * Date: 10/02/2016
  * Time: 16:10
  * IDE: PhpStorm
- * Create one time transactions
+ * Create one time transactions.
  */
-
 namespace MAbiola\Paystack\Models;
 
 use MAbiola\Paystack\Abstractions\BaseTransaction;
@@ -15,7 +14,7 @@ use MAbiola\Paystack\Exceptions\PaystackInvalidTransactionException;
 
 class OneTimeTransaction extends BaseTransaction implements TransactionContract
 {
-//    protected $transactionResource;
+    //    protected $transactionResource;
 
     private $transactionRef;
     private $amount;
@@ -24,6 +23,7 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
 
     /**
      * OneTimeTransaction constructor.
+     *
      * @param $transactionRef
      * @param $amount
      * @param $email
@@ -40,10 +40,12 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
     }
 
     /**
-     * Make a new one time transaction object
+     * Make a new one time transaction object.
+     *
      * @param $amount
      * @param $email
      * @param $plan
+     *
      * @return static
      */
     public static function make($amount, $email, $plan)
@@ -52,7 +54,8 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
     }
 
     /**
-     * Initialize one time transaction to get payment url
+     * Initialize one time transaction to get payment url.
+     *
      * @return \Exception|mixed|PaystackInvalidTransactionException
      */
     public function initialize()
@@ -63,7 +66,7 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
                 json_decode(
                     json_encode(
                         [
-                            "message" => "Transaction Reference Not Generated."
+                            'message' => 'Transaction Reference Not Generated.',
                         ]
                     ),
                     false
@@ -73,6 +76,7 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
 
     /**
      * Get transaction request body.
+     *
      * @return string
      */
     public function _requestPayload()
@@ -80,7 +84,7 @@ class OneTimeTransaction extends BaseTransaction implements TransactionContract
         $payload = [
             'amount'    => $this->amount,
             'reference' => $this->transactionRef,
-            'email'     => $this->email
+            'email'     => $this->email,
         ];
 
         if (!empty($this->plan)) {

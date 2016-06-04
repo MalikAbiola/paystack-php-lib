@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 16/02/2016
  * Time: 11:46
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Helpers;
 
 use MAbiola\Paystack\Abstractions\BaseTransaction;
@@ -16,14 +15,17 @@ class Transaction extends BaseTransaction
 {
     public static function make()
     {
-        return new static;
+        return new static();
     }
 
     /**
-     * Verify Transaction
+     * Verify Transaction.
+     *
      * @param $transactionRef
-     * @return array|bool
+     *
      * @throws \Exception
+     *
+     * @return array|bool
      */
     public function verify($transactionRef)
     {
@@ -38,17 +40,21 @@ class Transaction extends BaseTransaction
                 'authorization' => $transactionData['authorization'],
                 'customer'      => $transactionData['customer'],
                 'amount'        => $transactionData['amount'],
-                'plan'          => $transactionData['plan']
+                'plan'          => $transactionData['plan'],
             ];
         }
 
         return false;
     }
+
     /**
-     * Get transaction details
+     * Get transaction details.
+     *
      * @param $transactionId
-     * @return \MAbiola\Paystack\Models\Transaction
+     *
      * @throws \Exception|mixed
+     *
+     * @return \MAbiola\Paystack\Models\Transaction
      */
     public function details($transactionId)
     {
@@ -62,10 +68,13 @@ class Transaction extends BaseTransaction
     }
 
     /**
-     * Get all transactions. per page
+     * Get all transactions. per page.
+     *
      * @param $page
-     * @return array
+     *
      * @throws \Exception|mixed
+     *
+     * @return array
      */
     public function allTransactions($page)
     {
@@ -84,9 +93,11 @@ class Transaction extends BaseTransaction
     }
 
     /**
-     * Get merchant transaction total
-     * @return mixed
+     * Get merchant transaction total.
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function transactionsTotals()
     {

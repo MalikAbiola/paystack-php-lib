@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 04/02/2016
  * Time: 22:29
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Models;
 
 use MAbiola\Paystack\Abstractions\Model;
@@ -27,10 +26,13 @@ class Customer extends Model implements ModelInterface
     }
 
     /**
-     * Get customer by ID
+     * Get customer by ID.
+     *
      * @param $customerId
-     * @return $this
+     *
      * @throws \Exception|mixed
+     *
+     * @return $this
      */
     public function getCustomer($customerId)
     {
@@ -42,16 +44,19 @@ class Customer extends Model implements ModelInterface
 
         $this->_setAttributes($customerModel);
         $this->setDeletable(true);
+
         return $this;
     }
 
     /**
-     * set up a new customer object
+     * set up a new customer object.
+     *
      * @param $first_name
      * @param $last_name
      * @param $email
      * @param $phone
      * @param array $otherAttributes
+     *
      * @return $this
      */
     public function make($first_name, $last_name, $email, $phone, $otherAttributes = [])
@@ -69,15 +74,18 @@ class Customer extends Model implements ModelInterface
     }
 
     /**
-     * set update data on customer model
+     * set update data on customer model.
+     *
      * @param $updateAttributes
-     * @return $this
+     *
      * @throws \Exception
+     *
+     * @return $this
      */
     public function setUpdateData($updateAttributes)
     {
         if (empty($updateAttributes)) {
-            throw new \InvalidArgumentException("Update Attributes Empty");
+            throw new \InvalidArgumentException('Update Attributes Empty');
         }
 
         $this->_setAttributes($updateAttributes);
@@ -87,11 +95,13 @@ class Customer extends Model implements ModelInterface
     }
 
     /**
-     * save/update customer model on paystack
-     * @return $this
+     * save/update customer model on paystack.
+     *
      * @throws \Exception
      * @throws \Exception|mixed
      * @throws null
+     *
+     * @return $this
      */
     public function save()
     {
@@ -111,7 +121,7 @@ class Customer extends Model implements ModelInterface
         }
 
         if ($resourceResponse == null) {
-            throw new \InvalidArgumentException("You Cant Perform This Operation on an empty customer object");
+            throw new \InvalidArgumentException('You Cant Perform This Operation on an empty customer object');
         }
 
         if ($resourceResponse instanceof \Exception) {
@@ -122,14 +132,16 @@ class Customer extends Model implements ModelInterface
     }
 
     /**
-     * delete customer
-     * @return $this
+     * delete customer.
+     *
      * @throws \Exception
      * @throws \Exception|mixed
+     *
+     * @return $this
      */
     public function delete()
     {
-//        if ($this->isDeletable()) {
+        //        if ($this->isDeletable()) {
 //            $resourceResponse = $this->customerResource->delete($this->customerId);
 //            if ($resourceResponse instanceof \Exception) {
 //                throw $resourceResponse;

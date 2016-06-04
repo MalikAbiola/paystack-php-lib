@@ -1,6 +1,7 @@
 <?php
 
 namespace MAbiola\Paystack\Tests;
+
 use MAbiola\Paystack\Abstractions\Resource;
 use MAbiola\Paystack\Helpers\Utils;
 
@@ -8,7 +9,7 @@ use MAbiola\Paystack\Helpers\Utils;
  * Created by Malik Abiola.
  * Date: 15/02/2016
  * Time: 21:42
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
 class UtilsTest extends BaseTestCase
 {
@@ -19,7 +20,7 @@ class UtilsTest extends BaseTestCase
 
     public function testGetEnvReturnsDefaultValueWhenKeyNotFound()
     {
-        $this->assertEquals("key", Utils::env("NOT_FOUND_KEY", 'key'));
+        $this->assertEquals('key', Utils::env('NOT_FOUND_KEY', 'key'));
     }
 
     public function testTransformUrlReturnsTransformedUrl()

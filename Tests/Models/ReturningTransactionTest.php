@@ -3,11 +3,9 @@
  * Created by Malik Abiola.
  * Date: 15/02/2016
  * Time: 18:14
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
-
 
 use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
 use MAbiola\Paystack\Models\ReturningTransaction;
@@ -28,7 +26,7 @@ class ReturningTransactionTest extends BaseTestCase
             ->once()
             ->andReturn($this->chargeReturningTransactionResourceResponseData);
 
-        $returningTransaction = ReturningTransaction::make("AUTH_jonwwppn", $this->planData['amount'], $this->customerData['email'], '');
+        $returningTransaction = ReturningTransaction::make('AUTH_jonwwppn', $this->planData['amount'], $this->customerData['email'], '');
         $returningTransaction->setTransactionResource($mockTransactionResource);
         $chargeReturningTransaction = $returningTransaction->charge();
 

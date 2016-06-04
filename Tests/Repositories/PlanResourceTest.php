@@ -3,11 +3,9 @@
  * Created by Malik Abiola.
  * Date: 17/02/2016
  * Time: 14:31
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
-
 
 use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
 use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
@@ -59,6 +57,7 @@ class PlanResourceTest extends BaseTestCase
 
     /**
      * @depends testCreatePlanSuccessful
+     *
      * @param $createdPlan
      */
     public function testUpdatePlanSuccessful($createdPlan)
@@ -75,6 +74,7 @@ class PlanResourceTest extends BaseTestCase
 
     /**
      * @depends testCreatePlanSuccessful
+     *
      * @param $createdPlan
      */
     public function testUpdatePlanThrowsException($createdPlan)
@@ -87,6 +87,7 @@ class PlanResourceTest extends BaseTestCase
 
     /**
      * @depends testCreatePlanSuccessful
+     *
      * @param $createdPlan
      */
     public function testGetPlanByIdSuccessful($createdPlan)
@@ -102,6 +103,7 @@ class PlanResourceTest extends BaseTestCase
 
     /**
      * @depends testCreatePlanSuccessful
+     *
      * @param $createdPlan
      */
     public function testGetPlanByIdThrowsException($createdPlan)
@@ -122,7 +124,6 @@ class PlanResourceTest extends BaseTestCase
         $this->assertArrayHasKey('amount', $retrievedPlans[0]);
     }
 
-
     public function testGetAllPlansThrowsError()
     {
         $planResource = new PlanResource(PaystackHttpClientFactory::make($this->fakeAuthHeader));
@@ -132,6 +133,7 @@ class PlanResourceTest extends BaseTestCase
 
     /**
      * @depends testCreatePlanSuccessful
+     *
      * @param $createdPlan
      */
     public function testDeletePlanReturnsA404($createdPlan)

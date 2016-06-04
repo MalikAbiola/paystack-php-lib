@@ -1,5 +1,7 @@
 <?php
+
 namespace MAbiola\Paystack\Tests;
+
 use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
 use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
 use MAbiola\Paystack\Exceptions\PaystackValidationException;
@@ -10,7 +12,7 @@ use MAbiola\Paystack\Repositories\CustomerResource;
  * Created by Malik Abiola.
  * Date: 17/02/2016
  * Time: 13:36
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
 class CustomerResourceTest extends BaseTestCase
 {
@@ -55,11 +57,11 @@ class CustomerResourceTest extends BaseTestCase
         $this->assertInstanceOf(PaystackValidationException::class, $createdCustomer);
         $this->assertTrue(is_array($validationErrors));
         $this->assertGreaterThanOrEqual(1, count($validationErrors));
-
     }
 
     /**
      * @depends testCreateUserSuccessful
+     *
      * @param $createdCustomer
      */
     public function testGetCustomerByIdReturnsCustomerDetails($createdCustomer)
@@ -76,6 +78,7 @@ class CustomerResourceTest extends BaseTestCase
 
     /**
      * @depends testCreateUserSuccessful
+     *
      * @param $createdCustomer
      */
     public function testGetCustomerByIdThrowsException($createdCustomer)
@@ -88,6 +91,7 @@ class CustomerResourceTest extends BaseTestCase
 
     /**
      * @depends testCreateUserSuccessful
+     *
      * @param $createdCustomer
      */
     public function testUpdateCustomerByIsSuccessful($createdCustomer)
@@ -104,6 +108,7 @@ class CustomerResourceTest extends BaseTestCase
 
     /**
      * @depends testCreateUserSuccessful
+     *
      * @param $createdCustomer
      */
 //    public function testUpdateCustomerThrowsException($createdCustomer)
@@ -119,6 +124,7 @@ class CustomerResourceTest extends BaseTestCase
 
     /**
      * @depends testCreateUserSuccessful
+     *
      * @param $createdCustomer
      */
     public function testDeleteCustomerReturns404($createdCustomer)

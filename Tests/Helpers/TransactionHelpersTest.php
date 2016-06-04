@@ -3,11 +3,9 @@
  * Created by Malik Abiola.
  * Date: 16/02/2016
  * Time: 12:23
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
-
 
 use MAbiola\Paystack\Exceptions\PaystackNotFoundException;
 use MAbiola\Paystack\Exceptions\PaystackUnauthorizedException;
@@ -17,7 +15,6 @@ use MAbiola\Paystack\Repositories\TransactionResource;
 
 class TransactionHelpersTest extends BaseTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -45,7 +42,7 @@ class TransactionHelpersTest extends BaseTestCase
     public function testRetrieveTransactionDetailsReturnsException()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Transaction Not Found";
+        $invalidResponse->message = 'Transaction Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('get')
@@ -81,7 +78,7 @@ class TransactionHelpersTest extends BaseTestCase
     public function testGetAllTransactionsReturnsException()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Transaction Not Found";
+        $invalidResponse->message = 'Transaction Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('getAll')
@@ -118,7 +115,7 @@ class TransactionHelpersTest extends BaseTestCase
     public function testGetTransactionTotalsReturnsException()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Authorization Not Found";
+        $invalidResponse->message = 'Authorization Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('getTransactionTotals')
@@ -168,7 +165,7 @@ class TransactionHelpersTest extends BaseTestCase
     public function testVerifyTransactionThrowsException()
     {
         $invalidResponse = new \stdClass();
-        $invalidResponse->message = "Authorization Not Found";
+        $invalidResponse->message = 'Authorization Not Found';
 
         $mockTransactionResource = \Mockery::mock($this->transactionResource)->makePartial();
         $mockTransactionResource->shouldReceive('verify')

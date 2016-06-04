@@ -4,7 +4,7 @@
  * Created by Malik Abiola.
  * Date: 01/02/2016
  * Time: 23:59
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
 namespace MAbiola\Paystack\Exceptions;
 
@@ -13,10 +13,12 @@ use Illuminate\Http\Response;
 class ExceptionHandler
 {
     /**
-     * Handles errors encountered and returns the kind of exception they are
+     * Handles errors encountered and returns the kind of exception they are.
+     *
      * @param $resourceName
      * @param $response
      * @param $statusCode
+     *
      * @return \Exception|PaystackNotFoundException|PaystackUnauthorizedException|PaystackValidationException
      */
     public static function handle($resourceName, $response, $statusCode)
@@ -32,9 +34,9 @@ class ExceptionHandler
                 return new PaystackInternalServerError($response, $statusCode);
             case Response::HTTP_INTERNAL_SERVER_ERROR:
 //                @todo: when this happens, send email with details to paystack.
-                return new PaystackInternalServerError("Internal Server Error.", $statusCode);
+                return new PaystackInternalServerError('Internal Server Error.', $statusCode);
             default:
-                return new \Exception("Unknown Error Occurred.", $statusCode);
+                return new \Exception('Unknown Error Occurred.', $statusCode);
         }
     }
 }

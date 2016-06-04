@@ -3,12 +3,12 @@
  * Created by Malik Abiola.
  * Date: 04/02/2016
  * Time: 23:21
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack;
 
 use MAbiola\Paystack\Factories\PaystackHttpClientFactory;
+use MAbiola\Paystack\Helpers\Transaction as TransactionHelper;
 use MAbiola\Paystack\Models\Customer;
 use MAbiola\Paystack\Models\OneTimeTransaction;
 use MAbiola\Paystack\Models\Plan;
@@ -16,7 +16,6 @@ use MAbiola\Paystack\Models\ReturningTransaction;
 use MAbiola\Paystack\Repositories\CustomerResource;
 use MAbiola\Paystack\Repositories\PlanResource;
 use MAbiola\Paystack\Repositories\TransactionResource;
-use MAbiola\Paystack\Helpers\Transaction as TransactionHelper;
 
 class Paystack
 {
@@ -30,6 +29,7 @@ class Paystack
 
     /**
      * Paystack constructor.
+     *
      * @param $key
      */
     private function __construct($key)
@@ -49,8 +49,10 @@ class Paystack
     }
 
     /**
-     * Make a new Paystack library object
+     * Make a new Paystack library object.
+     *
      * @param null $key
+     *
      * @return Paystack
      */
     public static function make($key = null)
@@ -59,10 +61,13 @@ class Paystack
     }
 
     /**
-     * Get customer by ID
+     * Get customer by ID.
+     *
      * @param $customerId
-     * @return Customer | \Exception
+     *
      * @throws \Exception|mixed
+     *
+     * @return Customer | \Exception
      */
     public function getCustomer($customerId)
     {
@@ -70,10 +75,13 @@ class Paystack
     }
 
     /**
-     * Get all customers
+     * Get all customers.
+     *
      * @param string $page
-     * @return \Exception|mixed
+     *
      * @throws \Exception|mixed
+     *
+     * @return \Exception|mixed
      */
     public function getCustomers($page = '')
     {
@@ -88,17 +96,22 @@ class Paystack
             $customerObject = new Customer($this->getCustomerResource());
             $customerObjects[] = $customerObject->_setAttributes($customer);
         }
+
         return $customerObjects;
     }
+
     /**
-     * Create new customer
+     * Create new customer.
+     *
      * @param $first_name
      * @param $last_name
      * @param $email
      * @param $phone
-     * @return mixed
+     *
      * @throws \Exception|mixed
      * @throws null
+     *
+     * @return mixed
      */
     public function createCustomer($first_name, $last_name, $email, $phone)
     {
@@ -106,12 +119,15 @@ class Paystack
     }
 
     /**
-     * Update customer by customer id/code
+     * Update customer by customer id/code.
+     *
      * @param $customerId
      * @param array $updateData
-     * @return mixed
+     *
      * @throws \Exception|mixed
      * @throws null
+     *
+     * @return mixed
      */
     public function updateCustomerData($customerId, $updateData)
     {
@@ -121,9 +137,11 @@ class Paystack
     }
 
     /**
-     * Delete customer by Id/Code
+     * Delete customer by Id/Code.
+     *
      * @param $customerId
-     * @return Mixed
+     *
+     * @return mixed
      */
     public function deleteCustomer($customerId)
     {
@@ -131,10 +149,13 @@ class Paystack
     }
 
     /**
-     * Get plan by plan id/code
+     * Get plan by plan id/code.
+     *
      * @param $planCode
-     * @return mixed
+     *
      * @throws \Exception|mixed
+     *
+     * @return mixed
      */
     public function getPlan($planCode)
     {
@@ -142,10 +163,13 @@ class Paystack
     }
 
     /**
-     * Get all plans
+     * Get all plans.
+     *
      * @param string $page
-     * @return \Exception|mixed
+     *
      * @throws \Exception|mixed
+     *
+     * @return \Exception|mixed
      */
     public function getPlans($page = '')
     {
@@ -165,14 +189,17 @@ class Paystack
     }
 
     /**
-     * Create new plan
+     * Create new plan.
+     *
      * @param $name
      * @param $description
      * @param $amount
      * @param $currency
-     * @return mixed
+     *
      * @throws \Exception|mixed
      * @throws null
+     *
+     * @return mixed
      */
     public function createPlan($name, $description, $amount, $currency)
     {
@@ -180,12 +207,15 @@ class Paystack
     }
 
     /**
-     * Update plan
+     * Update plan.
+     *
      * @param $planCode
      * @param $updateData
-     * @return mixed
+     *
      * @throws \Exception|mixed
      * @throws null
+     *
+     * @return mixed
      */
     public function updatePlan($planCode, $updateData)
     {
@@ -195,8 +225,10 @@ class Paystack
     }
 
     /**
-     * delete plans
+     * delete plans.
+     *
      * @param $planCode
+     *
      * @return $this
      */
     public function deletePlan($planCode)
@@ -205,12 +237,15 @@ class Paystack
     }
 
     /**
-     * Init a one time transaction to get payment page url
+     * Init a one time transaction to get payment page url.
+     *
      * @param $amount
      * @param $email
      * @param string $plan
-     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     *
      * @throws \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     *
+     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
      */
     public function startOneTimeTransaction($amount, $email, $plan = '')
     {
@@ -220,7 +255,7 @@ class Paystack
             $plan instanceof Plan ? $plan->get('plan_code') : $plan
         );
         $oneTimeTransaction->setTransactionResource($this->getTransactionResource());
-        $transaction =  $oneTimeTransaction->initialize();
+        $transaction = $oneTimeTransaction->initialize();
 
         if ($transaction instanceof \Exception) {
             throw $transaction;
@@ -230,13 +265,16 @@ class Paystack
     }
 
     /**
-     * Charge a returning customer
+     * Charge a returning customer.
+     *
      * @param $authorization
      * @param $amount
      * @param $email
      * @param string $plan
-     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     *
      * @throws \Exception|mixed|Exceptions\PaystackInvalidTransactionException
+     *
+     * @return \Exception|mixed|Exceptions\PaystackInvalidTransactionException
      */
     public function chargeReturningTransaction($authorization, $amount, $email, $plan = '')
     {
@@ -258,8 +296,10 @@ class Paystack
     }
 
     /**
-     * Verify transaction
+     * Verify transaction.
+     *
      * @param $transactionRef
+     *
      * @return array|bool
      */
     public function verifyTransaction($transactionRef)
@@ -268,10 +308,13 @@ class Paystack
     }
 
     /**
-     * Get transaction details
+     * Get transaction details.
+     *
      * @param $transactionId
-     * @return static
+     *
      * @throws \Exception|mixed
+     *
+     * @return static
      */
     public function transactionDetails($transactionId)
     {
@@ -279,10 +322,13 @@ class Paystack
     }
 
     /**
-     * Get all transactions. per page
+     * Get all transactions. per page.
+     *
      * @param $page
-     * @return array
+     *
      * @throws \Exception|mixed
+     *
+     * @return array
      */
     public function allTransactions($page = '')
     {
@@ -290,9 +336,11 @@ class Paystack
     }
 
     /**
-     * Get successful transactions volume or totals
-     * @return mixed
+     * Get successful transactions volume or totals.
+     *
      * @throws
+     *
+     * @return mixed
      */
     public function transactionsTotals()
     {
@@ -396,8 +444,10 @@ class Paystack
     }
 
     /**
-     * Make a HTTP Client for making requests
+     * Make a HTTP Client for making requests.
+     *
      * @param $key
+     *
      * @return \GuzzleHttp\Client
      */
     private function makePaystackHttpClient($key)
@@ -407,15 +457,16 @@ class Paystack
             PaystackHttpClientFactory::make(
                 [
                     'headers'   => [
-                        'Authorization' => "Bearer " . $key,
-                        'Content-Type'  => 'application/json'
-                    ]
+                        'Authorization' => 'Bearer '.$key,
+                        'Content-Type'  => 'application/json',
+                    ],
                 ]
             );
     }
 
     /**
-     * Get the created HTTP Client
+     * Get the created HTTP Client.
+     *
      * @return \GuzzleHttp\Client
      */
     public function getPaystackHttpClient()

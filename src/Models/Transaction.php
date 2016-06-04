@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 07/02/2016
  * Time: 15:10
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Models;
 
 use MAbiola\Paystack\Abstractions\Model;
@@ -16,6 +15,7 @@ class Transaction extends Model implements ModelInterface
 {
     /**
      * Transaction constructor.
+     *
      * @param $attributes
      */
     private function __construct($attributes)
@@ -24,8 +24,10 @@ class Transaction extends Model implements ModelInterface
     }
 
     /**
-     * make new transaction object
+     * make new transaction object.
+     *
      * @param $attributes
+     *
      * @return static
      */
     public static function make($attributes)
@@ -34,7 +36,7 @@ class Transaction extends Model implements ModelInterface
     }
 
     /**
-     * Verify this transaction
+     * Verify this transaction.
      */
     public function verify()
     {
@@ -42,7 +44,8 @@ class Transaction extends Model implements ModelInterface
     }
 
     /**
-     * convert transaction object to array
+     * convert transaction object to array.
+     *
      * @return mixed
      */
     public function _toArray()

@@ -3,17 +3,14 @@
  * Created by Malik Abiola.
  * Date: 16/02/2016
  * Time: 11:53
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Tests;
-
 
 use MAbiola\Paystack\Models\Transaction;
 
 class TransactionModelObjectTest extends BaseTestCase
 {
-
     public function setUp()
     {
         parent::setUp();

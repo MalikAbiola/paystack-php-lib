@@ -3,9 +3,8 @@
  * Created by Malik Abiola.
  * Date: 05/02/2016
  * Time: 00:13
- * IDE: PhpStorm
+ * IDE: PhpStorm.
  */
-
 namespace MAbiola\Paystack\Repositories;
 
 use GuzzleHttp\Client;
@@ -17,6 +16,7 @@ class TransactionResource extends Resource
 
     /**
      * TransactionResource constructor.
+     *
      * @param Client $paystackHttpClient
      */
     public function __construct(Client $paystackHttpClient)
@@ -25,8 +25,10 @@ class TransactionResource extends Resource
     }
 
     /**
-     * get transaction by id
+     * get transaction by id.
+     *
      * @param $id
+     *
      * @return \Exception|mixed
      */
     public function get($id)
@@ -39,23 +41,24 @@ class TransactionResource extends Resource
     }
 
     /**
-     * Get all transactions
+     * Get all transactions.
+     *
      * @param string $page
+     *
      * @return \Exception|mixed
      */
     public function getAll($page = '')
     {
         $page = !empty($page) ? "/page={$page}" : '';
-        $request =  $this->paystackHttpClient->get(
-            $this->transformUrl(Resource::GET_TRANSACTION, '') . $page
+        $request = $this->paystackHttpClient->get(
+            $this->transformUrl(Resource::GET_TRANSACTION, '').$page
         );
 
         return $this->processResourceRequestResponse($request);
-
     }
 
     /**
-     * Get transactions totals
+     * Get transactions totals.
      */
     public function getTransactionTotals()
     {
@@ -67,22 +70,26 @@ class TransactionResource extends Resource
     }
 
     /**
-     * Verify Transaction by transaction reference
+     * Verify Transaction by transaction reference.
+     *
      * @param $reference
+     *
      * @return \Exception|mixed
      */
     public function verify($reference)
     {
         $request = $this->paystackHttpClient->get(
-            $this->transformUrl(Resource::VERIFY_TRANSACTION, $reference, ":reference")
+            $this->transformUrl(Resource::VERIFY_TRANSACTION, $reference, ':reference')
         );
 
         return $this->processResourceRequestResponse($request);
     }
 
     /**
-     * Initialize one time transaction
+     * Initialize one time transaction.
+     *
      * @param $body
+     *
      * @return \Exception|mixed
      */
     public function initialize($body)
@@ -90,7 +97,7 @@ class TransactionResource extends Resource
         $request = $this->paystackHttpClient->post(
             Resource::INITIALIZE_TRANSACTION,
             [
-                'body'  => is_array($body) ? $this->toJson($body) : $body
+                'body'  => is_array($body) ? $this->toJson($body) : $body,
             ]
         );
 
@@ -98,8 +105,10 @@ class TransactionResource extends Resource
     }
 
     /**
-     * charge returning transaction
+     * charge returning transaction.
+     *
      * @param $body
+     *
      * @return \Exception|mixed
      */
     public function chargeAuthorization($body)
@@ -107,7 +116,7 @@ class TransactionResource extends Resource
         $request = $this->paystackHttpClient->post(
             Resource::CHARGE_AUTHORIZATION,
             [
-                'body'  => is_array($body) ? $this->toJson($body) : $body
+                'body'  => is_array($body) ? $this->toJson($body) : $body,
             ]
         );
 
@@ -115,8 +124,10 @@ class TransactionResource extends Resource
     }
 
     /**
-     * Charge Token
+     * Charge Token.
+     *
      * @param $body
+     *
      * @return \Exception|mixed
      */
     public function chargeToken($body)
@@ -124,7 +135,7 @@ class TransactionResource extends Resource
         $request = $this->paystackHttpClient->post(
             Resource::CHARGE_TOKEN,
             [
-                'body'  => is_array($body) ? $this->toJson($body) : $body
+                'body'  => is_array($body) ? $this->toJson($body) : $body,
             ]
         );
 
