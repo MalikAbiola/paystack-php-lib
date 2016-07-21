@@ -107,7 +107,6 @@ class PaystackLibTest extends BaseTestCase
         //set expected exception
         $this->setExpectedException(\Exception::class);
         $retrievedCustomers = $this->paystack->getCustomers();
-        var_dump($retrievedCustomers);
     }
 
     public function testCreateCustomerCreatesCustomerSuccessfully()
