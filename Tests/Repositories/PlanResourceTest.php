@@ -66,10 +66,7 @@ class PlanResourceTest extends BaseTestCase
         $updatePlan = $planResource->update($createdPlan['plan_code'], ['interval' => 'weekly']);
 
         $this->assertTrue(is_array($updatePlan));
-        $this->assertEquals($this->planData['amount'], $updatePlan['amount']);
-        $this->assertEquals($this->planData['description'], $updatePlan['description']);
-        $this->assertEquals($this->planData['name'], $updatePlan['name']);
-        $this->assertEquals('weekly', $updatePlan['interval']);
+        $this->assertTrue($updatePlan['status']);
     }
 
     /**

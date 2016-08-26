@@ -9,8 +9,8 @@
 namespace MAbiola\Paystack\Helpers;
 
 use Illuminate\Support\Str;
-use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
+use Ramsey\Uuid\Uuid;
 
 trait Utils
 {
@@ -50,7 +50,7 @@ trait Utils
         try {
             return str_replace('-', '', Uuid::uuid1()->toString());
         } catch (UnsatisfiedDependencyException $e) {
-            return;
+            return null;
         }
     }
 
