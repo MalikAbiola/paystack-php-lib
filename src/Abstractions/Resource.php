@@ -40,6 +40,6 @@ abstract class Resource
             return ExceptionHandler::handle(get_class($this), $response, $request->getStatusCode());
         }
 
-        return json_decode(json_encode($response->data), true);
+        return (isset($response->data)) ? json_decode(json_encode($response->data), true) : json_decode(json_encode($response), true);
     }
 }
