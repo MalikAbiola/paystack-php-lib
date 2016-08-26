@@ -1,6 +1,6 @@
 {
     "name": "mabiola/paystack-php-lib",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A PHP Library for https://paystack.co",
     "keywords": ["library", "Paystack"],
     "type": "library",
