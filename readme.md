@@ -1,8 +1,8 @@
 # PHP Library For [Paystack.co](http://paystack.co "Paystack.co")  (Unofficial) #
 A PHP library for Paystack.
 
-###Latest Version###
-	1.0.0
+**This library is no longer maintained. Please use the official library.**
+
 [![Build Status](https://travis-ci.org/MalikAbiola/paystack-php-lib.svg?branch=master)](https://travis-ci.org/MalikAbiola/paystack-php-lib)
 [![Coverage Status](https://coveralls.io/repos/github/MalikAbiola/paystack-php-lib/badge.svg?branch=master)](https://coveralls.io/github/MalikAbiola/paystack-php-lib?branch=master)
 # Requirements #
